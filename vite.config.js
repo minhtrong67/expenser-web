@@ -8,23 +8,16 @@ import { VitePWA } from 'vite-plugin-pwa';
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 // ---------------------------------------------------------------------------
-// Adaptive splash screen (light + dark)
+// Splash screen (single colour, no light/dark variants)
 //
-//  - <meta name="theme-color"> pair with a prefers-color-scheme media query, so
-//    the status bar / title bar already matches the OS theme before any JS runs
-//    (the inline script in index.html then lets the in-app theme win).
+//  - <meta name="theme-color"> so the status bar / title bar matches before
+//    any JS runs.
 //  - iOS has no manifest splash: it shows <link rel="apple-touch-startup-image">
-//    images picked by media query, including prefers-color-scheme. Those images
-//    are rendered here at build time (served on the fly by the dev server) for
-//    every common iPhone/iPad size, once per colour scheme.
-//  - Android builds its splash from the manifest background_color + icon. The
-//    manifest spec has no dark variant yet, so the light colour stays there and
-//    the WICG `user_preferences` override is added for browsers that adopt it.
+//    images picked by media query. Those images are rendered here at build time
+//    (served on the fly by the dev server) for every common iPhone/iPad size.
+//  - Android builds its splash from the manifest background_color + icon.
 // ---------------------------------------------------------------------------
-const SPLASH_COLORS = {
-  light: { bg: '#F8F9FF', theme: '#F8F9FF' },
-  dark: { bg: '#111418', theme: '#111418' },
-};
+const SPLASH_COLOR = '#4CAF50';
 
 // [CSS width, CSS height, device pixel ratio] - portrait
 const SPLASH_DEVICES = [
@@ -45,19 +38,19 @@ const SPLASH_DEVICES = [
   [768, 1024, 2], // iPad mini / 9.7"
 ];
 
-const splashName = (scheme, w, h) => `splash/${scheme}-${w}x${h}.png`;
+const splashName = (w, h) => `splash/${w}x${h}.png`;
 const splashSize = ([w, h, r]) => [w * r, h * r];
 
-function adaptiveSplash() {
+function splashScreen() {
   let iconPromise;
   const cache = new Map();
 
-  async function render(scheme, w, h) {
+  async function render(w, h) {
     iconPromise ||= loadImage(fileURLToPath(new URL('./public/icons/icon-512.png', import.meta.url)));
     const icon = await iconPromise;
     const canvas = createCanvas(w, h);
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = SPLASH_COLORS[scheme].bg;
+    ctx.fillStyle = SPLASH_COLOR;
     ctx.fillRect(0, 0, w, h);
     const size = Math.round(Math.min(w, h) * 0.26);
     ctx.drawImage(icon, Math.round((w - size) / 2), Math.round((h - size) / 2), size, size);
@@ -65,27 +58,24 @@ function adaptiveSplash() {
   }
 
   return {
-    name: 'expenser-adaptive-splash',
+    name: 'expenser-splash',
 
     transformIndexHtml() {
       const tags = [
-        { tag: 'meta', attrs: { name: 'theme-color', media: '(prefers-color-scheme: light)', content: SPLASH_COLORS.light.theme }, injectTo: 'head-prepend' },
-        { tag: 'meta', attrs: { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: SPLASH_COLORS.dark.theme }, injectTo: 'head-prepend' },
+        { tag: 'meta', attrs: { name: 'theme-color', content: SPLASH_COLOR }, injectTo: 'head-prepend' },
       ];
-      for (const scheme of ['light', 'dark']) {
-        for (const device of SPLASH_DEVICES) {
-          const [dw, dh, ratio] = device;
-          const [w, h] = splashSize(device);
-          tags.push({
-            tag: 'link',
-            attrs: {
-              rel: 'apple-touch-startup-image',
-              media: `(device-width: ${dw}px) and (device-height: ${dh}px) and (-webkit-device-pixel-ratio: ${ratio}) and (orientation: portrait) and (prefers-color-scheme: ${scheme})`,
-              href: `/${splashName(scheme, w, h)}`,
-            },
-            injectTo: 'head',
-          });
-        }
+      for (const device of SPLASH_DEVICES) {
+        const [dw, dh, ratio] = device;
+        const [w, h] = splashSize(device);
+        tags.push({
+          tag: 'link',
+          attrs: {
+            rel: 'apple-touch-startup-image',
+            media: `(device-width: ${dw}px) and (device-height: ${dh}px) and (-webkit-device-pixel-ratio: ${ratio}) and (orientation: portrait)`,
+            href: `/${splashName(w, h)}`,
+          },
+          injectTo: 'head',
+        });
       }
       return tags;
     },
@@ -93,11 +83,11 @@ function adaptiveSplash() {
     // Dev server: render the PNGs on demand.
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        const m = /^\/splash\/(light|dark)-(\d+)x(\d+)\.png/.exec(req.url || '');
+        const m = /^\/splash\/(\d+)x(\d+)\.png/.exec(req.url || '');
         if (!m) return next();
         try {
-          const key = `${m[1]}-${m[2]}x${m[3]}`;
-          if (!cache.has(key)) cache.set(key, await render(m[1], Number(m[2]), Number(m[3])));
+          const key = `${m[1]}x${m[2]}`;
+          if (!cache.has(key)) cache.set(key, await render(Number(m[1]), Number(m[2])));
           res.setHeader('Content-Type', 'image/png');
           res.end(cache.get(key));
         } catch (err) {
@@ -109,14 +99,12 @@ function adaptiveSplash() {
     // Build: emit every image as a static asset.
     async generateBundle() {
       const seen = new Set();
-      for (const scheme of ['light', 'dark']) {
-        for (const device of SPLASH_DEVICES) {
-          const [w, h] = splashSize(device);
-          const fileName = splashName(scheme, w, h);
-          if (seen.has(fileName)) continue;
-          seen.add(fileName);
-          this.emitFile({ type: 'asset', fileName, source: await render(scheme, w, h) });
-        }
+      for (const device of SPLASH_DEVICES) {
+        const [w, h] = splashSize(device);
+        const fileName = splashName(w, h);
+        if (seen.has(fileName)) continue;
+        seen.add(fileName);
+        this.emitFile({ type: 'asset', fileName, source: await render(w, h) });
       }
     },
   };
@@ -144,7 +132,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    adaptiveSplash(),
+    splashScreen(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icons/apple-touch-icon.png', 'favicon.svg', 'landing.html', 'og-image.png'],
@@ -157,13 +145,9 @@ export default defineConfig({
         start_url: '/',
         scope: '/',
         display: 'standalone',
-        background_color: '#F8F9FF',
-        theme_color: '#36618E',
+        background_color: '#4CAF50',
+        theme_color: '#4CAF50',
         categories: ['finance', 'productivity'],
-        // Dark-mode override for splash colours (WICG manifest-incubations
-        // "user_preferences"; unsupported browsers just ignore it and use the
-        // light colours above). iOS uses the generated startup images instead.
-        user_preferences: { color_scheme: { dark: { background_color: '#111418', theme_color: '#111418' } } },
         icons: [
           { src: '/icons/icon-72.png', sizes: '72x72', type: 'image/png' },
           { src: '/icons/icon-96.png', sizes: '96x96', type: 'image/png' },

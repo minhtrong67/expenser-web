@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, PieChart, Pie, Cell, LineChart, Line, LabelList } from 'recharts';
+import { ResponsiveContainer, Tooltip, Legend, PieChart, Pie, Cell } from 'recharts';
 import Icon from '../components/ui/Icon';
 import IconButton from '../components/ui/IconButton';
 import Chip from '../components/ui/Chip';
@@ -11,10 +11,9 @@ import { useData } from '../contexts/DataContext';
 import { useI18n } from '../i18n';
 import { useSessionState } from '../hooks/useSessionState';
 import { useChartTheme } from '../hooks/useChartTheme';
-import { formatMoney, formatDateShort, formatCompactMoney, formatMonthYear, formatDayHeader } from '../utils/format';
+import { formatMoney, formatDateShort, formatMonthYear, formatDayHeader } from '../utils/format';
 
 const RANGES = ['today', 'week', 'month', 'year', 'all'];
-const DAY = 86_400_000;
 
 const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
@@ -52,37 +51,6 @@ function shiftAnchor(range, anchorTs, delta) {
   return new Date(a.getFullYear() + delta, 0, 1).getTime();
 }
 
-// Zero-filled buckets so the trend chart has no gaps: hours / days / months.
-function buildTrend(range, start, end, txs, monthsShort) {
-  const buckets = [];
-  let indexOf;
-  if (range === 'today') {
-    for (let h = 0; h < 24; h += 1) buckets.push({ key: `${String(h).padStart(2, '0')}h`, income: 0, expense: 0 });
-    indexOf = (d) => d.getHours();
-  } else if (range === 'week' || range === 'month') {
-    const s = startOfDay(start);
-    const n = Math.round((startOfDay(end) - s) / DAY) + 1;
-    for (let i = 0; i < n; i += 1) {
-      const d = new Date(s.getFullYear(), s.getMonth(), s.getDate() + i);
-      buckets.push({ key: range === 'month' ? String(d.getDate()) : formatDateShort(d), income: 0, expense: 0 });
-    }
-    indexOf = (d) => Math.round((startOfDay(d) - s) / DAY);
-  } else {
-    const first = range === 'year' ? new Date(start.getFullYear(), 0, 1) : new Date(Math.min(...txs.map((x) => x.date.getTime()), end.getTime()));
-    const base = first.getFullYear() * 12 + first.getMonth();
-    const last = end.getFullYear() * 12 + end.getMonth();
-    for (let m = base; m <= last; m += 1) {
-      buckets.push({ key: range === 'year' ? monthsShort[m % 12] : `${String((m % 12) + 1).padStart(2, '0')}/${String(Math.floor(m / 12)).slice(2)}`, income: 0, expense: 0 });
-    }
-    indexOf = (d) => d.getFullYear() * 12 + d.getMonth() - base;
-  }
-  txs.forEach((tx) => {
-    const b = buckets[indexOf(tx.date)];
-    if (b) b[tx.type === 'income' ? 'income' : 'expense'] += tx.amount;
-  });
-  return buckets;
-}
-
 function ChartCard({ title, subtitle, children }) {
   return (
     <section className="animate-fade-in rounded-2xl bg-surface-container-low p-5">
@@ -107,7 +75,6 @@ export default function StatisticsPage() {
   // Memoised so downstream useMemo's really are cached (fresh Date objects every render defeated them).
   const period = useMemo(() => getPeriod(range, anchorTs), [range, anchorTs]);
   const { start, end, fullEnd, isCurrent } = period;
-  const monthsShort = useMemo(() => t('stats.monthsShort').split(','), [t]);
   const hasNav = range !== 'all';
   const canGoNext = !isCurrent;
 
@@ -151,12 +118,16 @@ export default function StatisticsPage() {
       .sort((a, b) => b.value - a.value);
   }, [filtered, getCategory, t]);
 
-  const trendData = useMemo(() => buildTrend(range, start, end, filtered, monthsShort), [range, start, end, filtered, monthsShort]);
-
-  const incomeVsExpense = [
-    { name: t('tx.income'), value: totals.income, fill: chart.income },
-    { name: t('tx.expense'), value: totals.expense, fill: chart.expense },
-  ];
+  // Income vs expense as pie slices (zero-value slices are dropped).
+  const incomeVsExpense = useMemo(() => {
+    const total = totals.income + totals.expense;
+    return [
+      { name: t('tx.income'), value: totals.income, color: chart.income },
+      { name: t('tx.expense'), value: totals.expense, color: chart.expense },
+    ]
+      .filter((d) => d.value > 0)
+      .map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }));
+  }, [totals, chart.income, chart.expense, t]);
 
   async function handleExport(format) {
     if (filtered.length === 0) {
@@ -184,8 +155,6 @@ export default function StatisticsPage() {
       </div>
     );
   }
-
-  const axisTick = (v) => formatCompactMoney(v);
 
   return (
     <div className="space-y-4 sm:space-y-5">
@@ -259,39 +228,20 @@ export default function StatisticsPage() {
       ) : (
         <>
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-            <ChartCard title={t('stats.trend')} subtitle={`${t('stats.totalIncome')} ${formatMoney(totals.income)} · ${t('stats.totalExpense')} ${formatMoney(totals.expense)}`}>
-              <ResponsiveContainer width="100%" height={280}>
-                <LineChart data={trendData} margin={{ left: 0, right: 8, top: 8 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={chart.grid} />
-                  <XAxis dataKey="key" tick={chart.tick} tickLine={false} axisLine={false} minTickGap={12} />
-                  <YAxis tickFormatter={axisTick} tick={chart.tick} tickLine={false} axisLine={false} width={44} />
-                  <Tooltip {...chart.tooltip} formatter={(v) => formatMoney(v)} />
-                  <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Line type="monotone" dataKey="income" name={t('tx.income')} stroke={chart.income} strokeWidth={2.5} dot={trendData.length <= 31 ? { r: 3 } : false} activeDot={{ r: 5 }} isAnimationActive={false} />
-                  <Line type="monotone" dataKey="expense" name={t('tx.expense')} stroke={chart.expense} strokeWidth={2.5} dot={trendData.length <= 31 ? { r: 3 } : false} activeDot={{ r: 5 }} isAnimationActive={false} />
-                </LineChart>
-              </ResponsiveContainer>
-            </ChartCard>
-
             <ChartCard title={t('stats.compare')} subtitle={`${t('stats.difference')} ${totals.net >= 0 ? '+' : ''}${formatMoney(totals.net)}`}>
-              <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={incomeVsExpense} margin={{ left: 0, right: 8, top: 20 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={chart.grid} />
-                  <XAxis dataKey="name" tick={{ ...chart.tick, fontSize: 12 }} tickLine={false} axisLine={false} />
-                  <YAxis tickFormatter={axisTick} tick={chart.tick} tickLine={false} axisLine={false} width={44} />
-                  <Tooltip {...chart.tooltip} cursor={chart.cursor} formatter={(v) => formatMoney(v)} />
-                  <Bar dataKey="value" name={t('tx.amount')} radius={[12, 12, 0, 0]} isAnimationActive={false}>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie data={incomeVsExpense} dataKey="value" nameKey="name" innerRadius={55} outerRadius={92} paddingAngle={2} stroke="none" isAnimationActive={false} label={({ pct }) => (pct >= 4 ? `${pct}%` : '')} labelLine={false} style={{ fontSize: 11, fontWeight: 600 }}>
                     {incomeVsExpense.map((entry, i) => (
-                      <Cell key={i} fill={entry.fill} />
+                      <Cell key={i} fill={entry.color} />
                     ))}
-                    <LabelList dataKey="value" position="top" formatter={(v) => formatCompactMoney(v)} style={{ fontSize: 11, fontWeight: 600, fill: chart.tick.fill }} />
-                  </Bar>
-                </BarChart>
+                  </Pie>
+                  <Tooltip {...chart.tooltip} formatter={(v, n, { payload }) => [`${formatMoney(v)} (${payload.pct}%)`, payload.name]} />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
+                </PieChart>
               </ResponsiveContainer>
             </ChartCard>
-          </div>
 
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
             <ChartCard title={t('stats.pie')} subtitle={categoryData.length > 0 ? t('stats.pieSubtitle', { total: formatMoney(totals.expense), n: categoryData.length }) : undefined}>
               {categoryData.length === 0 ? (
                 <EmptyState icon="donut_large" text={t('stats.noExpense')} />
@@ -309,32 +259,32 @@ export default function StatisticsPage() {
                 </ResponsiveContainer>
               )}
             </ChartCard>
-
-            <ChartCard title={t('stats.categoryPct')} subtitle={categoryData.length > 0 ? t('stats.highest', { name: categoryData[0].name, pct: categoryData[0].pct }) : undefined}>
-              {categoryData.length === 0 ? (
-                <EmptyState icon="bar_chart" text={t('common.noData')} />
-              ) : (
-                <ul className="space-y-3">
-                  {categoryData.map((c) => (
-                    <li key={c.name}>
-                      <div className="mb-1 flex items-center justify-between gap-2 text-body-sm">
-                        <span className="flex min-w-0 items-center gap-1.5 font-medium text-on-surface">
-                          <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: c.color }} />
-                          <span className="wrap-any">{c.name}</span>
-                        </span>
-                        <span className="shrink-0 tabular-nums text-on-surface-variant">
-                          {formatMoney(c.value)} · {c.pct}%
-                        </span>
-                      </div>
-                      <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
-                        <div className="h-full rounded-full transition-[width] duration-500 ease-emphasized" style={{ width: `${c.pct}%`, backgroundColor: c.color }} />
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </ChartCard>
           </div>
+
+          <ChartCard title={t('stats.categoryPct')} subtitle={categoryData.length > 0 ? t('stats.highest', { name: categoryData[0].name, pct: categoryData[0].pct }) : undefined}>
+            {categoryData.length === 0 ? (
+              <EmptyState icon="bar_chart" text={t('common.noData')} />
+            ) : (
+              <ul className="space-y-3">
+                {categoryData.map((c) => (
+                  <li key={c.name}>
+                    <div className="mb-1 flex items-center justify-between gap-2 text-body-sm">
+                      <span className="flex min-w-0 items-center gap-1.5 font-medium text-on-surface">
+                        <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: c.color }} />
+                        <span className="wrap-any">{c.name}</span>
+                      </span>
+                      <span className="shrink-0 tabular-nums text-on-surface-variant">
+                        {formatMoney(c.value)} · {c.pct}%
+                      </span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
+                      <div className="h-full rounded-full transition-[width] duration-500 ease-emphasized" style={{ width: `${c.pct}%`, backgroundColor: c.color }} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </ChartCard>
         </>
       )}
     </div>
