@@ -430,17 +430,30 @@ async function buildPdfReport(r) {
 }
 
 // Renders a compact report card off-screen and captures it as a PNG.
+// Legend rows have a fixed height + line-height and no overflow clipping: html2canvas
+// crops the bottom of text inside `overflow:hidden` boxes, so long names are
+// shortened in JS instead of with CSS ellipsis.
 async function buildImageReport(r) {
   const { default: html2canvas } = await import('html2canvas');
-  const { title, subtitle, income, expense, count, expenseRows, incomeRows, expensePie, incomePie, t } = r;
-  const legend = (rows) =>
-    rows
-      .slice(0, 8)
-      .map((x) => `<div style="display:flex;align-items:center;gap:8px;font-size:13px;margin:5px 0"><span style="width:10px;height:10px;border-radius:3px;background:${escapeHtml(x.color)}"></span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(x.name)}</span><b>${x.pct}%</b></div>`)
+  const { title, subtitle, income, expense, count, expenseSlices, expensePie, compareSlices, comparePie, t } = r;
+  const ROW_H = 28;
+  const shorten = (name, max = 24) => (name.length > max ? `${name.slice(0, max - 1)}…` : name);
+  const legend = (slices, showAmount) =>
+    slices
+      .slice(0, 10)
+      .map(
+        (x) =>
+          `<div style="display:flex;align-items:center;gap:8px;height:${ROW_H}px;font-size:13px;line-height:${ROW_H}px">` +
+          `<span style="flex:none;width:10px;height:10px;border-radius:3px;background:${escapeHtml(x.color)}"></span>` +
+          `<span style="flex:1;min-width:0;white-space:nowrap;line-height:${ROW_H}px">${escapeHtml(shorten(x.name))}</span>` +
+          (showAmount ? `<span style="flex:none;color:#44474E;line-height:${ROW_H}px">${escapeHtml(formatMoney(x.value))}</span>` : '') +
+          `<b style="flex:none;min-width:40px;text-align:right;line-height:${ROW_H}px">${Math.round(x.pct)}%</b>` +
+          `</div>`,
+      )
       .join('');
-  const pieBlock = (heading, url, rows) =>
+  const pieBlock = (heading, url, slices, showAmount) =>
     url
-      ? `<div style="margin-top:22px"><div style="font-weight:700;font-size:15px;margin-bottom:10px">${escapeHtml(heading)}</div><div style="display:flex;gap:20px;align-items:center"><img src="${url}" style="width:190px;height:190px" alt=""/><div style="flex:1;min-width:0">${legend(rows)}</div></div></div>`
+      ? `<div style="margin-top:22px"><div style="font-weight:700;font-size:15px;line-height:22px;margin-bottom:10px">${escapeHtml(heading)}</div><div style="display:flex;gap:20px;align-items:center"><img src="${url}" style="flex:none;width:190px;height:190px" alt=""/><div style="flex:1;min-width:0">${legend(slices, showAmount)}</div></div></div>`
       : '';
   const stat = (label, value, bg, fg) => `<div style="flex:1;background:${bg};color:${fg};border-radius:18px;padding:14px 16px"><div style="font-size:12px;opacity:.8">${escapeHtml(label)}</div><div style="font-size:17px;font-weight:700;margin-top:4px">${escapeHtml(value)}</div></div>`;
 
@@ -458,8 +471,8 @@ async function buildImageReport(r) {
       ${stat(t('export.difference'), formatMoney(income - expense), '#D1E4FF', '#194975')}
     </div>
     <div style="font-size:12px;color:#44474E;margin-top:10px">${escapeHtml(t('export.totalCount'))}: <b>${count}</b></div>
-    ${pieBlock(t('export.pieExpense'), expensePie, expenseRows)}
-    ${incomeRows.length ? pieBlock(t('export.pieIncome'), incomePie, incomeRows) : ''}
+    ${pieBlock(t('export.pieExpense'), expensePie, expenseSlices, false)}
+    ${pieBlock(t('stats.compare'), comparePie, compareSlices, true)}
     <div style="margin-top:22px;font-size:11px;color:#74777F;text-align:right">${APP_NAME}</div>`;
   document.body.appendChild(node);
   try {
@@ -479,6 +492,14 @@ export async function exportRangeReport({ title, start, end, transactions, getCa
   const incomeRows = categoryBreakdown(rangeTx, 'income', getCategory, t);
   const expenseSlices = toPieSlices(expenseRows.map((x) => ({ name: x.name, value: x.total, color: x.color })), t('common.other'));
   const incomeSlices = toPieSlices(incomeRows.map((x) => ({ name: x.name, value: x.total, color: x.color })), t('common.other'));
+  // Income vs expense share (image report): two slices, zero values dropped.
+  const compareSlices = toPieSlices(
+    [
+      { name: t('export.type.income'), value: income, color: '#10B981' },
+      { name: t('export.type.expense'), value: expense, color: '#EF4444' },
+    ].filter((x) => x.value > 0),
+    t('common.other'),
+  );
   const ctx = {
     title,
     subtitle: t('export.subtitle', { from: formatDate(start), to: formatDate(end), date: formatDate(new Date()) }),
@@ -491,6 +512,8 @@ export async function exportRangeReport({ title, start, end, transactions, getCa
     incomeSlices,
     expensePie: expenseSlices.length ? renderPieDataUrl(expenseSlices) : null,
     incomePie: incomeSlices.length ? renderPieDataUrl(incomeSlices) : null,
+    compareSlices,
+    comparePie: compareSlices.length ? renderPieDataUrl(compareSlices) : null,
     rangeTx,
     getCategory,
     getWallet,
