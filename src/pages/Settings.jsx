@@ -330,7 +330,7 @@ export default function SettingsPage() {
         </Row>
       </Section>
 
-      <Section id="reminder" title={t('reminder.title')} icon="notifications_active" description={t('reminder.desc')}>
+      {/* <Section id="reminder" title={t('reminder.title')} icon="notifications_active" description={t('reminder.desc')}>
         {!reminder.supported ? (
           <p className="rounded-xl bg-surface-container p-3 text-body-md text-on-surface-variant">{t('reminder.unsupported')}</p>
         ) : (
@@ -368,7 +368,7 @@ export default function SettingsPage() {
             </Row>
           </>
         )}
-      </Section>
+      </Section> */}
 
       <Section title={t('settings.language')} icon="translate" description={t('settings.languageDesc')}>
         <SegmentedButton ariaLabel={t('settings.language')} value={settings.language} onChange={(language) => update({ language })} options={LANGUAGES.map((l) => ({ id: l.id, label: l.label }))} />

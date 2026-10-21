@@ -13,10 +13,10 @@ export default function SplashScreen() {
 
   // Keep the status bar the same colour as the splash while it is visible, then
   // hand it back to the app surface colour.
-  useEffect(() => {
-    setThemeColor(splashColor());
-    return () => setThemeColor(readThemeColors().surface);
-  }, []);
+  // useEffect(() => {
+  //   setThemeColor(splashColor());
+  //   return () => setThemeColor(readThemeColors().surface);
+  // }, []);
 
   return (
     <div className="splash" role="status" aria-live="polite">
