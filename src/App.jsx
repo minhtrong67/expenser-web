@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './contexts/AuthContext';
-import { SettingsProvider, useSettings } from './contexts/SettingsContext';
+import { SettingsProvider } from './contexts/SettingsContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import SplashScreen from './components/ui/SplashScreen';
@@ -20,25 +20,32 @@ const CategoriesPage = lazy(() => import('./pages/Categories'));
 const WalletsPage = lazy(() => import('./pages/Wallets'));
 const StatisticsPage = lazy(() => import('./pages/Statistics'));
 const SettingsPage = lazy(() => import('./pages/Settings'));
+const Landing = lazy(() => import('./pages/Landing'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Toast styling: inverted surface, following the active theme.
+// Toasts use the theme's popover surface, so they are light in the light theme and
+// dark in the dark theme. The styles are CSS variables: a theme switch re-colours
+// toasts that are already on screen, with no re-render needed.
 function ThemedToaster() {
-  const { colors, isDark } = useSettings();
   return (
     <Toaster
       position="top-center"
+      containerStyle={{ top: 'max(1rem, env(safe-area-inset-top))' }}
       toastOptions={{
         duration: 3500,
         style: {
-          background: colors.inverseSurface,
-          color: colors.inverseOnSurface,
-          borderRadius: '10px',
+          background: 'var(--popover)',
+          color: 'var(--popover-foreground)',
+          border: '1px solid var(--border)',
+          borderRadius: '12px',
           fontSize: '14px',
-          boxShadow: '0 8px 24px -6px rgba(0,0,0,.28)',
+          lineHeight: '20px',
+          padding: '10px 14px',
+          maxWidth: 'min(92vw, 420px)',
+          boxShadow: '0 12px 32px -12px rgb(0 0 0 / 0.30), 0 2px 6px -2px rgb(0 0 0 / 0.10)',
         },
-        success: { iconTheme: { primary: isDark ? '#008236' : '#00c950', secondary: colors.inverseSurface } },
-        error: { iconTheme: { primary: isDark ? '#e7000b' : '#ff6467', secondary: colors.inverseSurface } },
+        success: { iconTheme: { primary: 'var(--brand)', secondary: 'var(--popover)' } },
+        error: { iconTheme: { primary: 'var(--destructive)', secondary: 'var(--popover)' } },
       }}
     />
   );
@@ -53,6 +60,8 @@ export default function App() {
           {/* Same splash as index.html + the auth gate: one continuous loading screen */}
           <Suspense fallback={<SplashScreen />}>
             <Routes>
+              {/* Intro page: always reachable (Settings > About links here for signed-in users) */}
+              <Route path="/welcome" element={<Landing />} />
               <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
               <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
               <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
@@ -60,7 +69,7 @@ export default function App() {
               <Route
                 path="/"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute landing={<Landing />}>
                     <ProtectedShell />
                   </ProtectedRoute>
                 }

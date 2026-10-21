@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Icon from '../components/ui/Icon';
 import Button from '../components/ui/Button';
+import Toggle from '../components/ui/Toggle';
 import TextInput from '../components/ui/TextInput';
 import ConfirmDialog from '../components/ui/ConfirmDialog';
 import ExportMenu from '../components/ui/ExportMenu';
@@ -12,6 +14,7 @@ import { useSettings, THEME_MODES } from '../contexts/SettingsContext';
 import { useData } from '../contexts/DataContext';
 import { useI18n, LANGUAGES } from '../i18n';
 import { usePwaInstall } from '../hooks/usePwaInstall';
+import { useReminderSettings } from '../hooks/useReminder';
 import { useSessionState } from '../hooks/useSessionState';
 import { isNonEmpty, isStrongPassword } from '../utils/validators';
 import { ACCENT_PRESETS, DEFAULT_ACCENT, isValidHex } from '../theme';
@@ -131,6 +134,8 @@ export default function SettingsPage() {
   const { settings, update, resetSettings } = useSettings();
   const { transactions, categories, loading: dataLoading, getCategory, getWallet, importTransactions, importCategories } = useData();
   const { canInstall, installed, promptInstall } = usePwaInstall();
+  const navigate = useNavigate();
+  const reminder = useReminderSettings();
   // Which accordions are open - remembered while the browser tab lives
   const [openMap, setOpenMap] = useSessionState('settings.open', DEFAULT_OPEN);
   const toggle = (key) => setOpenMap((m) => ({ ...m, [key]: !m[key] }));
@@ -312,11 +317,57 @@ export default function SettingsPage() {
         )}
 
         <Divider />
+        <Row label={t('settings.intro')} hint={t('settings.introHint')}>
+          <Button variant="outlined" size="sm" icon="info" onClick={() => navigate('/welcome')}>
+            {t('settings.introOpen')}
+          </Button>
+        </Row>
+        <Divider />
         <Row label={t('common.logout')} hint={t('settings.logoutHint')}>
           <Button variant="outlined-danger" size="sm" icon="logout" onClick={() => setLogoutOpen(true)}>
             {t('common.logout')}
           </Button>
         </Row>
+      </Section>
+
+      <Section id="reminder" title={t('reminder.title')} icon="notifications_active" description={t('reminder.desc')}>
+        {!reminder.supported ? (
+          <p className="rounded-xl bg-surface-container p-3 text-body-md text-on-surface-variant">{t('reminder.unsupported')}</p>
+        ) : (
+          <>
+            <Row label={t('reminder.enable')} hint={t('reminder.enableHint')}>
+              <Toggle checked={reminder.enabled} disabled={reminder.busy} onChange={(on) => (on ? reminder.enable() : reminder.disable())} />
+            </Row>
+            {reminder.permission === 'denied' && (
+              <p className="flex items-start gap-2 rounded-xl bg-error-container p-3 text-body-md text-on-error-container">
+                <Icon name="notifications_off" size={18} className="mt-0.5 shrink-0" />
+                {t('reminder.denied')}
+              </p>
+            )}
+            {reminder.enabled && (
+              <div className="animate-slide-up space-y-4">
+                <Divider />
+                <Row label={t('reminder.time')} hint={t('reminder.timeHint')}>
+                  <div className="w-full sm:w-40">
+                    <TextInput type="time" label={t('reminder.time')} value={reminder.time} onChange={(e) => reminder.setTime(e.target.value)} />
+                  </div>
+                </Row>
+                {!reminder.pushConfigured && (
+                  <p className="flex items-start gap-2 rounded-xl bg-surface-container p-3 text-body-sm text-on-surface-variant">
+                    <Icon name="info" size={16} className="mt-0.5 shrink-0" />
+                    {t('reminder.localMode')}
+                  </p>
+                )}
+              </div>
+            )}
+            <Divider />
+            <Row label={t('reminder.test')} hint={t('reminder.testHint')}>
+              <Button variant="outlined" size="sm" icon="notifications" onClick={reminder.sendTest}>
+                {t('reminder.test')}
+              </Button>
+            </Row>
+          </>
+        )}
       </Section>
 
       <Section title={t('settings.language')} icon="translate" description={t('settings.languageDesc')}>
@@ -413,6 +464,7 @@ export default function SettingsPage() {
         onConfirm={async () => {
           setLoggingOut(true);
           try {
+            navigate('/', { replace: true }); // signed-out visitors land on the intro page
             await logout();
           } finally {
             setLoggingOut(false);

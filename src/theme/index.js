@@ -137,6 +137,7 @@ const COLOR_VARS = {
   income: '--md-income',
   expense: '--md-expense',
   surface: '--md-surface',
+  popover: '--popover',
   onSurface: '--md-on-surface',
   onSurfaceVariant: '--md-on-surface-variant',
   outlineVariant: '--md-outline-variant',
@@ -152,8 +153,8 @@ export function readThemeColors() {
 // Values of expenser-theme.css, used for the very first render (before the
 // real ones can be read from the DOM).
 export const FALLBACK_COLORS = {
-  light: { primary: '#008236', brand: '#008236', income: '#008236', expense: '#e7000b', surface: '#ffffff', onSurface: '#0a0a0a', onSurfaceVariant: '#737373', outlineVariant: '#e5e5e5', inverseSurface: '#0a0a0a', inverseOnSurface: '#ffffff' },
-  dark: { primary: '#016630', brand: '#00c950', income: '#00c950', expense: '#ff6467', surface: '#0a0a0a', onSurface: '#fafafa', onSurfaceVariant: '#a1a1a1', outlineVariant: '#262626', inverseSurface: '#fafafa', inverseOnSurface: '#0a0a0a' },
+  light: { primary: '#008236', brand: '#008236', income: '#008236', expense: '#e7000b', surface: '#ffffff', popover: '#ffffff', onSurface: '#0a0a0a', onSurfaceVariant: '#737373', outlineVariant: '#e5e5e5', inverseSurface: '#0a0a0a', inverseOnSurface: '#ffffff' },
+  dark: { primary: '#016630', brand: '#00c950', income: '#00c950', expense: '#ff6467', surface: '#0a0a0a', popover: '#171717', onSurface: '#fafafa', onSurfaceVariant: '#a1a1a1', outlineVariant: '#262626', inverseSurface: '#fafafa', inverseOnSurface: '#0a0a0a' },
 };
 
 /** Sets every <meta name="theme-color"> (status bar / title bar colour). */

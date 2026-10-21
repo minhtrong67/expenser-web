@@ -13,6 +13,8 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 import { useT } from '../i18n';
+import { useSettings } from './SettingsContext';
+import { DEFAULT_REMINDER, removeServerReminder, syncWorkerConfig } from '../services/reminders';
 
 const AuthContext = createContext(null);
 
@@ -30,6 +32,7 @@ const AUTH_ERRORS = {
 
 export function AuthProvider({ children }) {
   const t = useT();
+  const { update: updateSettings } = useSettings();
   const [user, setUser] = useState(undefined); // undefined = loading, null = logged out
   const [authError, setAuthError] = useState(null);
 
@@ -121,8 +124,13 @@ export function AuthProvider({ children }) {
     } catch {
       /* storage unavailable */
     }
-    return signOut(auth);
-  }, []);
+    // Stop this device's daily reminder: nobody else should get it after sign-out.
+    const uid = auth.currentUser?.uid;
+    updateSettings({ reminder: { ...DEFAULT_REMINDER } });
+    const cleanup = Promise.allSettled([removeServerReminder(uid), syncWorkerConfig({ enabled: false })]);
+    const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
+    return Promise.race([cleanup, timeout]).then(() => signOut(auth));
+  }, [updateSettings]);
 
   const resetPassword = useCallback(
     async (email) => {

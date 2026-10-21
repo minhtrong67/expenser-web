@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="public/icons/icon-192.png" alt="Expenser" width="88" />
+
 # Expenser
 
 **Quản lý chi tiêu cá nhân — tối giản, nhanh, mã nguồn mở.**
@@ -16,9 +18,12 @@
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 [Dùng thử](https://expenser-quan-ly-chi-tieu.vercel.app/) ·
-[Trang giới thiệu](https://expenser-quan-ly-chi-tieu.vercel.app/landing.html) ·
+[Tính năng](#-tính-năng) ·
 [Cài đặt](#-bắt-đầu) ·
+[Nhắc nhở hàng ngày](#-nhắc-nhở-hàng-ngày-thông-báo-đẩy) ·
 [Thiết kế](#-hệ-thống-thiết-kế)
+
+![Expenser](screenshots/image01.png)
 
 </div>
 
@@ -31,8 +36,10 @@
 - [Tính năng](#-tính-năng)
 - [Công nghệ](#-công-nghệ)
 - [Bắt đầu](#-bắt-đầu)
+- [Nhắc nhở hàng ngày (thông báo đẩy)](#-nhắc-nhở-hàng-ngày-thông-báo-đẩy)
 - [Scripts](#-scripts)
 - [Hệ thống thiết kế](#-hệ-thống-thiết-kế)
+- [Luồng điều hướng](#-luồng-điều-hướng)
 - [Cấu trúc dự án](#-cấu-trúc-dự-án)
 - [Mô hình dữ liệu](#-mô-hình-dữ-liệu)
 - [Triển khai](#-triển-khai)
@@ -41,26 +48,26 @@
 
 ## 📖 Giới thiệu
 
-**Expenser** giúp bạn ghi lại thu chi trong vài giây, theo dõi nhiều ví, xem thống kê trực quan và xuất báo cáo (PDF / Excel / ảnh). Ứng dụng ưu tiên thao tác một tay trên điện thoại, cài được như ứng dụng thật (PWA) và vẫn dùng được khi mất mạng.
+**Expenser** giúp bạn ghi lại thu chi trong vài giây, theo dõi nhiều ví, xem thống kê trực quan và xuất báo cáo (PDF / Excel / ảnh). Ứng dụng ưu tiên thao tác một tay trên điện thoại, cài được như ứng dụng thật (PWA), vẫn dùng được khi mất mạng và nhắc bạn ghi chép mỗi ngày.
 
 | | |
 | --- | --- |
 | 🎨 **Giao diện tối giản** | Nền phẳng, viền mảnh, ít đổ bóng; chế độ sáng / tối / theo hệ thống và màu nhấn tùy chọn. |
-| ⚡ **Nhập liệu nhanh** | Gợi ý số tiền một chạm (gõ `2` → `2.000 · 20.000 · 200.000 · 2.000.000`) và nhập lại các mục gần đây. |
+| ⚡ **Nhập liệu nhanh** | Gợi ý số tiền một chạm: gõ `2` → `2.000 · 20.000 · 200.000 · 2.000.000`. |
+| 🔔 **Nhắc nhở hàng ngày** | Thông báo đẩy đẹp mắt, bật/tắt và đổi giờ trong Cài đặt (mặc định 06:00). |
 | 🌐 **Song ngữ** | Tiếng Việt / English, ngày giờ và tiền tệ tự định dạng theo ngôn ngữ. |
 | 📴 **Offline-first** | PWA có splash screen theo giao diện sáng/tối, Firestore lưu đệm và tự đồng bộ khi có mạng. |
 | 🔓 **Mã nguồn mở** | Phát hành theo giấy phép MIT. |
 
 ## 🖼️ Ảnh chụp màn hình
 
-<!-- Thay các ảnh trong thư mục screenshots/ bằng ảnh chụp giao diện hiện tại, giữ nguyên tên file. -->
-
 | | | |
 | :---: | :---: | :---: |
-| ![Tổng quan](screenshots/image01.png)<br/>**Tổng quan** | ![Giao dịch](screenshots/image02.png)<br/>**Danh sách giao dịch** | ![Thêm giao dịch](screenshots/image03.png)<br/>**Thêm giao dịch** |
-| ![Thống kê](screenshots/image04.png)<br/>**Thống kê** | ![Báo cáo](screenshots/image05.png)<br/>**Báo cáo PDF có biểu đồ tròn** | ![Màu nhấn](screenshots/image06.png)<br/>**Màu nhấn** |
-| ![Chế độ tối](screenshots/image07.png)<br/>**Chế độ tối** | ![Di động](screenshots/image08.png)<br/>**Giao diện di động** | ![English](screenshots/image09.png)<br/>**Tiếng Anh** |
-| ![Lịch](screenshots/image10.png)<br/>**Lịch giao dịch** | ![Ngăn kéo ngày](screenshots/image11.png)<br/>**Chi tiết một ngày** | ![Ngăn kéo trên máy tính](screenshots/image13.png)<br/>**Chi tiết ngày trên máy tính** |
+| ![Trang giới thiệu](screenshots/image01.png)<br/>**Trang giới thiệu** | ![Nhập số tiền thông minh](screenshots/image02.png)<br/>**Dùng thử nhập số tiền (tối)** | ![Nhắc nhở](screenshots/image03.png)<br/>**Thông báo nhắc nhở (tối)** |
+| ![Đăng nhập](screenshots/image04.png)<br/>**Đăng nhập** | ![Tổng quan](screenshots/image05.png)<br/>**Tổng quan** | ![Thêm giao dịch](screenshots/image06.png)<br/>**Thêm giao dịch + gợi ý số tiền** |
+| ![Thống kê](screenshots/image07.png)<br/>**Thống kê** | ![Báo cáo PDF](screenshots/image08.png)<br/>**Báo cáo PDF có biểu đồ tròn** | ![Cài đặt](screenshots/image09.png)<br/>**Cài đặt: nhắc nhở & toast** |
+| ![Chế độ tối](screenshots/image10.png)<br/>**Chế độ tối** | ![Di động](screenshots/image11.png)<br/>**Giao diện di động** | ![Landing di động](screenshots/image12.png)<br/>**Trang giới thiệu trên di động (tối)** |
+| ![English](screenshots/image13.png)<br/>**Tiếng Anh** | ![Lịch](screenshots/image14.png)<br/>**Lịch giao dịch** | ![Chi tiết ngày](screenshots/image15.png)<br/>**Chi tiết một ngày (di động)** |
 
 ## ✨ Tính năng
 
@@ -70,7 +77,7 @@
 | --- | --- |
 | **Tổng quan** | Số dư, thu/chi tháng này (so với tháng trước), biểu đồ tròn, cơ cấu chi tiêu, giao dịch gần đây và số dư từng ví. |
 | **Giao dịch** | Xem dạng danh sách (nhóm theo ngày) hoặc lịch tháng; lọc, tìm kiếm, sắp xếp; vuốt phải để sửa, vuốt trái để xóa; tự tải thêm khi cuộn. |
-| **Nhập nhanh** | **Gợi ý số tiền**: gõ `2` để chọn `2.000`, `20.000`, `200.000` hoặc `2.000.000`; gõ `25` ra `25.000 … 25.000.000`. Ngoài ra có gợi ý các mục đã nhập gần đây (số tiền, danh mục, ví). |
+| **Nhập nhanh** | **Gợi ý số tiền**: gõ `2` để chọn `2.000`, `20.000`, `200.000` hoặc `2.000.000`; gõ `25` ra `25.000 … 25.000.000`. Có thêm gợi ý các mục đã nhập gần đây (số tiền, danh mục, ví). |
 | **Danh mục** | Thêm / sửa / xóa danh mục thu và chi với emoji và màu tùy chỉnh. |
 | **Nhiều ví** | Số dư từng ví và chuyển tiền giữa các ví. |
 
@@ -83,6 +90,10 @@
 
 ### Trải nghiệm
 
+- **Trang giới thiệu (landing)** là trang mặc định cho khách chưa đăng nhập: responsive đầy đủ, sáng/tối/hệ thống, Việt/Anh, hiệu ứng cuộn mượt, ô nhập số tiền dùng thử ngay và thẻ SEO đầy đủ. Người đã đăng nhập vào thẳng ứng dụng; nút **Giới thiệu** trong Cài đặt mở lại trang này.
+- **Đăng nhập** bằng Google với giao diện chia đôi chuyên nghiệp, có nút quay về trang chủ.
+- **Nhắc nhở hàng ngày**: bật/tắt và chỉnh giờ trong Cài đặt, nút *Gửi thử thông báo* để xem trước.
+- **Toast** theo đúng giao diện: nền sáng ở chế độ sáng, nền tối ở chế độ tối, đổi màu ngay khi chuyển theme.
 - Chế độ **Sáng / Tối / Theo hệ thống**, **màu nhấn** (8 màu gợi ý hoặc chọn bất kỳ), cỡ chữ 3 mức.
 - Form nhiều trường mở dạng sheet toàn màn hình; form ngắn và hộp xác nhận dùng dialog; không tự focus để tránh bật bàn phím.
 - Bộ lọc từng trang và trạng thái các mục Cài đặt được nhớ trong phiên.
@@ -97,6 +108,7 @@
 | Frontend | React 19, Vite 8, React Router 7 |
 | Giao diện | Tailwind CSS 3, token màu `oklch` trong `expenser-theme.css`, font hệ thống, lucide-react |
 | Backend | Firebase Authentication + Cloud Firestore (persistent cache) |
+| Thông báo đẩy | Web Push (VAPID) qua Vercel Function `api/send-reminders.js`, `web-push`, `firebase-admin` |
 | Biểu đồ | Recharts |
 | Xuất / nhập | jsPDF + autoTable, ExcelJS, PapaParse, html2canvas |
 | PWA | vite-plugin-pwa (Workbox), ảnh splash iOS sinh lúc build |
@@ -115,7 +127,7 @@ npm install
 **1. Tạo Firebase project**
 
 1. Firebase Console → **Add project**.
-2. **Authentication → Sign-in method**: bật **Google** (và Email/Password nếu muốn dùng trang `/register`).
+2. **Authentication → Sign-in method**: bật **Google**.
 3. **Firestore Database → Create database**.
 4. **Project settings → Your apps → Web app**: sao chép `firebaseConfig`.
 
@@ -128,9 +140,12 @@ VITE_FIREBASE_PROJECT_ID=xxxxx
 VITE_FIREBASE_STORAGE_BUCKET=xxxxx.appspot.com
 VITE_FIREBASE_MESSAGING_SENDER_ID=xxxxx
 VITE_FIREBASE_APP_ID=xxxxx
+
+# Tùy chọn - chỉ cần khi muốn thông báo đẩy khi đã đóng ứng dụng (xem phần bên dưới)
+VITE_VAPID_PUBLIC_KEY=
 ```
 
-**3. Security Rules** — dán nội dung [`firestore.rules`](firestore.rules) vào tab **Rules** (mỗi người dùng chỉ đọc/ghi dữ liệu của chính mình).
+**3. Security Rules** — dán nội dung [`firestore.rules`](firestore.rules) vào tab **Rules** (mỗi người dùng chỉ đọc/ghi dữ liệu của chính mình; thêm quy tắc cho collection `reminders`).
 
 **4. Authorized domains** — *Authentication → Settings → Authorized domains*: thêm `localhost` và tên miền triển khai.
 
@@ -139,6 +154,46 @@ VITE_FIREBASE_APP_ID=xxxxx
 ```bash
 npm run dev
 ```
+
+## 🔔 Nhắc nhở hàng ngày (thông báo đẩy)
+
+Trong **Cài đặt → Nhắc nhở hàng ngày**, người dùng có thể bật/tắt thông báo, chọn giờ (mặc định **06:00** theo múi giờ thiết bị) và bấm **Gửi thử thông báo** để xem trước.
+
+Thông báo được thiết kế riêng: biểu tượng ứng dụng, huy hiệu đơn sắc trên thanh trạng thái, ảnh banner khi mở rộng, nội dung xoay vòng theo ngày bằng tiếng Việt hoặc Anh, hai nút hành động **Thêm chi tiêu / Thêm thu nhập**, và chạm vào thông báo sẽ mở thẳng form thêm giao dịch (`/?add=expense`, `/?add=income`).
+
+Ứng dụng dùng ba đường gửi, tự chọn đường tốt nhất có sẵn:
+
+| Cách | Khi nào hoạt động | Cần cấu hình |
+| --- | --- | --- |
+| **Web Push** (khuyên dùng) | Cả khi ứng dụng đã đóng | Khóa VAPID + Vercel Function + bộ hẹn giờ (bên dưới) |
+| **Periodic Background Sync** | Chrome/Android, PWA đã cài, giờ không chính xác tuyệt đối | Không |
+| **Hẹn giờ trong trang** | Khi ứng dụng đang mở hoặc chạy nền | Không |
+
+Cả ba dùng chung một `tag` nên mỗi ngày chỉ hiện một thông báo.
+
+### Bật Web Push trên Vercel
+
+1. Sinh khóa VAPID: `npm run vapid` (in ra *public key* và *private key*).
+2. Đặt `VITE_VAPID_PUBLIC_KEY` (public key) vào `.env` và **Environment Variables** của Vercel.
+3. Thêm các biến **chỉ dùng phía máy chủ** trên Vercel:
+
+   | Biến | Ý nghĩa |
+   | --- | --- |
+   | `FIREBASE_SERVICE_ACCOUNT` | JSON service account (Firebase Console → Project settings → Service accounts), dán trên một dòng |
+   | `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | Cặp khóa ở bước 1 |
+   | `VAPID_SUBJECT` | `mailto:ban@example.com` |
+   | `CRON_SECRET` | Chuỗi bí mật dài, ngẫu nhiên |
+   | `REMINDER_WINDOW_MINUTES` | (tùy chọn) Trễ tối đa vẫn gửi, mặc định 90 |
+
+4. Triển khai lại, rồi **gọi `/api/send-reminders` mỗi ~10 phút**, ví dụ:
+   - **GitHub Actions** (miễn phí): dùng sẵn [`.github/workflows/reminders.yml`](.github/workflows/reminders.yml), chỉ cần thêm secret `REMINDER_URL` (`https://<tên-miền>/api/send-reminders`) và `CRON_SECRET`.
+   - Vercel Cron (gói Pro cho phép chạy thường xuyên hơn 1 lần/ngày) hoặc dịch vụ như cron-job.org, gửi kèm header `Authorization: Bearer <CRON_SECRET>`.
+
+> Gói Hobby của Vercel chỉ cho cron chạy một lần mỗi ngày nên cần bộ hẹn giờ bên ngoài như trên.
+
+Mỗi thiết bị bật nhắc nhở lưu một tài liệu trong collection `reminders` (đăng ký push, giờ, múi giờ, ngôn ngữ). Tài liệu bị xóa khi người dùng tắt nhắc nhở, đăng xuất, hoặc khi dịch vụ push báo đăng ký đã hết hạn.
+
+**Lưu ý nền tảng:** trên iPhone cần iOS 16.4+ và phải *Thêm vào Màn hình chính* trước khi cấp quyền thông báo. Nếu trình duyệt đang chặn thông báo, Cài đặt sẽ hiển thị hướng dẫn mở lại.
 
 ## 🛠️ Scripts
 
@@ -149,6 +204,7 @@ npm run dev
 | `npm run preview` | Chạy thử bản build. |
 | `npm run lint` | Kiểm tra code bằng oxlint. |
 | `npm run i18n:check` | Kiểm tra mọi khóa dịch có đủ ở `vi.js` và `en.js`. |
+| `npm run vapid` | Sinh cặp khóa VAPID cho thông báo đẩy. |
 
 **Thêm / sửa văn bản:** mọi chuỗi hiển thị nằm trong [`src/i18n/vi.js`](src/i18n/vi.js) và [`src/i18n/en.js`](src/i18n/en.js). Dùng `const t = useT()` rồi `t('khóa', { n: 3 })`; trong tiếng Anh, khóa kết thúc `_one` là dạng số ít khi `n === 1`.
 
@@ -167,18 +223,35 @@ Phong cách **modern minimalist**: nền phẳng, viền mảnh thay cho đổ b
 
 **Màu nhấn.** Mặc định là đúng theme. Khi người dùng chọn màu khác, chỉ `primary`, `chart-*` và `sidebar-primary` bị ghi đè theo hue của màu đó, với độ sáng/độ bão hòa lấy từ dải xanh lá của theme để luôn đủ tương phản ở cả chế độ sáng và tối.
 
+**Toast & tooltip.** Dùng biến `--popover`, `--popover-foreground`, `--border` nên luôn khớp giao diện sáng/tối và đổi màu tức thì khi chuyển theme.
+
 **Splash screen PWA.** Màu nền xanh brand ở giao diện sáng và `#0a0a0a` ở giao diện tối — không bao giờ trắng.
 
 - **iOS**: ảnh `apple-touch-startup-image` sáng/tối cho từng kích thước iPhone/iPad, chọn bằng `prefers-color-scheme`.
 - **Android**: Chrome chưa hỗ trợ biến thể tối cho `background_color` của manifest nên dùng một màu cố định (xanh brand); màn hình tải trong trang sau đó hiển thị đúng theme.
 
+## 🧭 Luồng điều hướng
+
+| Đường dẫn | Khách (chưa đăng nhập) | Đã đăng nhập |
+| --- | --- | --- |
+| `/` | **Trang giới thiệu** | **Tổng quan** (vào thẳng, không qua trang giới thiệu) |
+| `/welcome` | Trang giới thiệu | Trang giới thiệu (mở từ Cài đặt → Giới thiệu) |
+| `/login` | Đăng nhập | Chuyển về `/` |
+| `/transactions` `/categories` `/wallets` `/statistics` `/settings` | Chuyển tới `/login` | Trang tương ứng |
+
+Đăng xuất luôn đưa người dùng về trang giới thiệu.
+
 ## 📂 Cấu trúc dự án
 
 ```
 expenser/
+├── api/
+│   └── send-reminders.js     # Vercel Function: gửi Web Push nhắc nhở hàng ngày
+├── .github/workflows/        # Bộ hẹn giờ gọi /api/send-reminders
 ├── public/
-│   ├── landing.html          # Trang giới thiệu (một file HTML, cùng phong cách tối giản)
-│   ├── icons/ · favicon.*    # Icon PWA & favicon
+│   ├── sw-push.js            # Xử lý push / nhấp thông báo trong service worker
+│   ├── notif-banner.png      # Ảnh banner của thông báo
+│   ├── icons/ · favicon.*    # Icon PWA, huy hiệu thông báo, favicon
 │   └── og-image.png · robots.txt · sitemap.xml
 ├── screenshots/              # Ảnh minh họa cho README
 ├── scripts/check-i18n.mjs    # Kiểm tra đồng bộ từ điển vi/en
@@ -188,10 +261,11 @@ expenser/
 │   │   ├── ui/               # Button, Modal, MoneyInput, TextInput, SplashScreen…
 │   │   └── *.jsx             # Form giao dịch / danh mục / ví, bộ lọc, lịch
 │   ├── contexts/             # Auth, Settings (giao diện + ngôn ngữ), Data (Firestore)
-│   ├── hooks/                # useSessionState, useLocalStorage, usePwaInstall…
+│   ├── hooks/                # useReminder, useInView, useSessionState, usePwaInstall…
 │   ├── i18n/                 # vi.js, en.js, hook useT
-│   ├── pages/                # Dashboard, Transactions, Categories, Wallets, Statistics, Settings…
-│   ├── routes/               # ProtectedRoute, PublicRoute, ProtectedShell
+│   ├── pages/                # Landing, Login, Dashboard, Transactions, Categories, Wallets, Statistics, Settings…
+│   ├── routes/               # ProtectedRoute (kèm landing cho khách), PublicRoute, ProtectedShell
+│   ├── services/reminders.js # Đăng ký push, lịch nhắc, nội dung thông báo
 │   ├── theme/                # expenser-theme.css (token) + màu nhấn, splash
 │   ├── utils/                # format, validators, exportImport, pieChart…
 │   ├── firebase.js · firestore.js
@@ -206,6 +280,8 @@ users/{uid}
   ├── transactions/{id}  { type, amount, categoryId, walletId, date, note }
   ├── categories/{id}    { name, type, emoji, color }
   └── wallets/{id}       { name, icon, color, balance }
+
+reminders/{uid}_{hash}   { uid, enabled, time, tz, lang, subscription, lastSentDate, updatedAt }
 ```
 
 ## 📦 Triển khai
@@ -214,11 +290,13 @@ users/{uid}
 npm run build
 ```
 
-Triển khai thư mục `dist/` lên **Vercel** (đã có `vercel.json`: SPA rewrite và cache header), Firebase Hosting hoặc Netlify. Nhớ thêm tên miền triển khai vào **Authorized domains** của Firebase Auth. Trang giới thiệu tĩnh được phục vụ tại `/landing.html`.
+Triển khai thư mục `dist/` cùng thư mục `api/` lên **Vercel** (đã có `vercel.json`: SPA rewrite không chặn `/api`, cache header, chuyển hướng `/landing.html` → `/`). Nhớ thêm tên miền triển khai vào **Authorized domains** của Firebase Auth. Nếu không dùng Vercel, ứng dụng vẫn chạy tĩnh được (Firebase Hosting, Netlify…) nhưng thông báo đẩy khi đóng ứng dụng cần một nơi chạy `api/send-reminders.js`.
+
+SEO & chia sẻ mạng xã hội: thẻ Open Graph / Twitter Card, canonical, JSON-LD (`WebApplication`), `robots.txt` và `sitemap.xml` đã có sẵn cho `https://expenser-quan-ly-chi-tieu.vercel.app/`; ảnh chia sẻ là `public/og-image.png` (1200×630).
 
 ## 🌍 Trình duyệt hỗ trợ
 
-Giao diện dùng `oklch()` và `color-mix()`, yêu cầu trình duyệt hiện đại: **Chrome / Edge 111+**, **Safari 16.4+**, **Firefox 113+**.
+Giao diện dùng `oklch()` và `color-mix()`, yêu cầu trình duyệt hiện đại: **Chrome / Edge 111+**, **Safari 16.4+**, **Firefox 113+**. Thông báo đẩy cần trình duyệt hỗ trợ Push API (Chrome, Edge, Firefox, Safari 16.4+ với PWA đã cài).
 
 ## 📄 Giấy phép
 

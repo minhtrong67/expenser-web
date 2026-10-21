@@ -20,7 +20,7 @@ function emptyForm() {
   return { type: 'expense', amount: '', categoryId: '', walletId: '', datetime: toInputDateTimeLocal(new Date()), note: '' };
 }
 
-export default function TransactionFormModal({ open, onClose, editingTx }) {
+export default function TransactionFormModal({ open, onClose, editingTx, initialType = 'expense' }) {
   const t = useT();
   const { locale } = useI18n();
   const { categories, wallets, getCategory, addTransaction, updateTransaction } = useData();
@@ -42,7 +42,7 @@ export default function TransactionFormModal({ open, onClose, editingTx }) {
         note: editingTx.note || '',
       });
     } else {
-      setForm({ ...emptyForm(), walletId: wallets[0]?.id || '' });
+      setForm({ ...emptyForm(), type: initialType, walletId: wallets[0]?.id || '' });
     }
     setErrors({});
     // Only re-initialise when the dialog opens / the edited item changes.

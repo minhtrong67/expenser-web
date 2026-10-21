@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Icon from '../ui/Icon';
 import IconButton from '../ui/IconButton';
 import { NAV_ITEMS } from './navConfig';
@@ -8,6 +8,7 @@ import { useT } from '../../i18n';
 export default function Sidebar({ open, onClose }) {
   const t = useT();
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function Sidebar({ open, onClose }) {
               <p className="wrap-any text-title-sm text-on-surface">{user?.displayName || t('common.user')}</p>
               <p className="wrap-any text-body-sm text-on-surface-variant">{user?.email}</p>
             </div>
-            <IconButton icon="logout" label={t('common.logout')} variant="danger" onClick={logout} />
+            <IconButton icon="logout" label={t('common.logout')} variant="danger" onClick={() => { navigate('/', { replace: true }); logout(); }} />
           </div>
         </div>
       </aside>

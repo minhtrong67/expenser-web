@@ -1,5 +1,11 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "redirects": [
+    { "source": "/landing.html", "destination": "/", "permanent": true }
+  ],
+  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "functions": {
+    "api/send-reminders.js": { "maxDuration": 30 }
+  },
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -14,7 +20,7 @@
       ]
     },
     {
-      "source": "/(sw\\.js|index\\.html|landing\\.html)",
+      "source": "/(sw\\.js|sw-push\\.js|index\\.html)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     }
   ]

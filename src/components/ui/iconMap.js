@@ -9,6 +9,7 @@ import {
   PiggyBank, Clock, Search, SearchX, Settings, LineChart, LayoutDashboard,
   ClipboardList, TrendingUp, TrendingDown, SlidersHorizontal, FileUp, Eye, EyeOff,
   AlertTriangle, UserCircle, Landmark, ArrowDownAZ, ArrowDownZA,
+  Bell, BellRing, BellOff, ShieldCheck, WifiOff, Zap, Rocket, Heart, Star, ChevronUp, Minus,
   Image, Languages, Globe, Sparkles, Code, ArrowLeft, CircleCheck, ArrowUpDown, ArrowDownUp, Pipette, ExternalLink,
 } from 'lucide-react';
 
@@ -109,6 +110,17 @@ const ICON_MAP = {
   visibility: Eye,
   visibility_off: EyeOff,
   warning: AlertTriangle,
+  notifications: Bell,
+  notifications_active: BellRing,
+  notifications_off: BellOff,
+  shield: ShieldCheck,
+  wifi_off: WifiOff,
+  bolt: Zap,
+  rocket: Rocket,
+  favorite: Heart,
+  star: Star,
+  expand_less: ChevronUp,
+  remove: Minus,
 };
 
 export default ICON_MAP;

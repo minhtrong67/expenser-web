@@ -30,18 +30,22 @@ export default function Login() {
   return (
     <AuthLayout>
       <AuthCard>
-        <h1 className="text-headline-sm text-on-surface">{t('auth.welcomeBack')}</h1>
-        <p className="mt-2 text-body-lg text-on-surface-variant">{t('auth.loginSub')}</p>
+        <img src="/icons/icon-192.png" alt="" width="48" height="48" className="mb-6 h-12 w-12 rounded-xl" />
+        <p className="text-label-lg font-semibold text-brand">{t('auth.kicker')}</p>
+        <h1 className="mt-1 text-headline-sm font-bold tracking-tight text-on-surface">{t('auth.title2')}</h1>
+        <p className="mt-2 text-body-lg text-on-surface-variant">{t('auth.sub2')}</p>
 
-        <Button type="button" variant="outlined" size="lg" className="mt-7 w-full !text-on-surface" loading={googleLoading} onClick={handleGoogle}>
+        <Button type="button" variant="outlined" size="lg" className="mt-8 w-full !text-on-surface" loading={googleLoading} onClick={handleGoogle}>
           <GoogleIcon />
           {t('auth.google')}
         </Button>
 
-        <div className="mt-6 flex items-center justify-center gap-2 text-body-sm text-on-surface-variant">
-          <Icon name="lock" size={14} />
+        <div className="mt-5 flex items-center justify-center gap-2 rounded-lg bg-surface-container px-3 py-2 text-body-sm text-on-surface-variant">
+          <Icon name="shield" size={14} className="text-brand" />
           <span>{t('auth.secure')}</span>
         </div>
+
+        <p className="mt-6 text-center text-body-sm text-on-surface-variant">{t('auth.terms')}</p>
       </AuthCard>
     </AuthLayout>
   );

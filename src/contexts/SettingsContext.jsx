@@ -10,6 +10,7 @@ import {
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { I18nContext, LANGUAGES, createT, detectLanguage } from '../i18n';
 import { setFormatLocale } from '../utils/format';
+import { DEFAULT_REMINDER, normalizeTime } from '../services/reminders';
 import {
   DEFAULT_ACCENT,
   FALLBACK_COLORS,
@@ -36,6 +37,7 @@ const DEFAULT_SETTINGS = {
   themeMode: 'system', // light | dark | system
   fontSize: 'md', // sm | md | lg
   language: detectLanguage(), // vi | en
+  reminder: DEFAULT_REMINDER, // daily notification: { enabled, time: 'HH:MM' } - per device
   accentColor: DEFAULT_ACCENT, // '' = the supplied theme (expenser-theme.css); or any #RRGGBB accent
 };
 
@@ -52,6 +54,7 @@ export function SettingsProvider({ children }) {
     const { seedColor: legacySeed, ...merged } = { ...DEFAULT_SETTINGS, ...stored }; // seedColor = removed Material 3 setting
     if (!LANGUAGES.some((l) => l.id === merged.language)) merged.language = DEFAULT_SETTINGS.language;
     if (merged.accentColor && !isValidHex(merged.accentColor)) merged.accentColor = DEFAULT_ACCENT;
+    merged.reminder = { enabled: !!merged.reminder?.enabled, time: normalizeTime(merged.reminder?.time) };
     if (merged.fontSize === 'xl') merged.fontSize = 'lg'; // removed size
     if (!FONT_SCALES[merged.fontSize]) merged.fontSize = 'md';
     return merged;

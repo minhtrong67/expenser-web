@@ -1,5 +1,5 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import MobileNav from './MobileNav';
 import Topbar from './Topbar';
@@ -10,10 +10,12 @@ import RouteFallback from '../ui/RouteFallback';
 import { NAV_ITEMS } from './navConfig';
 import { useT } from '../../i18n';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { useReminderRuntime } from '../../hooks/useReminder';
 
 export default function AppLayout() {
   const t = useT();
   const location = useLocation();
+  const navigate = useNavigate();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [txModalOpen, setTxModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -46,7 +48,21 @@ export default function AppLayout() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
 
-  const openAddTx = useCallback(() => setTxModalOpen(true), []);
+  const [txInitialType, setTxInitialType] = useState('expense');
+  const openAddTx = useCallback((type) => {
+    setTxInitialType(type === 'income' ? 'income' : 'expense');
+    setTxModalOpen(true);
+  }, []);
+
+  // Deep link from the daily reminder notification: /?add=expense | /?add=income
+  useEffect(() => {
+    const add = new URLSearchParams(location.search).get('add');
+    if (!add) return;
+    openAddTx(add);
+    navigate({ pathname: location.pathname, search: '' }, { replace: true });
+  }, [location.search, location.pathname, navigate, openAddTx]);
+
+  useReminderRuntime();
 
   const current = NAV_ITEMS.find((n) => (n.end ? location.pathname === n.to : location.pathname.startsWith(n.to)));
   const title = current ? t(current.labelKey) : 'Expenser';
@@ -72,7 +88,7 @@ export default function AppLayout() {
       <MobileNav />
       <FabStack onSlot={setFabSlot} />
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} onAddTransaction={openAddTx} />
-      <TransactionFormModal open={txModalOpen} onClose={() => setTxModalOpen(false)} />
+      <TransactionFormModal open={txModalOpen} initialType={txInitialType} onClose={() => setTxModalOpen(false)} />
     </div>
   );
 }

@@ -8,13 +8,15 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "i18n:check": "node scripts/check-i18n.mjs"
+    "i18n:check": "node scripts/check-i18n.mjs",
+    "vapid": "web-push generate-vapid-keys"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.11",
     "esbuild": "^0.28.2",
     "exceljs": "^4.4.0",
     "firebase": "^12.18.0",
+    "firebase-admin": "^14.5.0",
     "html2canvas": "^1.4.1",
     "jsdom": "^30.1.3",
     "jspdf": "^4.2.1",
@@ -25,7 +27,8 @@
     "react-dom": "^19.2.8",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.18.3",
-    "recharts": "^3.10.1"
+    "recharts": "^3.10.1",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",
