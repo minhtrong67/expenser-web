@@ -11,7 +11,7 @@ function mergeRefs(...refs) {
   };
 }
 
-/** Filled textarea that grows with its content. */
+/** Outlined textarea that grows with its content. */
 const Textarea = forwardRef(function Textarea(
   { label, error, hint, icon, value, onChange, className = '', id, ...rest },
   ref,

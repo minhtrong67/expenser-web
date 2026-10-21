@@ -21,9 +21,9 @@ export default function ScrollToTop() {
     <IconButton
       icon="arrow_upward"
       label={t('common.scrollTop')}
-      variant="tonal"
+      variant="outlined"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-[calc(10.5rem+env(safe-area-inset-bottom))] right-5 z-30 animate-scale-in shadow-elev-2 lg:bottom-8 lg:right-8"
+      className="fixed bg-card bottom-[calc(10.5rem+env(safe-area-inset-bottom))] right-5 z-30 animate-scale-in shadow-elev-2 lg:bottom-8 lg:right-8"
     />
   );
 }

@@ -18,7 +18,7 @@ export default function TransactionFilters({ filters, setFilters, categories, wa
   const sortedWallets = useMemo(() => [...wallets].sort((a, b) => a.name.localeCompare(b.name, locale)), [wallets, locale]);
 
   return (
-    <section className="overflow-hidden rounded-2xl bg-surface-container-low">
+    <section className="overflow-hidden rounded-2xl border border-line bg-card">
       <div className="flex items-center gap-1 pr-2">
         <button
           type="button"

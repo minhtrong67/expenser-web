@@ -8,14 +8,14 @@ const VARIANTS = {
   danger: 'text-error',
 };
 
-/** Round 40px icon button. `label` becomes the accessible name + tooltip. */
+/** Square-ish 40px icon button. `label` becomes the accessible name + tooltip. */
 export default function IconButton({ icon, label, variant = 'standard', size = 20, className = '', ...rest }) {
   return (
     <button
       type="button"
       aria-label={label}
       title={label}
-      className={`state-layer ripple inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-40 ${VARIANTS[variant]} ${className}`}
+      className={`state-layer inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors duration-200 disabled:opacity-40 ${VARIANTS[variant]} ${className}`}
       {...rest}
     >
       <Icon name={icon} size={size} />

@@ -9,30 +9,28 @@ export default function MobileNav() {
     <>
       <nav
         aria-label={t('nav.menu')}
-        className="fixed inset-x-0 bottom-0 z-30 bg-surface-container pb-[env(safe-area-inset-bottom)] shadow-elev-2 lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
       >
-        <div className="mx-auto flex h-20 max-w-xl items-stretch justify-around px-2">
+        <div className="mx-auto flex h-16 max-w-xl items-stretch justify-around px-2">
           {MOBILE_NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `group flex flex-1 flex-col items-center justify-center gap-1 pt-3 text-label-md transition-colors ${
-                  isActive ? 'text-on-surface' : 'text-on-surface-variant'
+                `group flex flex-1 flex-col items-center justify-center gap-1 text-label-md transition-colors ${
+                  isActive ? 'text-brand' : 'text-on-surface-variant'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   <span
-                    className={`flex h-8 w-16 items-center justify-center rounded-full transition-all duration-300 ease-emphasized group-active:scale-95 ${
-                      isActive ? 'bg-secondary-container text-on-secondary-container' : ''
-                    }`}
+                    className={`flex h-7 w-12 items-center justify-center transition-transform duration-200 ease-emphasized group-active:scale-95`}
                   >
                     <Icon name={item.icon} size={24} fill={isActive && false} />
                   </span>
-                  <span className={isActive ? 'font-bold' : ''}>{t(item.labelKey)}</span>
+                  <span className={isActive ? 'font-semibold' : ''}>{t(item.labelKey)}</span>
                 </>
               )}
             </NavLink>

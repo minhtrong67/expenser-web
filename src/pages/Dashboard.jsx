@@ -26,9 +26,9 @@ function ChangeBadge({ current, previous }) {
 
 function SummaryCard({ icon, label, value, tone, badge, valueClass = '' }) {
   return (
-    <div className={`rounded-2xl p-4 transition-shadow duration-200 hover:shadow-elev-1 sm:p-5 ${tone}`}>
+    <div className={`rounded-xl border border-line p-4 sm:p-5 ${tone}`}>
       <div className="mb-3 flex items-center justify-between gap-2">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-surface/50">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface/60">
           <Icon name={icon} size={20} />
         </span>
         {badge}
@@ -41,7 +41,7 @@ function SummaryCard({ icon, label, value, tone, badge, valueClass = '' }) {
 
 function Card({ title, action, children, className = '' }) {
   return (
-    <section className={`rounded-2xl bg-surface-container-low p-5 ${className}`}>
+    <section className={`rounded-2xl border border-line bg-card p-5 ${className}`}>
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-title-md text-on-surface">{title}</h3>
         {action}
@@ -194,10 +194,10 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        <section className="overflow-hidden rounded-2xl bg-surface-container-low lg:col-span-2">
+        <section className="overflow-hidden rounded-2xl border border-line bg-card lg:col-span-2">
           <div className="flex items-center justify-between px-5 pb-2 pt-5">
             <h3 className="text-title-md text-on-surface">{t('dashboard.recent')}</h3>
-            <Link to="/transactions" className="state-layer rounded-full px-3 py-1.5 text-label-lg text-primary">
+            <Link to="/transactions" className="state-layer rounded-lg px-3 py-1.5 text-label-lg text-brand">
               {t('dashboard.viewAll')}
             </Link>
           </div>

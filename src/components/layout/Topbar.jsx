@@ -11,7 +11,7 @@ export default function Topbar({ title, scrolled, onSearchClick, onMenuClick }) 
   return (
     <header
       className={`sticky top-0 z-20 box-content flex h-14 items-center gap-1 px-2 transition-colors duration-300 sm:h-16 sm:gap-2 sm:px-4 lg:px-6 ${
-        scrolled ? 'bg-surface-container shadow-elev-1' : 'bg-surface'
+        scrolled ? 'border-b border-line bg-background/85 backdrop-blur-md' : 'border-b border-transparent bg-background'
       }`}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
@@ -20,7 +20,7 @@ export default function Topbar({ title, scrolled, onSearchClick, onMenuClick }) 
 
       <button
         onClick={onSearchClick}
-        className="state-layer hidden h-10 items-center gap-2 rounded-full bg-surface-container-high px-4 text-body-md text-on-surface-variant sm:flex"
+        className="state-layer hidden h-9 items-center gap-2 rounded-lg border border-line bg-card px-3 text-body-md text-on-surface-variant sm:flex"
       >
         <Icon name="search" size={18} />
         <span>{t('common.search')}</span>
@@ -31,7 +31,7 @@ export default function Topbar({ title, scrolled, onSearchClick, onMenuClick }) 
         onClick={toggleLanguage}
         aria-label={t('topbar.switchLanguage')}
         title={t('topbar.switchLanguage')}
-        className="state-layer ripple flex h-10 min-w-10 items-center justify-center gap-1 rounded-full px-2 text-label-lg text-on-surface-variant"
+        className="state-layer flex h-10 min-w-10 items-center justify-center gap-1 rounded-lg px-2 text-label-lg text-on-surface-variant"
       >
         <Icon name="translate" size={18} />
         {lang.toUpperCase()}

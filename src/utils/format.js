@@ -140,3 +140,18 @@ export function formatCompactMoney(n) {
   if (abs >= 1000) return `${Math.round(num / 1000)}${unit.k}`;
   return String(num);
 }
+
+/**
+ * Quick-pick amounts for a short typed number. Typing "2" offers
+ * 2.000 / 20.000 / 200.000 / 2.000.000 (the number x 10^3 ... 10^6), so a
+ * VND amount can be entered with a tap instead of typing every zero.
+ * Only offered while the number is still short (< 1.000) - once the user has
+ * typed a real amount there is nothing left to guess.
+ */
+export function getAmountSuggestions(value, max = Number.MAX_SAFE_INTEGER) {
+  const n = Math.floor(Number(value) || 0);
+  if (n <= 0 || n >= 1000) return [];
+  return [1_000, 10_000, 100_000, 1_000_000]
+    .map((mult) => n * mult)
+    .filter((amount) => amount <= max);
+}

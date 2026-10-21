@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import Icon from './Icon';
 
-/** Native <select> styled as an M3 filled field (best picker UX on mobile). */
+/** Native <select> styled as an outlined field (best picker UX on mobile). */
 export default function SelectField({ label, value, onChange, children, className = '' }) {
   const id = useId();
   return (

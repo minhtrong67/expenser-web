@@ -1,7 +1,7 @@
 // English dictionary. Placeholders use {name}; keys ending in `_one` are the singular form when {n} === 1.
 export default {
   'meta.title': 'Expenser — Personal expense tracker',
-  'meta.description': 'Expenser: a free, open-source personal expense tracker. Multiple wallets, clear statistics, PDF/Excel reports, Material Design 3 interface, Vietnamese & English.',
+  'meta.description': 'Expenser: a free, open-source personal expense tracker. Multiple wallets, clear statistics, PDF/Excel reports, clean minimalist interface, Vietnamese & English.',
 
   // Common
   'common.add': 'Add',
@@ -51,6 +51,8 @@ export default {
   'tx.transfer': 'Transfer',
   'tx.type': 'Transaction type',
   'tx.amount': 'Amount',
+  'money.suggestions': 'Amount suggestions',
+  'money.pick': 'Use {amount}',
   'tx.category': 'Category',
   'tx.wallet': 'Wallet',
   'tx.datetime': 'Date & time',
@@ -240,12 +242,12 @@ export default {
   'settings.mode.light': 'Light',
   'settings.mode.dark': 'Dark',
   'settings.mode.system': 'System',
-  'settings.color': 'Theme colour',
-  'settings.colorHint': 'A full Material 3 palette is generated from the colour you pick',
-  'settings.colorReset': 'Default colour',
+  'settings.color': 'Accent colour',
+  'settings.colorHint': 'Only changes the accent (buttons, links, charts); backgrounds and text stay minimalist',
+  'settings.colorReset': 'Default',
   'settings.colors.blue': 'Blue',
   'settings.colors.teal': 'Teal',
-  'settings.colors.green': 'Green',
+  'settings.colors.green': 'Green (default)',
   'settings.colors.amber': 'Amber',
   'settings.colors.orange': 'Orange',
   'settings.colors.rose': 'Rose',

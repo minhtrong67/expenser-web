@@ -62,8 +62,8 @@ export default function CommandPalette({ open, onClose, onAddTransaction }) {
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-20 sm:pt-28">
-      <div className="absolute inset-0 animate-fade-in bg-scrim/32" onClick={onClose} aria-hidden="true" />
-      <div role="dialog" aria-modal="true" aria-label={t('common.search')} className="relative z-10 w-full max-w-lg animate-scale-in overflow-hidden rounded-4xl bg-surface-container-high shadow-elev-3">
+      <div className="absolute inset-0 animate-fade-in bg-scrim/30" onClick={onClose} aria-hidden="true" />
+      <div role="dialog" aria-modal="true" aria-label={t('common.search')} className="relative z-10 w-full max-w-lg animate-scale-in overflow-hidden rounded-2xl border border-line bg-popover shadow-elev-3">
         <div className="flex items-center gap-3 px-5 py-3">
           <Icon name="search" className="text-on-surface-variant" />
           <input
@@ -88,7 +88,7 @@ export default function CommandPalette({ open, onClose, onAddTransaction }) {
                 onClose();
               }}
               onMouseEnter={() => setActiveIndex(i)}
-              className={`flex h-12 w-full items-center gap-3 rounded-full px-4 text-left text-body-lg transition-colors ${
+              className={`flex h-11 w-full items-center gap-3 rounded-lg px-3 text-left text-body-lg transition-colors ${
                 i === activeIndex ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface'
               }`}
             >

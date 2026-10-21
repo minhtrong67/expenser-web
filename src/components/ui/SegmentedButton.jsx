@@ -1,7 +1,8 @@
 import Icon from './Icon';
 
 /**
- * Material 3 segmented button. options: [{ id, label, icon?, activeClass? }]
+ * Segmented control: a muted track with a raised active segment.
+ * options: [{ id, label, icon?, activeClass? }]
  * `activeClass` lets a segment use semantic colours (e.g. income / expense).
  */
 export default function SegmentedButton({ options, value, onChange, className = '', ariaLabel }) {
@@ -9,9 +10,9 @@ export default function SegmentedButton({ options, value, onChange, className = 
     <div
       role="radiogroup"
       aria-label={ariaLabel}
-      className={`flex h-10 w-full overflow-hidden rounded-full border border-outline ${className}`}
+      className={`flex w-full gap-1 rounded-lg bg-surface-container p-1 ${className}`}
     >
-      {options.map((o, i) => {
+      {options.map((o) => {
         const active = o.id === value;
         return (
           <button
@@ -20,11 +21,11 @@ export default function SegmentedButton({ options, value, onChange, className = 
             role="radio"
             aria-checked={active}
             onClick={() => onChange(o.id)}
-            className={`state-layer ripple flex flex-1 items-center justify-center gap-1.5 px-3 text-label-lg transition-colors duration-200 ${
-              i > 0 ? 'border-l border-outline' : ''
-            } ${active ? o.activeClass || 'bg-secondary-container text-on-secondary-container' : 'text-on-surface'}`}
+            className={`state-layer flex min-h-8 flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1 text-label-lg transition-colors duration-200 ${
+              active ? o.activeClass || 'bg-background text-on-surface shadow-elev-1' : 'text-on-surface-variant'
+            }`}
           >
-            {active ? <Icon name="check" size={16} /> : o.icon ? <Icon name={o.icon} size={16} /> : null}
+            {o.icon && <Icon name={o.icon} size={16} />}
             <span className="wrap-any">{o.label}</span>
           </button>
         );

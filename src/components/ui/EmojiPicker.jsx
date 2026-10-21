@@ -30,7 +30,7 @@ export default function EmojiPicker({ value, onChange }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3 rounded-2xl bg-surface-container-highest p-3">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-surface-container-lowest">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-line bg-cardest">
           <Emoji size={26}>{current}</Emoji>
         </span>
         <input
@@ -38,7 +38,7 @@ export default function EmojiPicker({ value, onChange }) {
           value={customInput}
           onChange={handleCustomInputChange}
           placeholder={t('emoji.placeholder')}
-          className="min-w-0 flex-1 rounded-full border border-outline bg-transparent px-4 py-2.5 text-body-md text-on-surface outline-none placeholder:text-on-surface-variant focus:border-primary"
+          className="min-w-0 flex-1 rounded-lg border border-outline bg-transparent px-3 py-2.5 text-body-md text-on-surface outline-none placeholder:text-on-surface-variant focus:border-brand"
         />
       </div>
       <p className="-mt-1 text-body-sm text-on-surface-variant">{t('emoji.tip')}</p>
@@ -77,7 +77,7 @@ function EmojiButton({ emoji, active, onClick }) {
       onClick={onClick}
       aria-pressed={active}
       className={`state-layer flex h-10 w-10 items-center justify-center rounded-xl text-lg transition-colors ${
-        active ? 'bg-secondary-container ring-2 ring-primary' : ''
+        active ? 'bg-secondary-container ring-2 ring-brand' : ''
       }`}
     >
       <Emoji size={20}>{emoji}</Emoji>

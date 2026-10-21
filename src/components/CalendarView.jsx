@@ -55,11 +55,11 @@ export default function CalendarView() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between rounded-2xl bg-surface-container-low p-2">
+      <div className="flex items-center justify-between rounded-2xl border border-line bg-card p-2">
         <IconButton icon="chevron_left" label={t('stats.prev')} onClick={() => changeMonth(-1)} />
-        <button onClick={() => setCursorTs(Date.now())} className="state-layer flex flex-col items-center rounded-full px-4 py-1">
+        <button onClick={() => setCursorTs(Date.now())} className="state-layer flex flex-col items-center rounded-lg px-4 py-1">
           <span className="text-title-md text-on-surface">{formatMonthYear(cursor)}</span>
-          {!isCurrentMonth && <span className="text-label-sm text-primary">{t('calendar.today')}</span>}
+          {!isCurrentMonth && <span className="text-label-sm text-brand">{t('calendar.today')}</span>}
         </button>
         <IconButton icon="chevron_right" label={t('stats.next')} onClick={() => changeMonth(1)} />
       </div>
@@ -81,7 +81,7 @@ export default function CalendarView() {
         </div>
       </div>
 
-      <div className="rounded-2xl bg-surface-container-low p-3 sm:p-5">
+      <div className="rounded-2xl border border-line bg-card p-3 sm:p-5">
         <div className="mb-2 grid grid-cols-7 gap-1 text-center text-label-md text-on-surface-variant">
           {weekdays.map((w) => (
             <div key={w}>{w}</div>
@@ -100,10 +100,10 @@ export default function CalendarView() {
                 disabled={!data}
                 aria-label={`${day}`}
                 className={`state-layer flex aspect-square flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-center transition-colors disabled:cursor-default ${tone} ${
-                  isToday ? 'ring-2 ring-primary' : ''
+                  isToday ? 'ring-2 ring-brand' : ''
                 }`}
               >
-                <span className={`text-label-md ${isToday ? 'font-bold text-primary' : data ? '' : 'text-on-surface-variant'}`}>{day}</span>
+                <span className={`text-label-md ${isToday ? 'font-bold text-brand' : data ? '' : 'text-on-surface-variant'}`}>{day}</span>
                 {data?.income > 0 && <span className="text-[9px] font-bold leading-none sm:text-[10px]">+{formatCompactMoney(data.income)}</span>}
                 {data?.expense > 0 && <span className="text-[9px] font-bold leading-none sm:text-[10px]">-{formatCompactMoney(data.expense)}</span>}
               </button>

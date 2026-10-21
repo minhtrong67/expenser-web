@@ -53,7 +53,7 @@ function shiftAnchor(range, anchorTs, delta) {
 
 function ChartCard({ title, subtitle, children }) {
   return (
-    <section className="animate-fade-in rounded-2xl bg-surface-container-low p-5">
+    <section className="animate-fade-in rounded-2xl border border-line bg-card p-5">
       <div className="mb-4">
         <h3 className="text-title-md text-on-surface">{title}</h3>
         {subtitle && <p className="mt-0.5 wrap-any text-body-sm text-on-surface-variant">{subtitle}</p>}
@@ -169,11 +169,11 @@ export default function StatisticsPage() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {hasNav && (
-            <div className="flex flex-1 items-center justify-between rounded-full bg-surface-container-low p-1.5">
+            <div className="flex flex-1 items-center justify-between rounded-xl bg-surface-container p-1">
               <IconButton icon="chevron_left" label={t('stats.prev')} variant="tonal" onClick={() => shift(-1)} />
-              <button onClick={() => setAnchorTs(Date.now())} disabled={isCurrent} className="state-layer flex min-w-0 flex-col items-center rounded-full px-4 py-1 disabled:pointer-events-none">
+              <button onClick={() => setAnchorTs(Date.now())} disabled={isCurrent} className="state-layer flex min-w-0 flex-col items-center rounded-lg px-4 py-1 disabled:pointer-events-none">
                 <span className="wrap-any text-title-sm font-bold text-on-surface">{periodLabel}</span>
-                {!isCurrent && <span className="text-label-sm text-primary">{t('stats.backToCurrent')}</span>}
+                {!isCurrent && <span className="text-label-sm text-brand">{t('stats.backToCurrent')}</span>}
               </button>
               <IconButton icon="chevron_right" label={t('stats.next')} variant="tonal" onClick={() => shift(1)} disabled={!canGoNext} />
             </div>
@@ -192,9 +192,7 @@ export default function StatisticsPage() {
         </div>
       </div>
 
-      <section className="relative overflow-hidden rounded-3xl bg-primary-container p-5 text-on-primary-container sm:p-6">
-        <div className="absolute -right-8 -top-10 h-36 w-36 rounded-full bg-primary/10" />
-        <div className="absolute -bottom-12 -left-8 h-36 w-36 rounded-full bg-primary/10" />
+      <section className="relative overflow-hidden rounded-2xl border border-brand/20 bg-primary-container p-5 text-on-primary-container sm:p-6">
         <div className="relative grid grid-cols-3 gap-3 sm:gap-6">
           <div className="min-w-0">
             <p className="flex items-center gap-1 text-label-md opacity-80">
@@ -222,7 +220,7 @@ export default function StatisticsPage() {
       </section>
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl bg-surface-container-low">
+        <div className="rounded-2xl border border-line bg-card">
           <EmptyState icon="bar_chart" text={t('stats.noData')} />
         </div>
       ) : (

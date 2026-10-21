@@ -140,7 +140,7 @@ export default function TransactionFormModal({ open, onClose, editingTx }) {
                     key={`${r.categoryId}-${r.amount}-${r.note}-${idx}`}
                     type="button"
                     onClick={() => applyRecent(r)}
-                    className="state-layer ripple flex h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-outline px-3 text-label-md text-on-surface-variant"
+                    className="state-layer flex h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-outline px-3 text-label-md text-on-surface-variant"
                   >
                     <Emoji size={15}>{getCategoryEmoji(cat)}</Emoji>
                     <span>{cat?.name || t('common.other')}</span>

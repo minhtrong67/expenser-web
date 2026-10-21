@@ -17,9 +17,9 @@ export default function Fab({ label, onClick, icon = 'add' }) {
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="state-layer ripple flex h-14 animate-scale-in items-center justify-center gap-3 rounded-2xl bg-primary px-4 text-on-primary shadow-elev-3 transition-[transform,box-shadow] duration-200 ease-emphasized hover:shadow-elev-2 active:scale-95 lg:px-5"
+      className="state-layer flex h-12 min-w-12 animate-scale-in items-center justify-center gap-2 rounded-xl bg-primary px-3 text-on-primary shadow-elev-2 transition-transform duration-200 ease-emphasized active:scale-95 lg:px-4"
     >
-      <Icon name={icon} size={24} />
+      <Icon name={icon} size={22} />
       <span className="hidden text-label-lg lg:inline">{label}</span>
     </button>,
     slot,

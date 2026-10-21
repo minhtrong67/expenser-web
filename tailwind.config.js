@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 
-// Every Material Design 3 colour role is exposed as a CSS variable holding an
-// "r g b" triplet (set from src/theme), so Tailwind can apply opacity
-// modifiers (e.g. `bg-on-surface/12`) and the whole palette can be swapped at
-// runtime without rebuilding any CSS.
-const role = (name) => `rgb(var(--md-${name}) / <alpha-value>)`;
+// Colour roles (bg-surface, text-on-surface-variant, bg-primary-container ...)
+// are defined in src/index.css from the tokens in src/theme/expenser-theme.css.
+// They are full CSS colours (oklch / color-mix), so opacity modifiers such as
+// `bg-on-surface/12` are applied with color-mix instead of the rgb() alpha slot.
+const role = (name) => `color-mix(in oklab, var(--md-${name}) calc(<alpha-value> * 100%), transparent)`;
 
 const ROLES = [
   'primary', 'on-primary', 'primary-container', 'on-primary-container',
@@ -23,6 +23,16 @@ const ROLES = [
   'expense', 'on-expense', 'expense-container', 'on-expense-container',
 ];
 
+// Raw tokens from expenser-theme.css, for the minimalist surfaces:
+//   card / popover = panels, line = hairline borders, brand = readable accent (text, icons, focus).
+const token = (name) => `color-mix(in oklab, var(--${name}) calc(<alpha-value> * 100%), transparent)`;
+const EXTRA_COLORS = {
+  card: token('card'),
+  popover: token('popover'),
+  line: token('border'),
+  brand: token('brand'),
+};
+
 export default {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,jsx}'],
@@ -31,28 +41,39 @@ export default {
       fontFamily: {
         sans: ['system-ui', '-apple-system', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif'],
       },
-      colors: Object.fromEntries(ROLES.map((r) => [r, role(r)])),
-      // Material 3 type scale
+      colors: { ...Object.fromEntries(ROLES.map((r) => [r, role(r)])), ...EXTRA_COLORS },
+      // Type scale
       fontSize: {
         'display-sm': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '0' }],
         'headline-lg': ['2rem', { lineHeight: '2.5rem', letterSpacing: '0' }],
         'headline-md': ['1.75rem', { lineHeight: '2.25rem', letterSpacing: '0' }],
         'headline-sm': ['1.5rem', { lineHeight: '2rem', letterSpacing: '0' }],
         'title-lg': ['1.375rem', { lineHeight: '1.75rem', letterSpacing: '0' }],
-        'title-md': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.009em', fontWeight: '500' }],
-        'title-sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.006em', fontWeight: '500' }],
-        'label-lg': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.006em', fontWeight: '500' }],
-        'label-md': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.031em', fontWeight: '500' }],
-        'label-sm': ['0.6875rem', { lineHeight: '1rem', letterSpacing: '0.045em', fontWeight: '500' }],
-        'body-lg': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.031em' }],
-        'body-md': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.016em' }],
-        'body-sm': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.033em' }],
+        'title-md': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0', fontWeight: '500' }],
+        'title-sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0', fontWeight: '500' }],
+        'label-lg': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0', fontWeight: '500' }],
+        'label-md': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0', fontWeight: '500' }],
+        'label-sm': ['0.6875rem', { lineHeight: '1rem', letterSpacing: '0', fontWeight: '500' }],
+        'body-lg': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0' }],
+        'body-md': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0' }],
+        'body-sm': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0' }],
       },
-      borderRadius: { '4xl': '1.75rem' },
+      // Radii follow --radius (0.625rem) from the theme: calmer corners than Material's pills.
+      borderRadius: {
+        sm: 'calc(var(--radius) - 6px)',
+        DEFAULT: 'calc(var(--radius) - 4px)',
+        md: 'calc(var(--radius) - 4px)',
+        lg: 'calc(var(--radius) - 2px)',
+        xl: 'var(--radius)',
+        '2xl': 'calc(var(--radius) + 2px)',
+        '3xl': 'calc(var(--radius) + 4px)',
+        '4xl': 'calc(var(--radius) + 6px)',
+      },
+      // Minimalist: depth comes from hairline borders; shadows are only for floating layers.
       boxShadow: {
-        'elev-1': '0 1px 2px rgb(var(--md-shadow) / 0.3), 0 1px 3px 1px rgb(var(--md-shadow) / 0.15)',
-        'elev-2': '0 1px 2px rgb(var(--md-shadow) / 0.3), 0 2px 6px 2px rgb(var(--md-shadow) / 0.15)',
-        'elev-3': '0 1px 3px rgb(var(--md-shadow) / 0.3), 0 4px 8px 3px rgb(var(--md-shadow) / 0.15)',
+        'elev-1': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        'elev-2': '0 4px 12px -2px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.06)',
+        'elev-3': '0 16px 40px -8px rgb(0 0 0 / 0.22), 0 4px 10px -4px rgb(0 0 0 / 0.10)',
       },
       transitionTimingFunction: {
         emphasized: 'cubic-bezier(0.2, 0, 0, 1)',
@@ -88,10 +109,6 @@ export default {
         shimmer: {
           '0%': { backgroundPosition: '-400px 0' },
           '100%': { backgroundPosition: '400px 0' },
-        },
-        ripple: {
-          '0%': { transform: 'scale(0)', opacity: 'var(--ripple-alpha, 0.16)' },
-          '100%': { transform: 'scale(1)', opacity: 0 },
         },
       },
       animation: {

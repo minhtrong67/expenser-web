@@ -42,7 +42,7 @@ export default function RecurringPage() {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">Giao dịch sẽ tự động được tạo khi đến kỳ hạn mỗi khi bạn mở ứng dụng.</p>
+        <p className="text-sm text-on-surface-variant">Giao dịch sẽ tự động được tạo khi đến kỳ hạn mỗi khi bạn mở ứng dụng.</p>
         <Button size="sm" icon="add" onClick={() => { setEditing(null); setFormOpen(true); }}>Thêm định kỳ</Button>
       </div>
 

@@ -11,20 +11,20 @@ export default function Sidebar({ open, onClose }) {
 
   return (
     <>
-      {open && <div className="fixed inset-0 z-30 animate-fade-in bg-scrim/32 lg:hidden" onClick={onClose} aria-hidden="true" />}
+      {open && <div className="fixed inset-0 z-30 animate-fade-in bg-scrim/30 lg:hidden" onClick={onClose} aria-hidden="true" />}
       <aside
         aria-label={t('nav.menu')}
-        className={`fixed inset-y-0 left-0 z-40 flex w-[19rem] max-w-[85vw] flex-col rounded-r-3xl bg-surface-container-low transition-transform duration-300 ease-emphasized lg:rounded-none ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-[19rem] max-w-[85vw] flex-col rounded-r-2xl border-r border-line bg-card transition-transform duration-300 ease-emphasized lg:rounded-none ${
           open ? 'translate-x-0 shadow-elev-3 lg:shadow-none' : '-translate-x-full'
         }`}
       >
         {/* App name only - no logo, per the brand brief */}
         <div className="flex items-center justify-between px-7 pb-3 pt-6">
-          <p className="text-title-lg font-bold tracking-tight text-primary">Expenser</p>
+          <p className="text-title-lg font-semibold tracking-tight text-on-surface">Expenser</p>
           <IconButton icon="close" label={t('common.close')} onClick={onClose} className="-mr-3 lg:hidden" />
         </div>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-3">
+        <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 pb-3">
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
@@ -32,12 +32,12 @@ export default function Sidebar({ open, onClose }) {
               end={item.end}
               onClick={() => window.innerWidth < 1024 && onClose?.()}
               className={({ isActive }) =>
-                `state-layer flex h-14 items-center gap-3 rounded-full px-4 text-label-lg transition-colors duration-200 ${
-                  isActive ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant'
+                `state-layer flex h-10 items-center gap-3 rounded-lg px-3 text-label-lg transition-colors duration-200 ${
+                  isActive ? 'bg-secondary-container text-on-surface' : 'text-on-surface-variant'
                 }`
               }
             >
-              <Icon name={item.icon} size={22} />
+              <Icon name={item.icon} size={20} />
               {t(item.labelKey)}
             </NavLink>
           ))}

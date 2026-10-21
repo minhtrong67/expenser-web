@@ -138,7 +138,7 @@ function ProgressBar({ value, max }) {
   const near = !over && pct >= 80;
   const color = over ? 'bg-rose-500' : near ? 'bg-amber-500' : 'bg-accent-500';
   return (
-    <div className="h-2.5 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+    <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
       <div className={`h-full rounded-full transition-all ${color}`} style={{ width: `${pct}%` }} />
     </div>
   );

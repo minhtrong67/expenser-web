@@ -22,9 +22,9 @@ const StatisticsPage = lazy(() => import('./pages/Statistics'));
 const SettingsPage = lazy(() => import('./pages/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Material 3 snackbar styling, following the active (custom) colour scheme.
+// Toast styling: inverted surface, following the active theme.
 function ThemedToaster() {
-  const { colors } = useSettings();
+  const { colors, isDark } = useSettings();
   return (
     <Toaster
       position="top-center"
@@ -33,12 +33,12 @@ function ThemedToaster() {
         style: {
           background: colors.inverseSurface,
           color: colors.inverseOnSurface,
-          borderRadius: '12px',
+          borderRadius: '10px',
           fontSize: '14px',
-          boxShadow: '0 4px 12px rgba(0,0,0,.25)',
+          boxShadow: '0 8px 24px -6px rgba(0,0,0,.28)',
         },
-        success: { iconTheme: { primary: '#71DC92', secondary: colors.inverseSurface } },
-        error: { iconTheme: { primary: '#FFB3AE', secondary: colors.inverseSurface } },
+        success: { iconTheme: { primary: isDark ? '#008236' : '#00c950', secondary: colors.inverseSurface } },
+        error: { iconTheme: { primary: isDark ? '#e7000b' : '#ff6467', secondary: colors.inverseSurface } },
       }}
     />
   );

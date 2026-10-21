@@ -9,28 +9,26 @@ export default function AuthorCredit({ className = '' }) {
 
   return (
     <section
-      className={`relative overflow-hidden rounded-4xl bg-gradient-to-br from-primary-container via-secondary-container to-tertiary-container p-6 text-on-primary-container ${className}`}
+      className={`relative overflow-hidden rounded-2xl border border-brand/25 bg-primary-container p-5 text-on-primary-container ${className}`}
     >
-      <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10" />
-      <div className="pointer-events-none absolute -bottom-14 -left-8 h-40 w-40 rounded-full bg-tertiary/10" />
-      <p className="relative text-label-md uppercase tracking-widest opacity-80">{t('credit.title')}</p>
+      <p className="relative text-label-md font-semibold">{t('credit.title')}</p>
       <div className="relative mt-4 flex flex-col gap-3 sm:flex-row sm:items-stretch">
-        <div className="flex flex-1 items-center gap-3 rounded-3xl bg-surface/70 p-4 backdrop-blur">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elev-1">
+        <div className="flex flex-1 items-center gap-3 rounded-xl border border-line bg-card p-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary text-on-primary">
             <Icon name="code" size={24} />
           </span>
           <div className="min-w-0">
             <p className="text-label-md text-on-surface-variant">{t('credit.author')}</p>
-            <p className="wrap-any text-title-lg font-bold text-primary">{AUTHOR}</p>
+            <p className="wrap-any text-title-lg font-bold text-brand">{AUTHOR}</p>
           </div>
         </div>
-        <div className="flex flex-1 items-center gap-3 rounded-3xl bg-surface/70 p-4 backdrop-blur">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-tertiary text-on-tertiary shadow-elev-1">
+        <div className="flex flex-1 items-center gap-3 rounded-xl border border-line bg-card p-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-secondary-container text-on-surface">
             <Icon name="auto_awesome" size={24} />
           </span>
           <div className="min-w-0">
             <p className="text-label-md text-on-surface-variant">{t('credit.ai')}</p>
-            <p className="wrap-any text-title-lg font-bold text-tertiary">
+            <p className="wrap-any text-title-lg font-bold text-on-surface">
               Claude <span className="text-label-md font-medium text-on-surface-variant">· Anthropic</span>
             </p>
           </div>

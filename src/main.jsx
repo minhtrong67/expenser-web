@@ -2,9 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
-import { initRipple } from './utils/ripple';
-
-initRipple();
 
 // Returning users: start downloading the signed-in shell and the current page
 // right now, in parallel with Firebase Auth restoring the session - so by the

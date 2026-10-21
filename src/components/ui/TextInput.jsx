@@ -4,7 +4,7 @@ import { SupportingText } from './Field';
 
 const ALWAYS_FLOATED = ['date', 'datetime-local', 'time', 'month'];
 
-/** Material 3 filled text field with a floating label. */
+/** Outlined text field with a floating label. */
 const TextInput = forwardRef(function TextInput(
   { label, error, hint, icon, trailing, required, className = '', id, type = 'text', ...rest },
   ref,

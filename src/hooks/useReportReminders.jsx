@@ -62,7 +62,7 @@ export function useReportReminders() {
           <div className="flex items-start gap-3">
             <div className="min-w-0 flex-1">
               <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{title}</p>
-              <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">{body}</p>
+              <p className="mt-0.5 text-xs text-on-surface-variant">{body}</p>
             </div>
             <button
               onClick={() => {

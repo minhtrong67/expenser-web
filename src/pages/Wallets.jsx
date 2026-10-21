@@ -75,7 +75,7 @@ export default function WalletsPage() {
 
   return (
     <div className="space-y-4 sm:space-y-5">
-      <section className="flex flex-col gap-4 rounded-3xl bg-primary-container p-6 text-on-primary-container sm:flex-row sm:items-center sm:justify-between">
+      <section className="flex flex-col gap-4 rounded-2xl border border-brand/20 bg-primary-container p-5 text-on-primary-container sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-label-lg opacity-80">{t('wallet.totalAll')}</p>
           <p className="mt-1 text-headline-sm font-bold tabular-nums sm:text-headline-md">{formatMoney(total)}</p>
@@ -91,7 +91,7 @@ export default function WalletsPage() {
       </section>
 
       {wallets.length === 0 ? (
-        <div className="rounded-2xl bg-surface-container-low">
+        <div className="rounded-2xl border border-line bg-card">
           <EmptyState icon="account_balance_wallet" text={t('wallet.empty')} action={{ label: t('wallet.addFirst'), onClick: () => openForm() }} />
         </div>
       ) : (
@@ -100,7 +100,7 @@ export default function WalletsPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {wallets.map((w, idx) => (
               <SwipeableItem key={w.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(idx * 30, 300)}ms` }} onEdit={() => openForm(w)} onDelete={() => setDeleteTarget(w)}>
-                <div className="rounded-2xl bg-surface-container-low p-5 transition-shadow duration-200 hover:shadow-elev-1">
+                <div className="rounded-2xl border border-line bg-card p-5 transition-colors duration-200 hover:bg-surface-container">
                   <div className="mb-4 flex items-start justify-between">
                     <span className="flex h-12 w-12 items-center justify-center rounded-2xl" style={{ backgroundColor: `${w.color}26`, color: w.color }}>
                       <Icon name={w.icon} size={24} />

@@ -1,117 +1,101 @@
+/* Design tokens (light + .dark) supplied as expenser-theme.css - the single source of truth. */
+@import './theme/expenser-theme.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ==========================================================================
-   Material Design 3 colour roles (default seed #2196F3, exported from
-   Material Theme Builder (material-theme-blue.json)). Values are "r g b" triplets so Tailwind opacity
-   modifiers work. src/theme overrides them at runtime for custom seeds.
+   Modern minimalist design system
+   --------------------------------------------------------------------------
+   Colours come from the tokens in src/theme/expenser-theme.css. Below they are
+   re-exported under the role names the components and Tailwind config use
+   (bg-surface, text-on-surface-variant, bg-primary-container ...), so changing
+   the theme file restyles the whole app. Roles are complete CSS colours
+   (oklch / color-mix), not "r g b" triplets - Tailwind adds opacity with
+   color-mix (see tailwind.config.js).
    ========================================================================== */
 :root {
   --font-scale: 1;
-  /* Interaction state layers (Material 3: hover 8%, focus/press 10-12%). */
-  --state-hover: 0.08;
-  --state-focus: 0.1;
-  --state-press: 0.1;
-  --ripple-alpha: 0.16;
-  --md-primary: 54 97 142;
-  --md-on-primary: 255 255 255;
-  --md-primary-container: 209 228 255;
-  --md-on-primary-container: 25 73 117;
-  --md-secondary: 83 95 112;
-  --md-on-secondary: 255 255 255;
-  --md-secondary-container: 215 227 247;
-  --md-on-secondary-container: 59 72 88;
-  --md-tertiary: 107 87 120;
-  --md-on-tertiary: 255 255 255;
-  --md-tertiary-container: 242 218 255;
-  --md-on-tertiary-container: 82 63 95;
-  --md-error: 186 26 26;
-  --md-on-error: 255 255 255;
-  --md-error-container: 255 218 214;
-  --md-on-error-container: 147 0 10;
-  --md-background: 248 249 255;
-  --md-on-background: 25 28 32;
-  --md-surface: 248 249 255;
-  --md-on-surface: 25 28 32;
-  --md-surface-variant: 223 226 235;
-  --md-on-surface-variant: 67 71 78;
-  --md-outline: 115 119 127;
-  --md-outline-variant: 195 199 207;
-  --md-shadow: 0 0 0;
-  --md-scrim: 0 0 0;
-  --md-inverse-surface: 46 49 53;
-  --md-inverse-on-surface: 239 240 247;
-  --md-inverse-primary: 160 202 253;
-  --md-surface-tint: 54 97 142;
-  --md-surface-dim: 216 218 224;
-  --md-surface-bright: 248 249 255;
-  --md-surface-container-lowest: 255 255 255;
-  --md-surface-container-low: 242 243 250;
-  --md-surface-container: 236 238 244;
-  --md-surface-container-high: 230 232 238;
-  --md-surface-container-highest: 225 226 232;
-  --md-income: 0 109 56;
-  --md-on-income: 255 255 255;
-  --md-income-container: 141 249 172;
-  --md-on-income-container: 0 33 13;
-  --md-expense: 186 26 26;
-  --md-on-expense: 255 255 255;
-  --md-expense-container: 255 218 214;
-  --md-on-expense-container: 147 0 10;
+  /* Interaction state layers: a faint wash of the text colour. */
+  --state-hover: 0.06;
+  --state-focus: 0.08;
+  --state-press: 0.08;
+
+  /* Readable accent for text / icons / borders (the fill colour lives in --primary). */
+  --brand: var(--primary);
+  /* Text on solid semantic fills (error, income ...). */
+  --on-solid: oklch(0.985 0 0);
+
+  --md-primary: var(--primary);
+  --md-on-primary: var(--primary-foreground);
+  --md-primary-container: color-mix(in oklab, var(--brand) 10%, var(--background));
+  --md-on-primary-container: var(--brand);
+
+  /* Tonal fill used for selected chips / segments / nav items */
+  --md-secondary: var(--secondary-foreground);
+  --md-on-secondary: var(--secondary);
+  --md-secondary-container: color-mix(in oklab, var(--muted) 92%, var(--foreground));
+  --md-on-secondary-container: var(--foreground);
+
+  --md-tertiary: var(--muted-foreground);
+  --md-on-tertiary: var(--background);
+  --md-tertiary-container: var(--muted);
+  --md-on-tertiary-container: var(--foreground);
+
+  --md-error: var(--destructive);
+  --md-on-error: var(--on-solid);
+  --md-error-container: color-mix(in oklab, var(--destructive) 10%, var(--background));
+  --md-on-error-container: var(--destructive);
+
+  --md-background: var(--background);
+  --md-on-background: var(--foreground);
+  --md-surface: var(--background);
+  --md-on-surface: var(--foreground);
+  --md-surface-variant: var(--muted);
+  --md-on-surface-variant: var(--muted-foreground);
+  --md-surface-dim: var(--muted);
+  --md-surface-bright: var(--background);
+  --md-surface-container-lowest: var(--background);
+  --md-surface-container-low: var(--card);
+  --md-surface-container: var(--muted);
+  --md-surface-container-high: color-mix(in oklab, var(--muted) 92%, var(--foreground));
+  --md-surface-container-highest: color-mix(in oklab, var(--muted) 84%, var(--foreground));
+
+  --md-outline: color-mix(in oklab, var(--input) 88%, var(--foreground));
+  --md-outline-variant: var(--border);
+  --md-shadow: oklch(0 0 0);
+  --md-scrim: oklch(0 0 0);
+  --md-inverse-surface: var(--foreground);
+  --md-inverse-on-surface: var(--background);
+  --md-inverse-primary: var(--sidebar-primary);
+  --md-surface-tint: var(--primary);
+
+  /* Money colours: income = brand green, expense = destructive */
+  --md-income: var(--brand);
+  --md-on-income: var(--on-solid);
+  --md-income-container: color-mix(in oklab, var(--brand) 10%, var(--background));
+  --md-on-income-container: var(--brand);
+  --md-expense: var(--destructive);
+  --md-on-expense: var(--on-solid);
+  --md-expense-container: color-mix(in oklab, var(--destructive) 10%, var(--background));
+  --md-on-expense-container: var(--destructive);
 }
 
 html.dark {
-  /* Light-coloured overlays wash out light text on dark surfaces - keep them subtle. */
+  /* In dark mode --primary is a deep green (good for filled buttons); the
+     lighter sidebar-primary green is the one that reads well as text/icons. */
+  --brand: var(--sidebar-primary);
+  --on-solid: oklch(0.145 0 0);
   --state-hover: 0.05;
-  --state-focus: 0.08;
-  --state-press: 0.08;
-  --ripple-alpha: 0.12;
-  --md-primary: 160 202 253;
-  --md-on-primary: 0 50 88;
-  --md-primary-container: 25 73 117;
-  --md-on-primary-container: 209 228 255;
-  --md-secondary: 187 199 219;
-  --md-on-secondary: 37 49 64;
-  --md-secondary-container: 59 72 88;
-  --md-on-secondary-container: 215 227 247;
-  --md-tertiary: 214 190 228;
-  --md-on-tertiary: 59 41 72;
-  --md-tertiary-container: 82 63 95;
-  --md-on-tertiary-container: 242 218 255;
-  --md-error: 255 180 171;
-  --md-on-error: 105 0 5;
-  --md-error-container: 147 0 10;
-  --md-on-error-container: 255 218 214;
-  --md-background: 17 20 24;
-  --md-on-background: 225 226 232;
-  --md-surface: 17 20 24;
-  --md-on-surface: 225 226 232;
-  --md-surface-variant: 67 71 78;
-  --md-on-surface-variant: 195 199 207;
-  --md-outline: 141 145 153;
-  --md-outline-variant: 67 71 78;
-  --md-shadow: 0 0 0;
-  --md-scrim: 0 0 0;
-  --md-inverse-surface: 225 226 232;
-  --md-inverse-on-surface: 46 49 53;
-  --md-inverse-primary: 54 97 142;
-  --md-surface-tint: 160 202 253;
-  --md-surface-dim: 17 20 24;
-  --md-surface-bright: 54 57 62;
-  --md-surface-container-lowest: 11 14 19;
-  --md-surface-container-low: 25 28 32;
-  --md-surface-container: 29 32 36;
-  --md-surface-container-high: 39 42 47;
-  --md-surface-container-highest: 50 53 58;
-  --md-income: 113 220 146;
-  --md-on-income: 0 57 26;
-  --md-income-container: 0 82 41;
-  --md-on-income-container: 141 249 172;
-  --md-expense: 255 180 171;
-  --md-on-expense: 105 0 5;
-  --md-expense-container: 147 0 10;
-  --md-on-expense-container: 255 218 214;
+  --state-focus: 0.07;
+  --state-press: 0.07;
+  --md-primary-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-secondary-container: color-mix(in oklab, var(--muted) 88%, var(--foreground));
+  --md-surface-container-high: color-mix(in oklab, var(--muted) 90%, var(--foreground));
+  --md-income-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-expense-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
+  --md-outline: color-mix(in oklab, var(--input) 85%, var(--foreground));
 }
 
 html {
@@ -120,6 +104,7 @@ html {
   -webkit-text-size-adjust: 100%;
   color-scheme: light;
   scroll-behavior: smooth;
+  background: var(--background);
 }
 html.dark {
   color-scheme: dark;
@@ -134,23 +119,23 @@ body {
 /* Thin themed scrollbars */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--md-outline) / 0.45) transparent;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 40%, transparent) transparent;
 }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-thumb { background: rgb(var(--md-outline) / 0.45); border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: rgb(var(--md-outline) / 0.7); }
+::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--muted-foreground) 40%, transparent); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--muted-foreground) 65%, transparent); }
 
 :focus-visible {
-  outline: 2px solid rgb(var(--md-primary));
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 ::selection {
-  background: rgb(var(--md-primary-container));
-  color: rgb(var(--md-on-primary-container));
+  background: color-mix(in oklab, var(--brand) 22%, transparent);
+  color: inherit;
 }
 
 @layer components {
-/* ---- State layers & ripple ------------------------------------------------ */
+/* ---- Hover / focus / press wash --------------------------------------------- */
 .state-layer { position: relative; isolation: isolate; }
 .state-layer::before {
   content: '';
@@ -169,35 +154,29 @@ body {
 .state-layer:focus-visible::before { opacity: var(--state-focus); }
 .state-layer:active:not(:disabled)::before { opacity: var(--state-press); }
 
-.ripple { position: relative; overflow: hidden; }
-.ripple-wave {
-  position: absolute;
-  border-radius: 9999px;
-  background: currentColor;
-  pointer-events: none;
-  animation: ripple 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
-  opacity: var(--ripple-alpha);
-}
-
-/* ---- Filled text field ---------------------------------------------------- */
+/* ---- Text field: quiet outlined box, label floats inside ---------------------- */
 .md-field {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   min-height: 3.5rem;
-  padding: 0 1rem;
-  border-radius: 0.5rem 0.5rem 0 0;
-  background: rgb(var(--md-surface-container-highest));
-  box-shadow: inset 0 -1px 0 0 rgb(var(--md-on-surface-variant));
-  transition: box-shadow 200ms cubic-bezier(0.2, 0, 0, 1), background-color 200ms;
+  padding: 0 0.875rem;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--background);
+  border: 1px solid var(--md-outline);
+  transition: border-color 150ms cubic-bezier(0.2, 0, 0, 1), box-shadow 150ms cubic-bezier(0.2, 0, 0, 1), background-color 150ms;
 }
-.md-field:hover { background: rgb(var(--md-surface-container-high)); }
+@media (hover: hover) {
+  .md-field:hover:not(:focus-within) { border-color: color-mix(in oklab, var(--md-outline) 70%, var(--foreground)); }
+}
 .md-field:focus-within {
-  box-shadow: inset 0 -2px 0 0 rgb(var(--md-primary));
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 20%, transparent);
 }
-.md-field-error { box-shadow: inset 0 -2px 0 0 rgb(var(--md-error)); }
-.md-field-error:focus-within { box-shadow: inset 0 -2px 0 0 rgb(var(--md-error)); }
+.md-field-error,
+.md-field-error:focus-within { border-color: var(--destructive); }
+.md-field-error:focus-within { box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 20%, transparent); }
 .md-field-disabled { opacity: 0.6; pointer-events: none; }
 
 .md-input {
@@ -207,7 +186,7 @@ body {
   padding: 1.5rem 0 0.375rem;
   font-size: 1rem;
   line-height: 1.5rem;
-  color: rgb(var(--md-on-surface));
+  color: var(--foreground);
   outline: none;
   border: 0;
 }
@@ -226,53 +205,53 @@ textarea.md-input { resize: none; overflow: hidden; display: block; }
   pointer-events: none;
   font-size: 1rem;
   line-height: 1.5rem;
-  color: rgb(var(--md-on-surface-variant));
+  color: var(--muted-foreground);
   transition: top 180ms cubic-bezier(0.2, 0, 0, 1), font-size 180ms cubic-bezier(0.2, 0, 0, 1),
     line-height 180ms, color 180ms;
 }
 .md-input:focus ~ .md-label,
 .md-input:not(:placeholder-shown) ~ .md-label,
 .md-field-floated .md-label {
-  top: 0.4rem;
+  top: 0.45rem;
   font-size: 0.75rem;
   line-height: 1rem;
 }
 .md-input:focus ~ .md-label,
-.md-field:focus-within .md-label { color: rgb(var(--md-primary)); }
+.md-field:focus-within .md-label { color: var(--brand); }
 .md-field-error .md-label,
-.md-field-error:focus-within .md-label { color: rgb(var(--md-error)); }
+.md-field-error:focus-within .md-label { color: var(--destructive); }
 .md-field-floated .md-input { padding-top: 1.5rem; }
 
 input[type='date'].md-input,
 input[type='datetime-local'].md-input { min-height: 3.5rem; }
 input[type='date']::-webkit-calendar-picker-indicator,
 input[type='datetime-local']::-webkit-calendar-picker-indicator {
-  opacity: 0.65;
+  opacity: 0.6;
   cursor: pointer;
 }
 html.dark input[type='date']::-webkit-calendar-picker-indicator,
 html.dark input[type='datetime-local']::-webkit-calendar-picker-indicator { filter: invert(1); }
 
 .md-supporting {
-  margin: 0.25rem 1rem 0;
+  margin: 0.375rem 0.25rem 0;
   font-size: 0.75rem;
   line-height: 1rem;
-  color: rgb(var(--md-on-surface-variant));
+  color: var(--muted-foreground);
 }
-.md-supporting-error { color: rgb(var(--md-error)); }
+.md-supporting-error { color: var(--destructive); }
 }
 
 /* ---- Skeleton ------------------------------------------------------------- */
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: rgb(var(--md-surface-container-highest));
+  background: var(--md-surface-container-high);
 }
 .skeleton::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgb(var(--md-surface) / 0.55), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--background) 55%, transparent), transparent);
   background-size: 400px 100%;
   animation: shimmer 1.6s infinite linear;
 }
@@ -285,24 +264,38 @@ input[type='number'] { -moz-appearance: textfield; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Single loading screen used by index.html AND every top-level Suspense / auth gate,
-   so the user sees one continuous splash instead of several different spinners. */
+/* ---- Splash ------------------------------------------------------------------
+   One loading screen used by index.html AND every top-level Suspense / auth
+   gate, so there is a single continuous splash instead of several spinners.
+   Never white: brand green in the light theme, the dark theme background in the
+   dark theme. Keep the two colours in sync with SPLASH in src/theme/index.js,
+   the inline <style> in index.html and vite.config.js (iOS startup images). */
 .splash {
+  position: relative;
   display: flex;
   min-height: 100dvh;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
-  background: rgb(var(--md-surface));
-  color: rgb(var(--md-primary));
+  background: #008236;
+  color: #fff;
+}
+html.dark .splash { background: #0a0a0a; }
+.splash-logo {
+  width: 6rem;
+  height: 6rem;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 .splash-spinner {
-  width: 2.5rem;
-  height: 2.5rem;
+  position: absolute;
+  top: calc(50% + 3rem + 2rem);
+  left: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: -0.75rem;
   border-radius: 9999px;
-  border: 3px solid rgb(var(--md-primary-container));
-  border-top-color: rgb(var(--md-primary));
+  border: 2px solid rgb(255 255 255 / 0.25);
+  border-top-color: #fff;
   animation: spin 0.8s linear infinite;
 }
 /* Small in-page spinner that only appears if loading takes longer than ~200 ms */
@@ -310,10 +303,6 @@ input[type='number'] { -moz-appearance: textfield; }
 @keyframes spin { to { transform: rotate(360deg); } }
 /* Keyframes used from plain CSS must be declared here: Tailwind only emits the
    ones referenced by an animate-* utility class. */
-@keyframes ripple {
-  from { transform: scale(0); opacity: var(--ripple-alpha); }
-  to { transform: scale(1); opacity: 0; }
-}
 @keyframes shimmer {
   from { background-position: -400px 0; }
   to { background-position: 400px 0; }

@@ -15,13 +15,11 @@ export default function AuthLayout({ children }) {
     <div className="flex min-h-dvh bg-surface">
       {/* Brand panel (large screens) */}
       <div className="relative hidden w-[46%] flex-col justify-between overflow-hidden bg-primary-container p-10 text-on-primary-container lg:flex">
-        <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/10" />
-        <div className="absolute -bottom-32 -left-10 h-80 w-80 rounded-full bg-primary/10" />
         <p className="relative text-title-lg font-bold tracking-tight">Expenser</p>
 
         <div className="relative">
-          <p className="mb-6 max-w-sm text-headline-md font-medium">{t('auth.heroTitle')}</p>
-          <div className="w-full max-w-sm rounded-3xl bg-primary/10 p-5 backdrop-blur">
+          <p className="mb-6 max-w-sm text-headline-md font-semibold">{t('auth.heroTitle')}</p>
+          <div className="w-full max-w-sm rounded-2xl border border-brand/20 bg-background/60 p-5">
             <p className="text-label-md opacity-70">{t('dashboard.totalBalance')}</p>
             <p className="mt-1 text-headline-sm font-bold tabular-nums">{formatMoney(12500000)}</p>
             <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-body-md">
@@ -44,14 +42,12 @@ export default function AuthLayout({ children }) {
       <div className="relative flex flex-1 flex-col overflow-hidden">
         {/* Soft tonal backdrop for small screens, where the brand panel is hidden */}
         <div className="pointer-events-none absolute inset-0 -z-0 lg:hidden" aria-hidden="true">
-          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-primary-container/70 blur-2xl" />
-          <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-tertiary-container/60 blur-2xl" />
         </div>
 
         <div className="relative z-10 flex items-center justify-between px-4 pt-4 sm:px-6" style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}>
-          <p className="text-title-lg font-bold text-primary lg:invisible">Expenser</p>
+          <p className="text-title-lg font-bold text-brand lg:invisible">Expenser</p>
           <div className="flex items-center gap-1">
-            <button onClick={toggleLanguage} aria-label={t('topbar.switchLanguage')} className="state-layer ripple flex h-10 items-center gap-1 rounded-full px-3 text-label-lg text-on-surface-variant">
+            <button onClick={toggleLanguage} aria-label={t('topbar.switchLanguage')} className="state-layer flex h-10 items-center gap-1 rounded-lg px-3 text-label-lg text-on-surface-variant">
               <Icon name="translate" size={18} />
               {lang.toUpperCase()}
             </button>
@@ -69,5 +65,5 @@ export default function AuthLayout({ children }) {
 }
 
 export function AuthCard({ children }) {
-  return <div className="rounded-3xl bg-surface-container-low p-6 shadow-elev-1 sm:p-8">{children}</div>;
+  return <div className="rounded-2xl border border-line bg-card p-6 sm:p-8">{children}</div>;
 }

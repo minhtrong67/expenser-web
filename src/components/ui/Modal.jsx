@@ -12,7 +12,7 @@ const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:n
 const DIALOG_WIDTH = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg' };
 
 /**
- * Material 3 overlay.
+ * Overlay.
  *  - variant "dialog" (default): centred dialog on every screen size. For short
  *    content and confirmations.
  *  - variant "sheet": full-height side sheet (full-screen on phones, slides in
@@ -111,7 +111,7 @@ export default function Modal({ open, onClose, title, children, size = 'md', var
 
   return createPortal(
     <div className={`fixed inset-0 z-50 flex ${wrapperClass}`}>
-      <div className="absolute inset-0 animate-fade-in bg-scrim/32" onClick={onClose} aria-hidden="true" />
+      <div className="absolute inset-0 animate-fade-in bg-scrim/30" onClick={onClose} aria-hidden="true" />
       <div
         ref={panelRef}
         data-modal
@@ -120,7 +120,7 @@ export default function Modal({ open, onClose, title, children, size = 'md', var
         aria-labelledby={titleId}
         tabIndex={-1}
         style={isSheet || isDrawer ? { paddingTop: isSheet ? 'env(safe-area-inset-top, 0px)' : undefined, paddingBottom: 'env(safe-area-inset-bottom, 0px)' } : undefined}
-        className={`relative z-10 flex w-full flex-col overflow-hidden bg-surface-container-high shadow-elev-3 outline-none ${panelClass}`}
+        className={`relative z-10 flex w-full flex-col overflow-hidden border border-line bg-popover shadow-elev-3 outline-none ${panelClass}`}
       >
         {isDrawer && (
           <div
@@ -136,7 +136,7 @@ export default function Modal({ open, onClose, title, children, size = 'md', var
         )}
         <div className={`flex shrink-0 items-center gap-2 pb-2 ${isSheet ? 'px-4 pt-3 sm:px-6' : isDrawer ? 'px-6 pt-1 sm:pt-5' : 'px-6 pt-5'}`}>
           {isSheet && <IconButton icon="close" label={t('common.close')} onClick={onClose} className="-ml-2" />}
-          <h2 id={titleId} className={`min-w-0 flex-1 wrap-any text-on-surface ${isSheet ? 'text-title-lg' : 'text-headline-sm'}`}>
+          <h2 id={titleId} className={`min-w-0 flex-1 wrap-any text-on-surface ${isSheet ? 'text-title-lg' : 'text-title-lg font-semibold'}`}>
             {title}
           </h2>
           {!isSheet && <IconButton icon="close" label={t('common.close')} onClick={onClose} className="-mr-3" />}

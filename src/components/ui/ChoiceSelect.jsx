@@ -89,7 +89,7 @@ export default function ChoiceSelect({ label, options, value, onChange, placehol
         <ul
           id={listId}
           role="listbox"
-          className="absolute z-30 mt-1 max-h-64 w-full animate-menu-in overflow-y-auto rounded-xl bg-surface-container shadow-elev-2"
+          className="absolute z-30 mt-1 max-h-64 w-full animate-menu-in overflow-y-auto rounded-xl border border-line bg-popover p-1 shadow-elev-2"
         >
           {options.length === 0 && <li className="px-4 py-3 text-body-md text-on-surface-variant">{emptyLabel || t('common.noItems')}</li>}
           {options.map((opt, i) => (
@@ -98,9 +98,9 @@ export default function ChoiceSelect({ label, options, value, onChange, placehol
                 type="button"
                 onClick={() => pick(opt)}
                 onMouseEnter={() => setActive(i)}
-                className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-body-lg transition-colors ${
-                  opt.id === value ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface'
-                } ${i === active && opt.id !== value ? 'bg-surface-container-highest' : ''}`}
+                className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-body-lg transition-colors ${
+                  opt.id === value ? 'bg-primary-container text-on-primary-container' : 'text-on-surface'
+                } ${i === active && opt.id !== value ? 'bg-surface-container' : ''}`}
               >
                 <OptionIcon opt={opt} size={18} />
                 <span className="flex-1 wrap-any">{opt.name}</span>

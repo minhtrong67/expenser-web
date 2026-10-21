@@ -4,197 +4,179 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Expenser — Quản lý chi tiêu cá nhân thông minh | Smart personal expense tracker</title>
-<meta name="description" content="Expenser: ứng dụng quản lý thu chi cá nhân miễn phí, mã nguồn mở, giao diện Material Design 3, hỗ trợ tiếng Việt & English, dùng được cả khi offline. / Free, open-source expense tracker with Material Design 3." />
+<meta name="description" content="Expenser: ứng dụng quản lý thu chi cá nhân miễn phí, mã nguồn mở, giao diện tối giản hiện đại, hỗ trợ tiếng Việt & English, dùng được cả khi offline. / Free, open-source expense tracker with a clean minimalist interface." />
 <meta name="author" content="minhtrong67" />
 <link rel="canonical" href="https://expenser-quan-ly-chi-tieu.vercel.app/landing.html" />
-<meta name="theme-color" content="#F8F9FF" />
+<meta name="theme-color" content="#FFFFFF" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Expenser" />
 <meta property="og:title" content="Expenser — Quản lý chi tiêu cá nhân thông minh" />
-<meta property="og:description" content="Theo dõi thu chi, ví, thống kê & báo cáo. Material Design 3, đổi màu chủ đề, song ngữ Việt/Anh, mã nguồn mở." />
+<meta property="og:description" content="Theo dõi thu chi, ví, thống kê & báo cáo. giao diện tối giản, đổi màu nhấn, song ngữ Việt/Anh, mã nguồn mở." />
 <meta property="og:url" content="https://expenser-quan-ly-chi-tieu.vercel.app/landing.html" />
 <meta property="og:image" content="https://expenser-quan-ly-chi-tieu.vercel.app/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <style>
 :root{
-  --primary:#36618E;--on-primary:#fff;--primary-container:#D1E4FF;--on-primary-container:#194975;
-  --secondary:#535F70;--secondary-container:#D7E3F7;--on-secondary-container:#3B4858;
-  --tertiary:#6B5778;--tertiary-container:#F2DAFF;--on-tertiary-container:#523F5F;
-  --surface:#F8F9FF;--on-surface:#191C20;--on-surface-variant:#43474E;
-  --sc-low:#F2F3FA;--sc:#ECEEF4;--sc-high:#E6E8EE;--sc-highest:#E1E2E8;
-  --outline:#73777F;--outline-variant:#C3C7CF;
-  --income:#006D38;--income-container:#8DF9AC;--on-income-container:#00210D;
-  --expense:#BA1A1A;--expense-container:#FFDAD6;--on-expense-container:#93000A;
-  --hov:.08;--prs:.12;--ease:cubic-bezier(.2,0,0,1);--ease-d:cubic-bezier(.05,.7,.1,1);
-  --elev1:0 1px 2px rgb(0 0 0/.25),0 1px 3px 1px rgb(0 0 0/.12);
-  --elev2:0 1px 2px rgb(0 0 0/.25),0 2px 6px 2px rgb(0 0 0/.12);
-  --elev3:0 2px 4px rgb(0 0 0/.25),0 8px 20px 4px rgb(0 0 0/.12);
+  --primary:#008236;--on-primary:#fff;--primary-container:#E6F3EB;--on-primary-container:#008236;
+  --secondary:#525252;--secondary-container:#EFEFEF;--on-secondary-container:#0A0A0A;
+  --tertiary:#737373;--tertiary-container:#F5F5F5;--on-tertiary-container:#0A0A0A;
+  --surface:#FFFFFF;--on-surface:#0A0A0A;--on-surface-variant:#737373;
+  --sc-low:#FAFAFA;--sc:#F5F5F5;--sc-high:#EFEFEF;--sc-highest:#E5E5E5;
+  --outline:#D4D4D4;--outline-variant:#E5E5E5;
+  --income:#008236;--income-container:#E6F3EB;--on-income-container:#006B2D;
+  --expense:#E7000B;--expense-container:#FDE6E7;--on-expense-container:#B80009;
+  --hov:.06;--prs:.08;--ease:cubic-bezier(.2,0,0,1);--ease-d:cubic-bezier(.05,.7,.1,1);
+  --radius:10px;
+  --elev1:0 1px 2px rgb(0 0 0/.05);
+  --elev2:0 4px 12px -2px rgb(0 0 0/.1),0 2px 4px -2px rgb(0 0 0/.06);
+  --elev3:0 16px 40px -8px rgb(0 0 0/.2),0 4px 10px -4px rgb(0 0 0/.08);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--surface);color:var(--on-surface);line-height:1.5;overflow-x:hidden;transition:background .4s var(--ease),color .4s var(--ease)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--surface);color:var(--on-surface);line-height:1.5;overflow-x:hidden;transition:background .3s var(--ease),color .3s var(--ease)}
 a{color:inherit;text-decoration:none}
 img,svg{display:block;max-width:100%}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--primary);outline-offset:3px}
-.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
-section{position:relative;padding:clamp(56px,9vw,112px) 0}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{position:relative;padding:clamp(56px,9vw,104px) 0}
 
-/* ---- buttons (M3) ---- */
-.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 28px;border-radius:999px;font-weight:500;font-size:15px;letter-spacing:.01em;transition:box-shadow .25s var(--ease),transform .25s var(--ease),background .25s}
-.btn::before{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s}
-.btn:hover::before{opacity:var(--hov,.08)}.btn:active::before{opacity:var(--prs,.12)}
-.btn:active{transform:scale(.97)}
+/* ---- buttons ---- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:var(--radius);font-weight:500;font-size:15px;transition:background .2s,transform .2s var(--ease),opacity .2s}
+.btn::before{content:"";position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;transition:opacity .2s}
+.btn:hover::before{opacity:var(--hov)}.btn:active::before{opacity:var(--prs)}
+.btn:active{transform:scale(.98)}
 .btn-filled{background:var(--primary);color:var(--on-primary)}
-.btn-filled:hover{box-shadow:var(--elev2)}
 .btn-tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
-.btn-outlined{border:1px solid var(--outline);color:var(--primary)}
-.btn-sm{height:40px;padding:0 20px;font-size:14px}
-.wave{position:absolute;border-radius:50%;background:currentColor;opacity:.2;transform:scale(0);animation:wave .6s var(--ease) forwards;pointer-events:none}
-@keyframes wave{to{transform:scale(1);opacity:0}}
-.icon-btn{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--on-surface-variant);position:relative;overflow:hidden;transition:background .2s}
-.icon-btn:hover{background:color-mix(in srgb,var(--on-surface) var(--hover-mix,8%),transparent)}
+.btn-outlined{border:1px solid var(--outline);color:var(--on-surface)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
+.icon-btn{width:36px;height:36px;border-radius:var(--radius);display:inline-flex;align-items:center;justify-content:center;color:var(--on-surface-variant);transition:background .2s,color .2s}
+.icon-btn:hover{background:var(--sc);color:var(--on-surface)}
 
 /* ---- nav ---- */
-.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top);transition:background .3s,box-shadow .3s,backdrop-filter .3s}
-.nav.scrolled{background:color-mix(in srgb,var(--sc) 88%,transparent);backdrop-filter:blur(14px);box-shadow:var(--elev1)}
-.nav-in{display:flex;align-items:center;height:64px;gap:8px}
-.brand{font-size:22px;font-weight:700;color:var(--primary);letter-spacing:-.01em;margin-right:auto}
-.links{display:flex;gap:4px;margin-right:12px}
-.links a{padding:8px 14px;border-radius:999px;font-size:14px;font-weight:500;color:var(--on-surface-variant);transition:background .2s,color .2s}
-.links a:hover{background:color-mix(in srgb,var(--on-surface) var(--hover-mix,8%),transparent);color:var(--on-surface)}
-.lang{display:inline-flex;align-items:center;gap:4px;height:40px;padding:0 12px;border-radius:999px;font-weight:500;font-size:14px;color:var(--on-surface-variant)}
-.lang:hover{background:color-mix(in srgb,var(--on-surface) var(--hover-mix,8%),transparent)}
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top);border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
+.nav.scrolled{background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(12px);border-color:var(--outline-variant)}
+.nav-in{display:flex;align-items:center;height:60px;gap:8px}
+.brand{font-size:19px;font-weight:700;color:var(--on-surface);letter-spacing:-.01em;margin-right:auto}
+.links{display:flex;gap:2px;margin-right:12px}
+.links a{padding:6px 12px;border-radius:var(--radius);font-size:14px;font-weight:500;color:var(--on-surface-variant);transition:background .2s,color .2s}
+.links a:hover{background:var(--sc);color:var(--on-surface)}
+.lang{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 10px;border-radius:var(--radius);font-weight:500;font-size:14px;color:var(--on-surface-variant);transition:background .2s,color .2s}
+.lang:hover{background:var(--sc);color:var(--on-surface)}
 
 /* ---- hero ---- */
-.hero{padding-top:calc(64px + clamp(40px,7vw,96px));overflow:hidden}
-.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;animation:float 14s ease-in-out infinite}
-.blob.a{width:420px;height:420px;background:var(--primary-container);top:-120px;right:-100px}
-.blob.b{width:360px;height:360px;background:var(--tertiary-container);bottom:-80px;left:-120px;animation-delay:-6s}
-@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,24px) scale(1.08)}}
+.hero{padding-top:calc(60px + clamp(40px,7vw,88px))}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;position:relative}
-.chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:8px;background:var(--secondary-container);color:var(--on-secondary-container);font-size:13px;font-weight:500}
-.chip i{width:8px;height:8px;border-radius:50%;background:var(--income);animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--income) 60%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
-h1{font-size:clamp(38px,6.4vw,68px);line-height:1.04;font-weight:900;letter-spacing:-.025em;margin:20px 0}
-h1 em{font-style:normal;background:linear-gradient(120deg,var(--primary),var(--tertiary));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:clamp(16px,2vw,19px);color:var(--on-surface-variant);max-width:520px}
+.chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--outline-variant);background:var(--sc-low);color:var(--on-surface-variant);font-size:13px;font-weight:500}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--income)}
+h1{font-size:clamp(36px,6vw,62px);line-height:1.06;font-weight:700;letter-spacing:-.03em;margin:20px 0}
+h1 em{font-style:normal;color:var(--primary)}
+.lead{font-size:clamp(16px,2vw,18px);color:var(--on-surface-variant);max-width:520px}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.badges{display:flex;flex-wrap:wrap;gap:20px;margin-top:36px;color:var(--on-surface-variant);font-size:13px}
+.badges{display:flex;flex-wrap:wrap;gap:20px;margin-top:32px;color:var(--on-surface-variant);font-size:13px}
 .badges span{display:inline-flex;align-items:center;gap:6px}
 .badges svg{color:var(--primary)}
 
 /* phone mockup */
-.stage{position:relative;display:flex;justify-content:center;perspective:1200px}
-.phone{width:min(300px,78vw);aspect-ratio:9/18.5;border-radius:42px;background:var(--sc-low);border:8px solid var(--on-surface);box-shadow:var(--elev3);padding:16px 14px;overflow:hidden;transform:rotateY(-8deg) rotateX(4deg);transition:transform .8s var(--ease-d);animation:bob 6s ease-in-out infinite}
-.stage:hover .phone{transform:rotateY(0) rotateX(0)}
-@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -12px}}
-.ph-top{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--primary);font-size:15px;margin-bottom:12px}
-.ph-card{border-radius:22px;padding:16px;background:var(--primary-container);color:var(--on-primary-container)}
+.stage{position:relative;display:flex;justify-content:center}
+.phone{width:min(290px,78vw);aspect-ratio:9/18.5;border-radius:36px;background:var(--surface);border:1px solid var(--outline);box-shadow:var(--elev3);padding:18px 14px;overflow:hidden}
+.ph-top{display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--on-surface);font-size:15px;margin-bottom:12px}
+.ph-card{border-radius:14px;padding:16px;background:var(--primary-container);color:var(--on-primary-container);border:1px solid color-mix(in srgb,var(--primary) 20%,transparent)}
 .ph-card small{font-size:11px;opacity:.8}
 .ph-card b{display:block;font-size:24px;letter-spacing:-.01em}
 .ph-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.ph-mini{border-radius:16px;padding:10px 12px;font-size:11px}
+.ph-mini{border-radius:12px;padding:10px 12px;font-size:11px}
 .ph-mini b{display:block;font-size:14px}
 .in{background:var(--income-container);color:var(--on-income-container)}
 .out{background:var(--expense-container);color:var(--on-expense-container)}
 .bars{display:flex;align-items:flex-end;gap:6px;height:84px;margin:14px 2px 8px}
-.bars i{flex:1;border-radius:6px 6px 2px 2px;background:var(--primary);transform-origin:bottom;transform:scaleY(0);animation:grow 1s var(--ease-d) forwards}
-.bars i:nth-child(even){background:var(--tertiary);opacity:.8}
+.bars i{flex:1;border-radius:4px 4px 2px 2px;background:var(--primary);transform-origin:bottom;transform:scaleY(0);animation:grow 1s var(--ease-d) forwards}
+.bars i:nth-child(even){opacity:.55}
 @keyframes grow{to{transform:scaleY(1)}}
 .ph-li{display:flex;align-items:center;gap:10px;padding:8px 4px;font-size:12px;animation:slide .6s var(--ease-d) both}
-.ph-li .d{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--secondary-container);font-size:14px}
+.ph-li .d{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--sc);font-size:14px}
 .ph-li span{flex:1}.ph-li b{font-variant-numeric:tabular-nums}
 @keyframes slide{from{opacity:0;transform:translateY(14px)}}
-.float-card{position:absolute;background:var(--sc-high);border-radius:20px;padding:12px 16px;box-shadow:var(--elev2);font-size:12px;display:flex;align-items:center;gap:10px;animation:bob 5s ease-in-out infinite}
-.float-card.f1{left:0;top:18%;animation-delay:-1s}.float-card.f2{right:0;bottom:16%;animation-delay:-3s}
-.float-card .ic{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.float-card{position:absolute;background:var(--surface);border:1px solid var(--outline-variant);border-radius:12px;padding:10px 14px;box-shadow:var(--elev2);font-size:12px;display:flex;align-items:center;gap:10px}
+.float-card.f1{left:0;top:18%}.float-card.f2{right:0;bottom:16%}
+.float-card .ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center}
 
 /* ---- reveal ---- */
-.rv{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease-d),transform .8s var(--ease-d);transition-delay:var(--d,0s)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease-d),transform .6s var(--ease-d);transition-delay:var(--d,0s)}
 .rv.show{opacity:1;transform:none}
 
 /* ---- headings ---- */
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary)}
-h2{font-size:clamp(28px,4.4vw,46px);line-height:1.12;font-weight:700;letter-spacing:-.02em;margin:10px 0 14px}
-.sub{color:var(--on-surface-variant);font-size:clamp(15px,1.8vw,18px);max-width:640px}
+.eyebrow{font-size:14px;font-weight:600;color:var(--primary)}
+h2{font-size:clamp(26px,4vw,40px);line-height:1.15;font-weight:700;letter-spacing:-.025em;margin:8px 0 14px}
+.sub{color:var(--on-surface-variant);font-size:clamp(15px,1.8vw,17px);max-width:620px}
 .center{text-align:center}.center .sub{margin-inline:auto}
 
 /* ---- features ---- */
 .grid{display:grid;gap:16px;margin-top:48px}
 .g3{grid-template-columns:repeat(3,1fr)}
-.card{position:relative;border-radius:28px;padding:28px;background:var(--sc-low);transition:transform .4s var(--ease-d),box-shadow .4s,background .3s;overflow:hidden}
-.card:hover{transform:translateY(-6px);box-shadow:var(--elev2);background:var(--sc)}
-.card .ic{width:52px;height:52px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:var(--primary-container);color:var(--on-primary-container);transition:transform .4s var(--ease-d)}
-.card:hover .ic{transform:rotate(-8deg) scale(1.08)}
-.card:nth-child(3n+2) .ic{background:var(--secondary-container);color:var(--on-secondary-container)}
-.card:nth-child(3n) .ic{background:var(--tertiary-container);color:var(--on-tertiary-container)}
-.card h3{font-size:19px;font-weight:700;margin-bottom:8px}
+.card{position:relative;border-radius:16px;padding:24px;background:var(--surface);border:1px solid var(--outline-variant);transition:border-color .25s,background .25s}
+.card:hover{border-color:var(--outline);background:var(--sc-low)}
+.card .ic{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;background:var(--primary-container);color:var(--on-primary-container)}
+.card h3{font-size:17px;font-weight:600;margin-bottom:6px}
 .card p{color:var(--on-surface-variant);font-size:15px}
 
 /* ---- showcase ---- */
-.showcase{background:var(--sc-low)}
+.showcase{background:var(--sc-low);border-block:1px solid var(--outline-variant)}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.swatches{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 8px}
-.sw{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .3s var(--ease-d),box-shadow .3s}
-.sw:hover{transform:scale(1.15)}
+.swatches{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
+.sw{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .25s var(--ease-d),box-shadow .25s}
+.sw:hover{transform:scale(1.1)}
 .sw.on{box-shadow:0 0 0 3px var(--sc-low),0 0 0 5px var(--primary)}
-.sw svg{opacity:0;transform:scale(.4);transition:.3s var(--ease-d)}.sw.on svg{opacity:1;transform:none}
+.sw svg{opacity:0;transform:scale(.4);transition:.25s var(--ease-d)}.sw.on svg{opacity:1;transform:none}
 .hint{font-size:13px;color:var(--on-surface-variant)}
-.panel{border-radius:32px;background:var(--surface);padding:22px;box-shadow:var(--elev2)}
-.pn-head{display:flex;gap:8px;margin-bottom:16px}
-.pn-head i{width:10px;height:10px;border-radius:50%;background:var(--outline-variant)}
-.seg{display:flex;border:1px solid var(--outline);border-radius:999px;overflow:hidden;height:40px;margin-bottom:14px}
-.seg div{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500}
-.seg .act{background:var(--secondary-container);color:var(--on-secondary-container)}
-.field{background:var(--sc-highest);border-radius:10px 10px 0 0;border-bottom:2px solid var(--primary);padding:8px 14px;margin-bottom:14px}
+.panel{border-radius:16px;background:var(--surface);border:1px solid var(--outline-variant);padding:20px;box-shadow:var(--elev1)}
+.pn-head{display:flex;gap:6px;margin-bottom:16px}
+.pn-head i{width:9px;height:9px;border-radius:50%;background:var(--outline-variant)}
+.seg{display:flex;gap:4px;padding:4px;border-radius:var(--radius);background:var(--sc);margin-bottom:14px}
+.seg div{flex:1;display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;font-size:13px;font-weight:500;color:var(--on-surface-variant)}
+.seg .act{background:var(--surface);color:var(--on-surface);box-shadow:var(--elev1)}
+.field{border:1px solid var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 20%,transparent);border-radius:8px;padding:8px 14px;margin-bottom:10px}
 .field small{font-size:11px;color:var(--primary);display:block}
 .field b{font-size:20px;font-variant-numeric:tabular-nums}
+.pn-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.pn-sug span{height:30px;padding:0 12px;border-radius:8px;display:inline-flex;align-items:center;font-size:12px;font-weight:500;font-variant-numeric:tabular-nums;border:1px solid var(--outline-variant);background:var(--surface)}
 .pn-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.pn-chips span{height:30px;padding:0 12px;border-radius:8px;display:inline-flex;align-items:center;font-size:12px;font-weight:500;border:1px solid var(--outline);color:var(--on-surface-variant)}
-.pn-chips .sel{background:var(--secondary-container);color:var(--on-secondary-container);border-color:transparent}
-.pn-btn{height:44px;border-radius:999px;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:14px}
+.pn-chips span{height:30px;padding:0 12px;border-radius:8px;display:inline-flex;align-items:center;font-size:12px;font-weight:500;border:1px solid var(--outline-variant);color:var(--on-surface-variant)}
+.pn-chips .sel{background:var(--primary-container);color:var(--on-primary-container);border-color:color-mix(in srgb,var(--primary) 40%,transparent)}
+.pn-btn{height:42px;border-radius:var(--radius);background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:14px}
 
 /* ---- steps ---- */
-.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.step{position:relative;padding:32px 28px;border-radius:28px;background:var(--sc-low)}
-.step::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--primary);color:var(--on-primary);font-weight:700;margin-bottom:18px;box-shadow:var(--elev1)}
-.step h3{font-size:18px;margin-bottom:6px}.step p{color:var(--on-surface-variant);font-size:15px}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.step{position:relative;padding:28px 24px;border-radius:16px;background:var(--surface);border:1px solid var(--outline-variant)}
+.step::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--primary);color:var(--on-primary);font-weight:600;margin-bottom:16px}
+.step h3{font-size:17px;font-weight:600;margin-bottom:6px}.step p{color:var(--on-surface-variant);font-size:15px}
 
 /* ---- stats ---- */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
-.stat{border-radius:28px;padding:28px 20px;text-align:center;background:var(--primary-container);color:var(--on-primary-container)}
-.stat:nth-child(2){background:var(--secondary-container);color:var(--on-secondary-container)}
-.stat:nth-child(3){background:var(--tertiary-container);color:var(--on-tertiary-container)}
-.stat:nth-child(4){background:var(--income-container);color:var(--on-income-container)}
-.stat b{display:block;font-size:clamp(34px,5vw,52px);font-weight:900;line-height:1.1;letter-spacing:-.02em}
-.stat span{font-size:14px;opacity:.85}
+.stat{border-radius:16px;padding:24px 16px;text-align:center;background:var(--sc-low);border:1px solid var(--outline-variant)}
+.stat b{display:block;font-size:clamp(30px,4.6vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--primary)}
+.stat span{font-size:14px;color:var(--on-surface-variant)}
 
 /* ---- tech / credit ---- */
-.tech{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px}
-.tech span{height:36px;padding:0 16px;border-radius:10px;display:inline-flex;align-items:center;background:var(--sc-high);font-size:14px;font-weight:500;transition:transform .3s var(--ease-d),background .3s}
-.tech span:hover{transform:translateY(-3px);background:var(--secondary-container)}
-.credit{margin-top:56px;border-radius:36px;padding:clamp(24px,4vw,40px);background:linear-gradient(135deg,var(--primary-container),var(--secondary-container) 55%,var(--tertiary-container));color:var(--on-primary-container);position:relative;overflow:hidden}
-.credit::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:var(--primary);opacity:.08;right:-60px;top:-80px}
-.credit .eyebrow{color:inherit;opacity:.75}
-.cr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;position:relative}
-.cr{display:flex;align-items:center;gap:14px;border-radius:24px;padding:18px;background:color-mix(in srgb,var(--surface) 72%,transparent);backdrop-filter:blur(8px);transition:transform .4s var(--ease-d)}
-.cr:hover{transform:translateY(-4px) scale(1.01)}
-.cr .ic{width:52px;height:52px;border-radius:18px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:var(--elev1)}
+.tech{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px}
+.tech span{height:34px;padding:0 14px;border-radius:8px;display:inline-flex;align-items:center;background:var(--sc-low);border:1px solid var(--outline-variant);font-size:14px;font-weight:500}
+.credit{margin-top:48px;border-radius:16px;padding:clamp(22px,4vw,32px);background:var(--primary-container);border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);color:var(--on-primary-container)}
+.credit .eyebrow{color:inherit}
+.cr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.cr{display:flex;align-items:center;gap:14px;border-radius:12px;padding:16px;background:var(--surface);border:1px solid var(--outline-variant)}
+.cr .ic{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
 .cr small{color:var(--on-surface-variant);font-size:12px;display:block}
-.cr b{font-size:22px;font-weight:900}
-.cr.a b{color:var(--primary)}.cr.a .ic{background:var(--primary);color:var(--on-primary)}
-.cr.b b{color:var(--tertiary)}.cr.b .ic{background:var(--tertiary);color:#fff}
+.cr b{font-size:20px;font-weight:700;color:var(--on-surface)}
+.cr.a .ic{background:var(--primary);color:var(--on-primary)}
+.cr.b .ic{background:var(--secondary-container);color:var(--on-surface)}
 
 /* ---- final cta + footer ---- */
 .final{text-align:center}
-.final .box{border-radius:44px;padding:clamp(40px,7vw,80px) 24px;background:var(--primary);color:var(--on-primary);position:relative;overflow:hidden}
-.final .box::before,.final .box::after{content:"";position:absolute;border-radius:50%;background:var(--on-primary);opacity:.08;animation:float 12s ease-in-out infinite}
-.final .box::before{width:300px;height:300px;left:-80px;top:-100px}.final .box::after{width:360px;height:360px;right:-100px;bottom:-140px;animation-delay:-5s}
-.final h2{position:relative}.final p{position:relative;opacity:.85;max-width:520px;margin:0 auto 28px}
-.final .btn{position:relative;background:var(--on-primary);color:var(--primary)}
-footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));text-align:center;color:var(--on-surface-variant);font-size:14px}
+.final .box{border-radius:20px;padding:clamp(40px,7vw,72px) 24px;background:var(--primary);color:var(--on-primary)}
+.final p{opacity:.85;max-width:520px;margin:0 auto 28px}
+.final .btn{background:var(--on-primary);color:var(--primary)}
+footer{padding:32px 0 calc(32px + env(safe-area-inset-bottom));text-align:center;color:var(--on-surface-variant);font-size:14px;border-top:1px solid var(--outline-variant)}
 
 /* ---- responsive ---- */
 @media(max-width:980px){
@@ -206,13 +188,11 @@ footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));text-align:center
   .split .panel-wrap{order:2}
 }
 @media(max-width:640px){
-  .wrap{width:min(1160px,100% - 32px)}
+  .wrap{width:min(1120px,100% - 32px)}
   .g3,.steps,.cr-grid{grid-template-columns:1fr}
   .cta .btn{flex:1 1 100%}
   .float-card{display:none}
   .nav-in .btn{display:none}
-  .card{padding:22px;border-radius:24px}
-  .blob.a{width:280px;height:280px}.blob.b{width:240px;height:240px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 </style>
@@ -253,8 +233,7 @@ footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));text-align:center
 
 <main id="top">
   <section class="hero">
-    <div class="blob a"></div><div class="blob b"></div>
-    <div class="wrap hero-grid">
+        <div class="wrap hero-grid">
       <div>
         <span class="chip rv"><i></i><span data-i="hero.chip"></span></span>
         <h1 class="rv" style="--d:.08s"><span data-i="hero.t1"></span> <em data-i="hero.t2"></em></h1>
@@ -312,7 +291,8 @@ footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));text-align:center
         <div class="panel" aria-hidden="true">
           <div class="pn-head"><i></i><i></i><i></i></div>
           <div class="seg"><div data-i="mock.expense"></div><div class="act" data-i="mock.income"></div></div>
-          <div class="field"><small data-i="mock.amount"></small><b>1.500.000 ₫</b></div>
+          <div class="field"><small data-i="mock.amount"></small><b>2 ₫</b></div>
+          <div class="pn-sug"><span>2.000</span><span>20.000</span><span>200.000</span><span>2.000.000</span></div>
           <div class="pn-chips"><span class="sel">💰 <span data-i="mock.sal" style="margin-left:4px"></span></span><span>🎁 <span data-i="mock.bonus" style="margin-left:4px"></span></span><span>📈 <span data-i="mock.invest" style="margin-left:4px"></span></span></div>
           <div class="pn-btn" data-i="mock.save"></div>
         </div>
@@ -343,7 +323,7 @@ footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));text-align:center
   <section id="about">
     <div class="wrap center">
       <div class="rv"><span class="eyebrow" data-i="a.eyebrow"></span><h2 data-i="a.title"></h2><p class="sub" data-i="a.sub"></p></div>
-      <div class="tech rv" style="--d:.1s"><span>React 19</span><span>Vite</span><span>Tailwind CSS</span><span>Material Design 3</span><span>Firebase</span><span>Recharts</span><span>PWA</span></div>
+      <div class="tech rv" style="--d:.1s"><span>React 19</span><span>Vite</span><span>Tailwind CSS</span><span>oklch design tokens</span><span>Firebase</span><span>Recharts</span><span>PWA</span></div>
       <div class="credit rv" style="text-align:left;--d:.15s">
         <span class="eyebrow" data-i="cr.title"></span>
         <div class="cr-grid">
@@ -365,39 +345,39 @@ footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));text-align:center
 <footer><div class="wrap"><p style="font-size:13px">© 2026 Expenser · MIT License</p></div></footer>
 
 <script>
-const PRESETS = {"blue":{"seed":"#2196F3","light":{"primary":"#36618E","onPrimary":"#FFFFFF","primaryContainer":"#D1E4FF","onPrimaryContainer":"#194975","secondary":"#535F70","onSecondary":"#FFFFFF","secondaryContainer":"#D7E3F7","onSecondaryContainer":"#3B4858","tertiary":"#6B5778","onTertiary":"#FFFFFF","tertiaryContainer":"#F2DAFF","onTertiaryContainer":"#523F5F","surface":"#F8F9FF","onSurface":"#191C20","onSurfaceVariant":"#43474E","surfaceContainerLow":"#F2F3FA","surfaceContainer":"#ECEEF4","surfaceContainerHigh":"#E6E8EE","surfaceContainerHighest":"#E1E2E8","outline":"#73777F","outlineVariant":"#C3C7CF","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#2E3135","inverseOnSurface":"#EFF0F7"},"dark":{"primary":"#A0CAFD","onPrimary":"#003258","primaryContainer":"#194975","onPrimaryContainer":"#D1E4FF","secondary":"#BBC7DB","onSecondary":"#253140","secondaryContainer":"#3B4858","onSecondaryContainer":"#D7E3F7","tertiary":"#D6BEE4","onTertiary":"#3B2948","tertiaryContainer":"#523F5F","onTertiaryContainer":"#F2DAFF","surface":"#111418","onSurface":"#E1E2E8","onSurfaceVariant":"#C3C7CF","surfaceContainerLow":"#191C20","surfaceContainer":"#1D2024","surfaceContainerHigh":"#272A2F","surfaceContainerHighest":"#32353A","outline":"#8D9199","outlineVariant":"#43474E","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#E1E2E8","inverseOnSurface":"#2E3135"}},"teal":{"seed":"#26A69A","light":{"primary":"#006A62","onPrimary":"#FFFFFF","primaryContainer":"#9DF2E6","onPrimaryContainer":"#005049","secondary":"#4A635F","onSecondary":"#FFFFFF","secondaryContainer":"#CCE8E3","onSecondaryContainer":"#324B48","tertiary":"#46617A","onTertiary":"#FFFFFF","tertiaryContainer":"#CDE5FF","onTertiaryContainer":"#2E4961","surface":"#F4FBF8","onSurface":"#161D1C","onSurfaceVariant":"#3F4947","surfaceContainerLow":"#EFF5F3","surfaceContainer":"#E9EFED","surfaceContainerHigh":"#E3EAE7","surfaceContainerHighest":"#DDE4E2","outline":"#6F7977","outlineVariant":"#BEC9C6","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#2B3230","inverseOnSurface":"#ECF2F0"},"dark":{"primary":"#81D5CA","onPrimary":"#003732","primaryContainer":"#005049","onPrimaryContainer":"#9DF2E6","secondary":"#B1CCC7","onSecondary":"#1C3531","secondaryContainer":"#324B48","onSecondaryContainer":"#CCE8E3","tertiary":"#AEC9E6","onTertiary":"#163349","tertiaryContainer":"#2E4961","onTertiaryContainer":"#CDE5FF","surface":"#0E1514","onSurface":"#DDE4E2","onSurfaceVariant":"#BEC9C6","surfaceContainerLow":"#161D1C","surfaceContainer":"#1A2120","surfaceContainerHigh":"#252B2A","surfaceContainerHighest":"#303635","outline":"#899390","outlineVariant":"#3F4947","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#DDE4E2","inverseOnSurface":"#2B3230"}},"green":{"seed":"#66BB6A","light":{"primary":"#39693B","onPrimary":"#FFFFFF","primaryContainer":"#BAF0B6","onPrimaryContainer":"#215025","secondary":"#52634F","onSecondary":"#FFFFFF","secondaryContainer":"#D5E8CF","onSecondaryContainer":"#3B4B39","tertiary":"#39656B","onTertiary":"#FFFFFF","tertiaryContainer":"#BCEBF1","onTertiaryContainer":"#1F4D53","surface":"#F7FBF1","onSurface":"#181D17","onSurfaceVariant":"#424940","surfaceContainerLow":"#F1F5EC","surfaceContainer":"#EBEFE6","surfaceContainerHigh":"#E6E9E0","surfaceContainerHighest":"#E0E4DB","outline":"#72796F","outlineVariant":"#C2C9BD","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#2D322C","inverseOnSurface":"#EEF2E9"},"dark":{"primary":"#9FD49C","onPrimary":"#063911","primaryContainer":"#215025","onPrimaryContainer":"#BAF0B6","secondary":"#B9CCB4","onSecondary":"#253424","secondaryContainer":"#3B4B39","onSecondaryContainer":"#D5E8CF","tertiary":"#A1CED5","onTertiary":"#00363C","tertiaryContainer":"#1F4D53","onTertiaryContainer":"#BCEBF1","surface":"#10140F","onSurface":"#E0E4DB","onSurfaceVariant":"#C2C9BD","surfaceContainerLow":"#181D17","surfaceContainer":"#1C211B","surfaceContainerHigh":"#272B25","surfaceContainerHighest":"#323630","outline":"#8C9388","outlineVariant":"#424940","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#E0E4DB","inverseOnSurface":"#2D322C"}},"amber":{"seed":"#F2B84B","light":{"primary":"#7B580D","onPrimary":"#FFFFFF","primaryContainer":"#FFDEAA","onPrimaryContainer":"#5F4100","secondary":"#6D5C3F","onSecondary":"#FFFFFF","secondaryContainer":"#F8DFBB","onSecondaryContainer":"#54442A","tertiary":"#4D6543","onTertiary":"#FFFFFF","tertiaryContainer":"#CFEBC0","onTertiaryContainer":"#364D2D","surface":"#FFF8F3","onSurface":"#201B13","onSurfaceVariant":"#4E4639","surfaceContainerLow":"#FDF2E5","surfaceContainer":"#F8ECDF","surfaceContainerHigh":"#F2E6D9","surfaceContainerHighest":"#ECE1D4","outline":"#807667","outlineVariant":"#D2C5B4","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#353027","inverseOnSurface":"#FAEFE2"},"dark":{"primary":"#EEBF6D","onPrimary":"#422C00","primaryContainer":"#5F4100","onPrimaryContainer":"#FFDEAA","secondary":"#DAC3A1","onSecondary":"#3C2E16","secondaryContainer":"#54442A","onSecondaryContainer":"#F8DFBB","tertiary":"#B4CEA5","onTertiary":"#203619","tertiaryContainer":"#364D2D","onTertiaryContainer":"#CFEBC0","surface":"#17130B","onSurface":"#ECE1D4","onSurfaceVariant":"#D2C5B4","surfaceContainerLow":"#201B13","surfaceContainer":"#241F17","surfaceContainerHigh":"#2F2921","surfaceContainerHighest":"#3A342B","outline":"#9A8F80","outlineVariant":"#4E4639","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#ECE1D4","inverseOnSurface":"#353027"}},"orange":{"seed":"#F28C4B","light":{"primary":"#8C4F27","onPrimary":"#FFFFFF","primaryContainer":"#FFDBC9","onPrimaryContainer":"#6F3812","secondary":"#765847","onSecondary":"#FFFFFF","secondaryContainer":"#FFDBC9","onSecondaryContainer":"#5C4131","tertiary":"#626033","onTertiary":"#FFFFFF","tertiaryContainer":"#E9E5AB","onTertiaryContainer":"#4A481D","surface":"#FFF8F5","onSurface":"#221A15","onSurfaceVariant":"#52443C","surfaceContainerLow":"#FFF1EB","surfaceContainer":"#FCEAE2","surfaceContainerHigh":"#F6E5DD","surfaceContainerHighest":"#F0DFD7","outline":"#85746B","outlineVariant":"#D7C2B8","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#382E29","inverseOnSurface":"#FFEDE5"},"dark":{"primary":"#FFB68C","onPrimary":"#532200","primaryContainer":"#6F3812","onPrimaryContainer":"#FFDBC9","secondary":"#E5BFAA","onSecondary":"#432B1D","secondaryContainer":"#5C4131","onSecondaryContainer":"#FFDBC9","tertiary":"#CCC992","onTertiary":"#333208","tertiaryContainer":"#4A481D","onTertiaryContainer":"#E9E5AB","surface":"#1A120D","onSurface":"#F0DFD7","onSurfaceVariant":"#D7C2B8","surfaceContainerLow":"#221A15","surfaceContainer":"#271E19","surfaceContainerHigh":"#312823","surfaceContainerHighest":"#3D332D","outline":"#9F8D84","outlineVariant":"#52443C","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#F0DFD7","inverseOnSurface":"#382E29"}},"rose":{"seed":"#E8648B","light":{"primary":"#8D4A5B","onPrimary":"#FFFFFF","primaryContainer":"#FFD9E0","onPrimaryContainer":"#713344","secondary":"#75565D","onSecondary":"#FFFFFF","secondaryContainer":"#FFD9E0","onSecondaryContainer":"#5B3F45","tertiary":"#7B5733","onTertiary":"#FFFFFF","tertiaryContainer":"#FFDCBE","onTertiaryContainer":"#60401E","surface":"#FFF8F7","onSurface":"#22191B","onSurfaceVariant":"#514346","surfaceContainerLow":"#FFF0F2","surfaceContainer":"#FBEAEC","surfaceContainerHigh":"#F5E4E6","surfaceContainerHighest":"#EFDEE0","outline":"#847376","outlineVariant":"#D6C2C5","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#382E30","inverseOnSurface":"#FEEDEF"},"dark":{"primary":"#FFB1C3","onPrimary":"#551D2E","primaryContainer":"#713344","onPrimaryContainer":"#FFD9E0","secondary":"#E4BDC4","onSecondary":"#43292F","secondaryContainer":"#5B3F45","onSecondaryContainer":"#FFD9E0","tertiary":"#EDBE92","onTertiary":"#462A09","tertiaryContainer":"#60401E","onTertiaryContainer":"#FFDCBE","surface":"#191113","onSurface":"#EFDEE0","onSurfaceVariant":"#D6C2C5","surfaceContainerLow":"#22191B","surfaceContainer":"#261D1F","surfaceContainerHigh":"#312829","surfaceContainerHighest":"#3C3234","outline":"#9E8C8F","outlineVariant":"#514346","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#EFDEE0","inverseOnSurface":"#382E30"}},"purple":{"seed":"#9575CD","light":{"primary":"#69548D","onPrimary":"#FFFFFF","primaryContainer":"#EBDCFF","onPrimaryContainer":"#503C74","secondary":"#635B70","onSecondary":"#FFFFFF","secondaryContainer":"#EADEF7","onSecondaryContainer":"#4B4358","tertiary":"#7F525D","onTertiary":"#FFFFFF","tertiaryContainer":"#FFD9E0","onTertiaryContainer":"#643B45","surface":"#FEF7FF","onSurface":"#1D1B20","onSurfaceVariant":"#49454E","surfaceContainerLow":"#F8F1F9","surfaceContainer":"#F3ECF4","surfaceContainerHigh":"#EDE6EE","surfaceContainerHighest":"#E7E0E8","outline":"#7A757F","outlineVariant":"#CBC4CF","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#322F35","inverseOnSurface":"#F5EEF7"},"dark":{"primary":"#D4BBFC","onPrimary":"#39255B","primaryContainer":"#503C74","onPrimaryContainer":"#EBDCFF","secondary":"#CDC2DB","onSecondary":"#342D40","secondaryContainer":"#4B4358","onSecondaryContainer":"#EADEF7","tertiary":"#F1B7C4","onTertiary":"#4A252F","tertiaryContainer":"#643B45","onTertiaryContainer":"#FFD9E0","surface":"#151218","onSurface":"#E7E0E8","onSurfaceVariant":"#CBC4CF","surfaceContainerLow":"#1D1B20","surfaceContainer":"#211F24","surfaceContainerHigh":"#2C292F","surfaceContainerHighest":"#37343A","outline":"#948E99","outlineVariant":"#49454E","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#E7E0E8","inverseOnSurface":"#322F35"}},"indigo":{"seed":"#5C6BC0","light":{"primary":"#515B92","onPrimary":"#FFFFFF","primaryContainer":"#DEE0FF","onPrimaryContainer":"#394379","secondary":"#5B5D72","onSecondary":"#FFFFFF","secondaryContainer":"#DFE1F9","onSecondaryContainer":"#434659","tertiary":"#76536D","onTertiary":"#FFFFFF","tertiaryContainer":"#FFD7F1","onTertiaryContainer":"#5D3C55","surface":"#FBF8FF","onSurface":"#1B1B21","onSurfaceVariant":"#46464F","surfaceContainerLow":"#F5F2FA","surfaceContainer":"#EFEDF4","surfaceContainerHigh":"#E9E7EF","surfaceContainerHighest":"#E4E1E9","outline":"#767680","outlineVariant":"#C6C5D0","income":"#006D38","onIncome":"#FFFFFF","incomeContainer":"#8DF9AC","onIncomeContainer":"#00210D","expense":"#BA1A1A","expenseContainer":"#FFDAD6","onExpenseContainer":"#93000A","inverseSurface":"#303036","inverseOnSurface":"#F2EFF7"},"dark":{"primary":"#BAC3FF","onPrimary":"#222C61","primaryContainer":"#394379","onPrimaryContainer":"#DEE0FF","secondary":"#C3C5DD","onSecondary":"#2C2F42","secondaryContainer":"#434659","onSecondaryContainer":"#DFE1F9","tertiary":"#E5BAD8","onTertiary":"#44263E","tertiaryContainer":"#5D3C55","onTertiaryContainer":"#FFD7F1","surface":"#121318","onSurface":"#E4E1E9","onSurfaceVariant":"#C6C5D0","surfaceContainerLow":"#1B1B21","surfaceContainer":"#1F1F25","surfaceContainerHigh":"#29292F","surfaceContainerHighest":"#34343A","outline":"#90909A","outlineVariant":"#46464F","income":"#71DC92","onIncome":"#00391A","incomeContainer":"#005229","onIncomeContainer":"#8DF9AC","expense":"#FFB4AB","expenseContainer":"#93000A","onExpenseContainer":"#FFDAD6","inverseSurface":"#E4E1E9","inverseOnSurface":"#303036"}}};
+const PRESETS = {"green":{"seed":"#008236","val":"","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#008236","onPrimary":"#FFFFFF","primaryContainer":"#E6F2EB","onPrimaryContainer":"#008236"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#00C952","onPrimary":"#0A0A0A","primaryContainer":"#092514","onPrimaryContainer":"#00C952"}},"blue":{"seed":"#2563EB","val":"#2563EB","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#3965C3","onPrimary":"#FFFFFF","primaryContainer":"#EBF0F9","onPrimaryContainer":"#3965C3"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#589DFF","onPrimary":"#0A0A0A","primaryContainer":"#151F2C","onPrimaryContainer":"#589DFF"}},"teal":{"seed":"#0D9488","val":"#0D9488","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#008576","onPrimary":"#FFFFFF","primaryContainer":"#E6F3F1","onPrimaryContainer":"#008576"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#00CEB7","onPrimary":"#0A0A0A","primaryContainer":"#092522","onPrimaryContainer":"#00CEB7"}},"amber":{"seed":"#D97706","val":"#D97706","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#A94D00","onPrimary":"#FFFFFF","primaryContainer":"#F6EDE6","onPrimaryContainer":"#A94D00"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#FF7700","onPrimary":"#0A0A0A","primaryContainer":"#2C1909","onPrimaryContainer":"#FF7700"}},"orange":{"seed":"#EA580C","val":"#EA580C","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#B1430F","onPrimary":"#FFFFFF","primaryContainer":"#F7ECE7","onPrimaryContainer":"#B1430F"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#FF670B","onPrimary":"#0A0A0A","primaryContainer":"#2C170A","onPrimaryContainer":"#FF670B"}},"rose":{"seed":"#E11D48","val":"#E11D48","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#B23B49","onPrimary":"#FFFFFF","primaryContainer":"#F7EBED","onPrimaryContainer":"#B23B49"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#FF5A71","onPrimary":"#0A0A0A","primaryContainer":"#2C1518","onPrimaryContainer":"#FF5A71"}},"purple":{"seed":"#7C3AED","val":"#7C3AED","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#7055BA","onPrimary":"#FFFFFF","primaryContainer":"#F1EEF8","onPrimaryContainer":"#7055BA"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#AE82FF","onPrimary":"#0A0A0A","primaryContainer":"#211B2C","onPrimaryContainer":"#AE82FF"}},"indigo":{"seed":"#4F46E5","val":"#4F46E5","light":{"secondary":"#525252","secondaryContainer":"#EFEFEF","onSecondaryContainer":"#0A0A0A","tertiary":"#737373","tertiaryContainer":"#F5F5F5","onTertiaryContainer":"#0A0A0A","surface":"#FFFFFF","onSurface":"#0A0A0A","onSurfaceVariant":"#737373","outline":"#D4D4D4","outlineVariant":"#E5E5E5","surfaceContainerLow":"#FAFAFA","surfaceContainer":"#F5F5F5","surfaceContainerHigh":"#EFEFEF","surfaceContainerHighest":"#E5E5E5","income":"#008236","incomeContainer":"#E6F2EB","onIncomeContainer":"#006B2D","expense":"#E7000B","expenseContainer":"#FDE6E7","onExpenseContainer":"#B80009","primary":"#575DC2","onPrimary":"#FFFFFF","primaryContainer":"#EEEFF9","onPrimaryContainer":"#575DC2"},"dark":{"secondary":"#A1A1A1","secondaryContainer":"#2E2E2E","onSecondaryContainer":"#FAFAFA","tertiary":"#A1A1A1","tertiaryContainer":"#262626","onTertiaryContainer":"#FAFAFA","surface":"#0A0A0A","onSurface":"#FAFAFA","onSurfaceVariant":"#A1A1A1","outline":"#3F3F3F","outlineVariant":"#262626","surfaceContainerLow":"#171717","surfaceContainer":"#1C1C1C","surfaceContainerHigh":"#262626","surfaceContainerHighest":"#2E2E2E","income":"#00C950","incomeContainer":"#092514","onIncomeContainer":"#00C950","expense":"#FF6467","expenseContainer":"#2E1214","onExpenseContainer":"#FF6467","primary":"#8790FF","onPrimary":"#0A0A0A","primaryContainer":"#1C1D2C","onPrimaryContainer":"#8790FF"}}};
 const I18N = {
 vi:{'nav.features':'Tính năng','nav.themes':'Giao diện','nav.how':'Cách dùng','nav.about':'Giới thiệu','cta.open':'Mở ứng dụng','cta.start':'Bắt đầu miễn phí','cta.explore':'Khám phá tính năng',
-'hero.chip':'Material Design 3 · Mã nguồn mở','hero.t1':'Quản lý chi tiêu','hero.t2':'gọn gàng, thông minh.','hero.lead':'Ghi lại thu chi trong vài giây, theo dõi nhiều ví, xem thống kê trực quan và xuất báo cáo chuyên nghiệp — tất cả trong một ứng dụng đẹp, nhanh và hoạt động cả khi offline.',
+'hero.chip':'Thiết kế tối giản · Mã nguồn mở','hero.t1':'Quản lý chi tiêu','hero.t2':'gọn gàng, thông minh.','hero.lead':'Ghi lại thu chi trong vài giây, theo dõi nhiều ví, xem thống kê trực quan và xuất báo cáo chuyên nghiệp — tất cả trong một ứng dụng đẹp, nhanh và hoạt động cả khi offline.',
 'badge.free':'Miễn phí','badge.oss':'Mã nguồn mở','badge.offline':'Dùng được offline',
 'mock.month':'Tháng này','mock.balance':'Tổng số dư','mock.income':'Thu nhập','mock.expense':'Chi tiêu','mock.food':'Ăn uống','mock.move':'Di chuyển','mock.sal':'Lương','mock.salary':'Lương tháng','mock.report':'Xuất báo cáo','mock.amount':'Số tiền','mock.bonus':'Thưởng','mock.invest':'Đầu tư','mock.save':'Lưu giao dịch',
 'f.eyebrow':'Tính năng','f.title':'Mọi thứ bạn cần để làm chủ tài chính','f.sub':'Đơn giản khi dùng hằng ngày, đủ mạnh khi cần phân tích.',
 'f1.t':'Nhiều ví & chuyển tiền','f1.d':'Quản lý tiền mặt, ngân hàng, ví điện tử riêng biệt và chuyển tiền giữa các ví chỉ với vài chạm.',
 'f2.t':'Thống kê trực quan','f2.d':'Lọc theo hôm nay, tuần, tháng, năm; xem xu hướng, so sánh thu chi và biểu đồ tròn theo danh mục.',
-'f3.t':'Đổi màu chủ đề','f3.d':'Giao diện Material You: chọn màu yêu thích, toàn bộ bảng màu sáng/tối tự động hài hòa theo.',
+'f3.t':'Sáng, tối & màu nhấn','f3.d':'Giao diện tối giản theo hệ thống sáng/tối; chọn màu nhấn yêu thích, nền và chữ vẫn giữ sự tinh gọn.',
 'f4.t':'Song ngữ Việt · Anh','f4.d':'Chuyển ngôn ngữ tức thì, định dạng ngày giờ và tiền tệ tự động theo ngôn ngữ.',
 'f5.t':'Báo cáo & nhập/xuất','f5.d':'Xuất PDF, Excel, ảnh có biểu đồ tròn; sao lưu CSV/JSON và nhập lại dữ liệu nhanh chóng.',
 'f6.t':'PWA & offline','f6.d':'Cài lên màn hình chính như app thật, mở nhanh, vẫn ghi chép khi mất mạng và tự đồng bộ sau.',
-'t.eyebrow':'Giao diện','t.title':'Màu sắc của riêng bạn','t.sub':'Chọn một màu — Expenser tự tạo bảng màu Material 3 đầy đủ cho chế độ sáng và tối. Thử ngay bên dưới, trang này đổi màu theo!','t.hint':'Trong ứng dụng, bạn còn có thể chọn bất kỳ màu nào trong Cài đặt.',
-'h.eyebrow':'Cách dùng','h.title':'Bắt đầu chỉ trong 3 bước','h1.t':'Đăng nhập','h1.d':'Dùng tài khoản Google, không cần nhớ thêm mật khẩu.','h2.t':'Ghi chép thu chi','h2.d':'Nhập số tiền, chọn danh mục & ví. Vuốt để sửa hoặc xóa nhanh.','h3.t':'Xem & xuất báo cáo','h3.d':'Theo dõi thống kê, xuất báo cáo PDF/Excel khi cần.',
-'s1':'Miễn phí','s2':'Ngôn ngữ','s3':'Màu chủ đề','s4':'Giấy phép mở',
+'t.eyebrow':'Giao diện','t.title':'Màu nhấn của riêng bạn','t.sub':'Chọn một màu nhấn — Expenser tự tính bản sáng và tối với độ tương phản phù hợp. Thử ngay bên dưới, trang này đổi màu theo!','t.hint':'Trong ứng dụng, bạn còn có thể chọn bất kỳ màu nào trong Cài đặt.',
+'h.eyebrow':'Cách dùng','h.title':'Bắt đầu chỉ trong 3 bước','h1.t':'Đăng nhập','h1.d':'Dùng tài khoản Google, không cần nhớ thêm mật khẩu.','h2.t':'Ghi chép thu chi','h2.d':'Gõ “2” là có ngay gợi ý 2.000, 20.000, 200.000… chạm để điền. Vuốt để sửa hoặc xóa nhanh.','h3.t':'Xem & xuất báo cáo','h3.d':'Theo dõi thống kê, xuất báo cáo PDF/Excel khi cần.',
+'s1':'Miễn phí','s2':'Ngôn ngữ','s3':'Màu nhấn','s4':'Giấy phép mở',
 'a.eyebrow':'Về dự án','a.title':'Xây dựng với tình yêu cho mã nguồn mở','a.sub':'Expenser là dự án công khai, mã nguồn mở theo giấy phép MIT. Đóng góp và góp ý luôn được chào đón.',
 'cr.title':'Đội ngũ phát triển','cr.author':'Tác giả','cr.ai':'Với sự hỗ trợ của AI',
 'end.title':'Sẵn sàng kiểm soát chi tiêu?','end.sub':'Mở Expenser và ghi giao dịch đầu tiên của bạn ngay hôm nay.'},
 en:{'nav.features':'Features','nav.themes':'Themes','nav.how':'How it works','nav.about':'About','cta.open':'Open app','cta.start':'Get started free','cta.explore':'Explore features',
-'hero.chip':'Material Design 3 · Open source','hero.t1':'Manage your money','hero.t2':'simply and smartly.','hero.lead':'Log income and expenses in seconds, track multiple wallets, explore clear statistics and export professional reports — in one beautiful, fast app that even works offline.',
+'hero.chip':'Minimalist design · Open source','hero.t1':'Manage your money','hero.t2':'simply and smartly.','hero.lead':'Log income and expenses in seconds, track multiple wallets, explore clear statistics and export professional reports — in one beautiful, fast app that even works offline.',
 'badge.free':'Free','badge.oss':'Open source','badge.offline':'Works offline',
 'mock.month':'This month','mock.balance':'Total balance','mock.income':'Income','mock.expense':'Expense','mock.food':'Food','mock.move':'Transport','mock.sal':'Salary','mock.salary':'Monthly salary','mock.report':'Export report','mock.amount':'Amount','mock.bonus':'Bonus','mock.invest':'Investment','mock.save':'Save transaction',
 'f.eyebrow':'Features','f.title':'Everything you need to own your finances','f.sub':'Effortless for everyday use, powerful when you need insight.',
 'f1.t':'Multiple wallets & transfers','f1.d':'Keep cash, bank and e-wallet balances separate and move money between them in a few taps.',
 'f2.t':'Visual statistics','f2.d':'Filter by today, week, month or year; see trends, income vs. expense and category pie charts.',
-'f3.t':'Custom theme colour','f3.d':'Material You styling: pick a favourite colour and the whole light/dark palette follows.',
+'f3.t':'Light, dark & accent','f3.d':'A calm minimalist look that follows light/dark mode; pick an accent colour while backgrounds and text stay clean.',
 'f4.t':'Bilingual: Vietnamese · English','f4.d':'Switch language instantly; dates and currency format themselves to match.',
 'f5.t':'Reports & import/export','f5.d':'Export PDF, Excel or image reports with a pie chart; back up to CSV/JSON and import again.',
 'f6.t':'PWA & offline','f6.d':'Install it like a native app, launch fast, keep logging without a connection and sync later.',
-'t.eyebrow':'Appearance','t.title':'Colours that are yours','t.sub':'Pick a colour — Expenser generates a full Material 3 palette for light and dark mode. Try it below; this page changes too!','t.hint':'Inside the app you can choose any colour in Settings.',
-'h.eyebrow':'How it works','h.title':'Up and running in 3 steps','h1.t':'Sign in','h1.d':'Use your Google account — no extra password to remember.','h2.t':'Log your money','h2.d':'Enter an amount, pick a category and wallet. Swipe to edit or delete fast.','h3.t':'Review & export','h3.d':'Follow your statistics and export PDF/Excel reports when needed.',
-'s1':'Free','s2':'Languages','s3':'Theme colours','s4':'Open licence',
+'t.eyebrow':'Appearance','t.title':'An accent that is yours','t.sub':'Pick an accent colour — Expenser derives matching light and dark variants with the right contrast. Try it below; this page changes too!','t.hint':'Inside the app you can choose any colour in Settings.',
+'h.eyebrow':'How it works','h.title':'Up and running in 3 steps','h1.t':'Sign in','h1.d':'Use your Google account — no extra password to remember.','h2.t':'Log your money','h2.d':'Type “2” and tap 2,000 / 20,000 / 200,000… to fill it in. Swipe to edit or delete fast.','h3.t':'Review & export','h3.d':'Follow your statistics and export PDF/Excel reports when needed.',
+'s1':'Free','s2':'Languages','s3':'Accent colours','s4':'Open licence',
 'a.eyebrow':'About','a.title':'Built with love for open source','a.sub':'Expenser is a public, open-source project under the MIT licence. Contributions and feedback are always welcome.',
 'cr.title':'Made by','cr.author':'Author','cr.ai':'With the help of AI',
 'end.title':'Ready to take control of your spending?','end.sub':'Open Expenser and log your first transaction today.'}
@@ -410,7 +390,7 @@ const prefersDark=matchMedia('(prefers-color-scheme: dark)');
 const state={
   lang:own.lang||app.language||((navigator.language||'vi').toLowerCase().startsWith('vi')?'vi':'en'),
   mode:own.mode||(app.themeMode&&app.themeMode!=='system'?app.themeMode:null),
-  preset:own.preset||(Object.keys(PRESETS).find(k=>PRESETS[k].seed.toLowerCase()===(app.seedColor||'').toLowerCase())||'blue')
+  preset:own.preset||(Object.keys(PRESETS).find(k=>PRESETS[k].val.toLowerCase()===(app.accentColor||'').toLowerCase())||'green')
 };
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
 const kebab=s=>s.replace(/[A-Z]/g,m=>'-'+m.toLowerCase());
@@ -424,8 +404,7 @@ function applyTheme(){
   root.style.setProperty('--sc-low',p.surfaceContainerLow);root.style.setProperty('--sc',p.surfaceContainer);
   root.style.setProperty('--sc-high',p.surfaceContainerHigh);root.style.setProperty('--sc-highest',p.surfaceContainerHighest);
   root.style.colorScheme=dark?'dark':'light';
-  root.style.setProperty('--hov',dark?'.05':'.08');root.style.setProperty('--prs',dark?'.08':'.12');
-  root.style.setProperty('--hover-mix',dark?'5%':'8%');
+  root.style.setProperty('--hov',dark?'.05':'.06');root.style.setProperty('--prs',dark?'.07':'.08');
   document.querySelector('meta[name=theme-color]').content=p.surface;
   document.getElementById('modeUse').setAttribute('href',dark?'#i-sun':'#i-moon');
   document.querySelectorAll('.sw').forEach(b=>{const on=b.dataset.id===state.preset;b.classList.toggle('on',on);b.setAttribute('aria-checked',on)});
@@ -442,7 +421,7 @@ const fmt=n=>n.toLocaleString(state.lang==='vi'?'vi-VN':'en-GB')+' ₫';
 // swatches
 const sw=document.getElementById('swatches');
 Object.entries(PRESETS).forEach(([id,p])=>{
-  const b=document.createElement('button');b.className='sw';b.dataset.id=id;b.style.background=p.seed;b.setAttribute('role','radio');b.setAttribute('aria-label',id);
+  const b=document.createElement('button');b.className='sw';b.dataset.id=id;b.style.background=p.seed;b.setAttribute('role','radio');b.setAttribute('aria-label',id);b.setAttribute('aria-checked','false');
   b.innerHTML='<svg width="22" height="22"><use href="#i-check"/></svg>';
   b.onclick=()=>{state.preset=id;save();applyTheme()};
   sw.appendChild(b);
@@ -471,15 +450,6 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.15,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 setTimeout(()=>document.querySelectorAll('[data-count][data-fmt]').forEach(countUp),500);
-
-// ripple
-document.addEventListener('pointerdown',e=>{
-  const el=e.target.closest('.btn,.icon-btn,.lang');if(!el)return;
-  if(!/btn|icon-btn/.test(el.className))return;
-  const r=el.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,w=document.createElement('span');
-  w.className='wave';w.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
-  el.appendChild(w);w.addEventListener('animationend',()=>w.remove());
-},{passive:true});
 </script>
 </body>
 </html>

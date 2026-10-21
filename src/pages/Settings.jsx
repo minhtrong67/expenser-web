@@ -14,7 +14,7 @@ import { useI18n, LANGUAGES } from '../i18n';
 import { usePwaInstall } from '../hooks/usePwaInstall';
 import { useSessionState } from '../hooks/useSessionState';
 import { isNonEmpty, isStrongPassword } from '../utils/validators';
-import { DEFAULT_SEED, THEME_PRESETS, isValidHex } from '../theme';
+import { ACCENT_PRESETS, DEFAULT_ACCENT, isValidHex } from '../theme';
 
 const FONT_SIZES = ['sm', 'md', 'lg'];
 
@@ -37,14 +37,14 @@ function Section({ id, title, icon, description, collapsible = false, open = tru
 
   if (!collapsible) {
     return (
-      <section className="rounded-3xl bg-surface-container-low p-4 sm:p-5">
+      <section className="rounded-2xl border border-line bg-card p-4 sm:p-5">
         <div className="mb-4 flex items-start gap-3">{header}</div>
         <div className="flex flex-col gap-4">{children}</div>
       </section>
     );
   }
   return (
-    <section className="overflow-hidden rounded-3xl bg-surface-container-low">
+    <section className="overflow-hidden rounded-2xl border border-line bg-card">
       <button
         type="button"
         onClick={onToggle}
@@ -68,7 +68,7 @@ function Section({ id, title, icon, description, collapsible = false, open = tru
 
 /** Small caption that groups rows inside a section. */
 function Group({ children }) {
-  return <p className="text-label-md uppercase tracking-wider text-primary">{children}</p>;
+  return <p className="text-label-md font-semibold text-brand">{children}</p>;
 }
 
 function Row({ label, hint, children }) {
@@ -89,11 +89,13 @@ const DEFAULT_OPEN = { account: true, appearance: false, data: false };
 
 function ThemeColorPicker({ value, onChange }) {
   const { t } = useI18n();
-  const isPreset = THEME_PRESETS.some((p) => p.seed.toLowerCase() === value.toLowerCase());
+  const current = (value || '').toLowerCase();
+  const isPreset = ACCENT_PRESETS.some((p) => p.hex.toLowerCase() === current);
+  const ring = 'ring-2 ring-brand ring-offset-2 ring-offset-card';
   return (
     <div className="flex flex-wrap items-center gap-3" role="radiogroup" aria-label={t('settings.color')}>
-      {THEME_PRESETS.map((p) => {
-        const active = p.seed.toLowerCase() === value.toLowerCase();
+      {ACCENT_PRESETS.map((p) => {
+        const active = p.hex.toLowerCase() === current;
         return (
           <button
             key={p.id}
@@ -102,22 +104,22 @@ function ThemeColorPicker({ value, onChange }) {
             aria-checked={active}
             aria-label={t(`settings.colors.${p.id}`)}
             title={t(`settings.colors.${p.id}`)}
-            onClick={() => onChange(p.seed)}
-            className={`flex h-11 w-11 items-center justify-center rounded-full text-white transition-transform duration-200 ease-emphasized hover:scale-110 ${active ? 'ring-2 ring-primary ring-offset-2 ring-offset-surface-container-low' : ''}`}
-            style={{ backgroundColor: p.seed }}
+            onClick={() => onChange(p.hex)}
+            className={`flex h-9 w-9 items-center justify-center rounded-full text-white transition-transform duration-200 ease-emphasized hover:scale-110 ${active ? ring : ''}`}
+            style={{ backgroundColor: p.swatch }}
           >
-            {active && <Icon name="check" size={20} />}
+            {active && <Icon name="check" size={18} />}
           </button>
         );
       })}
-      {/* Free colour: any hex via the native colour picker */}
+      {/* Free colour: any hex via the native colour picker (only its hue is used) */}
       <label
         title={t('settings.colors.custom')}
-        className={`relative flex h-11 w-11 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-outline text-on-surface-variant transition-transform duration-200 ease-emphasized hover:scale-110 ${!isPreset ? 'ring-2 ring-primary ring-offset-2 ring-offset-surface-container-low' : ''}`}
+        className={`relative flex h-9 w-9 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-outline text-on-surface-variant transition-transform duration-200 ease-emphasized hover:scale-110 ${!isPreset ? ring : ''}`}
         style={!isPreset ? { backgroundColor: value } : undefined}
       >
-        <Icon name="colorize" size={20} className={!isPreset ? 'text-white' : ''} />
-        <input type="color" value={value} aria-label={t('settings.colors.custom')} onChange={(e) => isValidHex(e.target.value) && onChange(e.target.value.toUpperCase())} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+        <Icon name="colorize" size={18} className={!isPreset ? 'text-white' : ''} />
+        <input type="color" value={isPreset ? '#008236' : value} aria-label={t('settings.colors.custom')} onChange={(e) => isValidHex(e.target.value) && onChange(e.target.value.toUpperCase())} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
       </label>
     </div>
   );
@@ -257,8 +259,7 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-3 pb-4 sm:space-y-4">
       {!installed && (
-        <section className="relative overflow-hidden rounded-3xl bg-primary-container p-5 text-on-primary-container sm:p-6">
-          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-primary/10" />
+        <section className="relative overflow-hidden rounded-2xl border border-brand/20 bg-primary-container p-5 text-on-primary-container sm:p-6">
           <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-3">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15">
@@ -334,13 +335,13 @@ export default function SettingsPage() {
               <p className="text-title-sm text-on-surface">{t('settings.color')}</p>
               <p className="mt-0.5 text-body-sm text-on-surface-variant">{t('settings.colorHint')}</p>
             </div>
-            {settings.seedColor !== DEFAULT_SEED && (
-              <Button variant="text" size="sm" icon="restart_alt" onClick={() => update({ seedColor: DEFAULT_SEED })} className="shrink-0">
+            {settings.accentColor !== DEFAULT_ACCENT && (
+              <Button variant="text" size="sm" icon="restart_alt" onClick={() => update({ accentColor: DEFAULT_ACCENT })} className="shrink-0">
                 {t('settings.colorReset')}
               </Button>
             )}
           </div>
-          <ThemeColorPicker value={settings.seedColor} onChange={(seedColor) => update({ seedColor })} />
+          <ThemeColorPicker value={settings.accentColor} onChange={(accentColor) => update({ accentColor })} />
         </div>
         <Divider />
         <div>
@@ -391,7 +392,7 @@ export default function SettingsPage() {
             href="/landing.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="state-layer ripple inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-full bg-secondary-container px-4 text-label-lg text-on-secondary-container"
+            className="state-layer inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg bg-secondary-container px-3 text-label-lg text-on-secondary-container"
           >
             <Icon name="open_in_new" size={18} />
             {t('settings.landingOpen')}

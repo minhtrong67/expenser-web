@@ -133,7 +133,7 @@ export default function TransactionsPage() {
           </>
         ) : (
           <>
-            <div className="flex flex-col items-start gap-3 rounded-2xl bg-income-container p-4 text-on-income-container transition-shadow hover:shadow-elev-1">
+            <div className="flex flex-col items-start gap-3 rounded-xl border border-line bg-income-container p-4 text-on-income-container">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-income text-on-income">
                 <Icon name="arrow_upward" size={20} />
               </span>
@@ -142,7 +142,7 @@ export default function TransactionsPage() {
                 <p className="wrap-any text-title-md font-bold tabular-nums leading-tight sm:text-title-lg">{formatMoney(stats.monthIncome)}</p>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-3 rounded-2xl bg-expense-container p-4 text-on-expense-container transition-shadow hover:shadow-elev-1">
+            <div className="flex flex-col items-start gap-3 rounded-xl border border-line bg-expense-container p-4 text-on-expense-container">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-expense text-on-expense">
                 <Icon name="arrow_downward" size={20} />
               </span>
@@ -188,7 +188,7 @@ export default function TransactionsPage() {
           {loading ? (
             <TableSkeleton />
           ) : filtered.length === 0 ? (
-            <div className="rounded-2xl bg-surface-container-low">
+            <div className="rounded-2xl border border-line bg-card">
               {transactions.length > 0 ? (
                 <EmptyState
                   icon="filter_alt_off"
@@ -236,7 +236,7 @@ export default function TransactionsPage() {
                                                         onEdit={isTransfer ? undefined : () => editTx(tx)}
                             onDelete={isTransfer ? undefined : () => setDeleteTarget(tx)}
                           >
-                            <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low p-3">
+                            <div className="flex items-center gap-3 rounded-2xl border border-line bg-card p-3">
                               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: `${cat?.color || '#64748B'}26`, color: cat?.color || '#64748B' }}>
                                 {isTransfer ? <Icon name="sync_alt" size={20} /> : <Emoji size={22}>{getCategoryEmoji(cat)}</Emoji>}
                               </span>

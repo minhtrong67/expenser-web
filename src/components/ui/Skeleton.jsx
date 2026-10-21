@@ -4,7 +4,7 @@ export function Skeleton({ className = '' }) {
 
 export function CardSkeleton() {
   return (
-    <div className="rounded-2xl bg-surface-container-low p-5">
+    <div className="rounded-2xl border border-line bg-card p-5">
       <Skeleton className="mb-3 h-4 w-24" />
       <Skeleton className="h-8 w-32" />
     </div>
@@ -26,7 +26,7 @@ export function RowSkeleton() {
 
 export function TableSkeleton({ rows = 6 }) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-surface-container-low">
+    <div className="overflow-hidden rounded-2xl border border-line bg-card">
       {Array.from({ length: rows }).map((_, i) => (
         <RowSkeleton key={i} />
       ))}
@@ -36,7 +36,7 @@ export function TableSkeleton({ rows = 6 }) {
 
 export function ChartSkeleton() {
   return (
-    <div className="rounded-2xl bg-surface-container-low p-5">
+    <div className="rounded-2xl border border-line bg-card p-5">
       <Skeleton className="mb-4 h-4 w-40" />
       <Skeleton className="h-56 w-full" />
     </div>
@@ -50,7 +50,7 @@ export function CalendarSkeleton() {
         <CardSkeleton />
         <CardSkeleton />
       </div>
-      <div className="rounded-2xl bg-surface-container-low p-4">
+      <div className="rounded-2xl border border-line bg-card p-4">
         <div className="mb-4 flex items-center justify-between">
           <Skeleton className="h-4 w-28" />
           <Skeleton className="h-8 w-20" />

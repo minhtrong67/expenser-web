@@ -14,20 +14,20 @@ async function loadExcel() {
   return mod.Workbook ? mod : mod.default;
 }
 
-// Brand palette for reports (matches the default Material 3 blue theme)
-const BRAND = [54, 97, 142];
-const INK = [25, 28, 32];
-const MUTED = [68, 71, 78];
-const ZEBRA = [243, 243, 250];
+// Brand palette for reports (matches the default expenser-theme.css: green on neutral)
+const BRAND = [0, 130, 54];
+const INK = [10, 10, 10];
+const MUTED = [82, 82, 82];
+const ZEBRA = [250, 250, 250];
 const HEX = {
-  brand: 'FF36618E',
-  ink: 'FF191C20',
-  muted: 'FF44474E',
-  zebra: 'FFF3F3FA',
-  line: 'FFE0E2EC',
+  brand: 'FF008236',
+  ink: 'FF0A0A0A',
+  muted: 'FF525252',
+  zebra: 'FFFAFAFA',
+  line: 'FFE5E5E5',
   white: 'FFFFFFFF',
-  income: 'FF006D38',
-  expense: 'FFBA1A1A',
+  income: 'FF008236',
+  expense: 'FFE7000B',
 };
 
 const hexToRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
@@ -446,7 +446,7 @@ async function buildImageReport(r) {
           `<div style="display:flex;align-items:center;gap:8px;height:${ROW_H}px;font-size:13px;line-height:${ROW_H}px">` +
           `<span style="flex:none;width:10px;height:10px;border-radius:3px;background:${escapeHtml(x.color)}"></span>` +
           `<span style="flex:1;min-width:0;white-space:nowrap;line-height:${ROW_H}px">${escapeHtml(shorten(x.name))}</span>` +
-          (showAmount ? `<span style="flex:none;color:#44474E;line-height:${ROW_H}px">${escapeHtml(formatMoney(x.value))}</span>` : '') +
+          (showAmount ? `<span style="flex:none;color:#525252;line-height:${ROW_H}px">${escapeHtml(formatMoney(x.value))}</span>` : '') +
           `<b style="flex:none;min-width:40px;text-align:right;line-height:${ROW_H}px">${Math.round(x.pct)}%</b>` +
           `</div>`,
       )
@@ -455,28 +455,28 @@ async function buildImageReport(r) {
     url
       ? `<div style="margin-top:22px"><div style="font-weight:700;font-size:15px;line-height:22px;margin-bottom:10px">${escapeHtml(heading)}</div><div style="display:flex;gap:20px;align-items:center"><img src="${url}" style="flex:none;width:190px;height:190px" alt=""/><div style="flex:1;min-width:0">${legend(slices, showAmount)}</div></div></div>`
       : '';
-  const stat = (label, value, bg, fg) => `<div style="flex:1;background:${bg};color:${fg};border-radius:18px;padding:14px 16px"><div style="font-size:12px;opacity:.8">${escapeHtml(label)}</div><div style="font-size:17px;font-weight:700;margin-top:4px">${escapeHtml(value)}</div></div>`;
+  const stat = (label, value, bg, fg) => `<div style="flex:1;background:${bg};color:${fg};border-radius:12px;padding:14px 16px"><div style="font-size:12px;opacity:.8">${escapeHtml(label)}</div><div style="font-size:17px;font-weight:700;margin-top:4px">${escapeHtml(value)}</div></div>`;
 
   const node = document.createElement('div');
-  node.style.cssText = 'position:fixed;left:-10000px;top:0;width:640px;padding:28px;background:#F8F9FF;color:#191C20;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif';
+  node.style.cssText = 'position:fixed;left:-10000px;top:0;width:640px;padding:28px;background:#FFFFFF;color:#0A0A0A;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif';
   node.innerHTML = `
-    <div style="background:#36618E;color:#fff;border-radius:24px;padding:20px 22px">
+    <div style="background:#008236;color:#fff;border-radius:14px;padding:20px 22px">
       <div style="font-size:13px;opacity:.8;font-weight:700">${APP_NAME}</div>
       <div style="font-size:22px;font-weight:700;margin-top:4px">${escapeHtml(title)}</div>
       <div style="font-size:12px;opacity:.8;margin-top:4px">${escapeHtml(subtitle)}</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:14px">
-      ${stat(t('export.totalIncome'), formatMoney(income), '#8DF9AC', '#00210D')}
-      ${stat(t('export.totalExpense'), formatMoney(expense), '#FFDAD7', '#410004')}
-      ${stat(t('export.difference'), formatMoney(income - expense), '#D1E4FF', '#194975')}
+      ${stat(t('export.totalIncome'), formatMoney(income), '#E6F3EB', '#006B2D')}
+      ${stat(t('export.totalExpense'), formatMoney(expense), '#FDE6E7', '#B80009')}
+      ${stat(t('export.difference'), formatMoney(income - expense), '#F5F5F5', '#0A0A0A')}
     </div>
-    <div style="font-size:12px;color:#44474E;margin-top:10px">${escapeHtml(t('export.totalCount'))}: <b>${count}</b></div>
+    <div style="font-size:12px;color:#525252;margin-top:10px">${escapeHtml(t('export.totalCount'))}: <b>${count}</b></div>
     ${pieBlock(t('export.pieExpense'), expensePie, expenseSlices, false)}
     ${pieBlock(t('stats.compare'), comparePie, compareSlices, true)}
-    <div style="margin-top:22px;font-size:11px;color:#74777F;text-align:right">${APP_NAME}</div>`;
+    <div style="margin-top:22px;font-size:11px;color:#737373;text-align:right">${APP_NAME}</div>`;
   document.body.appendChild(node);
   try {
-    const canvas = await html2canvas(node, { scale: 2, backgroundColor: '#F8F9FF', useCORS: true });
+    const canvas = await html2canvas(node, { scale: 2, backgroundColor: '#FFFFFF', useCORS: true });
     return await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   } finally {
     document.body.removeChild(node);
@@ -495,8 +495,8 @@ export async function exportRangeReport({ title, start, end, transactions, getCa
   // Income vs expense share (image report): two slices, zero values dropped.
   const compareSlices = toPieSlices(
     [
-      { name: t('export.type.income'), value: income, color: '#10B981' },
-      { name: t('export.type.expense'), value: expense, color: '#EF4444' },
+      { name: t('export.type.income'), value: income, color: '#008236' },
+      { name: t('export.type.expense'), value: expense, color: '#E7000B' },
     ].filter((x) => x.value > 0),
     t('common.other'),
   );

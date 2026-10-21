@@ -11,12 +11,13 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { I18nContext, LANGUAGES, createT, detectLanguage } from '../i18n';
 import { setFormatLocale } from '../utils/format';
 import {
-  DEFAULT_SCHEME,
-  DEFAULT_SEED,
-  applyRoles,
-  cacheScheme,
+  DEFAULT_ACCENT,
+  FALLBACK_COLORS,
+  applyAccent,
+  cacheAccent,
   isValidHex,
-  readCachedScheme,
+  readThemeColors,
+  setThemeColor,
 } from '../theme';
 
 const SettingsContext = createContext(null);
@@ -35,7 +36,7 @@ const DEFAULT_SETTINGS = {
   themeMode: 'system', // light | dark | system
   fontSize: 'md', // sm | md | lg
   language: detectLanguage(), // vi | en
-  seedColor: DEFAULT_SEED, // any #RRGGBB - the Material 3 scheme is derived from it
+  accentColor: DEFAULT_ACCENT, // '' = the supplied theme (expenser-theme.css); or any #RRGGBB accent
 };
 
 function getSystemPrefersDark() {
@@ -47,16 +48,16 @@ export function SettingsProvider({ children }) {
   // Old installs saved fewer fields (and a now-removed notification flag) -
   // merge over the defaults so every field is always defined.
   const settings = useMemo(() => {
-    const merged = { ...DEFAULT_SETTINGS, ...stored };
+    // eslint-disable-next-line no-unused-vars
+    const { seedColor: legacySeed, ...merged } = { ...DEFAULT_SETTINGS, ...stored }; // seedColor = removed Material 3 setting
     if (!LANGUAGES.some((l) => l.id === merged.language)) merged.language = DEFAULT_SETTINGS.language;
-    if (!isValidHex(merged.seedColor) || merged.seedColor.toUpperCase() === '#769CDF') merged.seedColor = DEFAULT_SEED; // #769CDF = previous default
+    if (merged.accentColor && !isValidHex(merged.accentColor)) merged.accentColor = DEFAULT_ACCENT;
     if (merged.fontSize === 'xl') merged.fontSize = 'lg'; // removed size
     if (!FONT_SCALES[merged.fontSize]) merged.fontSize = 'md';
     return merged;
   }, [stored]);
 
   const [systemDark, setSystemDark] = useState(getSystemPrefersDark);
-  const [generated, setGenerated] = useState(null); // { seed, scheme }
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
@@ -67,41 +68,27 @@ export function SettingsProvider({ children }) {
 
   const isDark = settings.themeMode === 'system' ? systemDark : settings.themeMode === 'dark';
 
-  // ---- Material 3 scheme from the seed colour ---------------------------------
-  const seed = settings.seedColor;
-  useEffect(() => {
-    if (seed === DEFAULT_SEED || readCachedScheme(seed)) return undefined;
-    let cancelled = false;
-    // The colour-science library is only fetched when a custom seed is used.
-    import('../theme/generateScheme').then(({ generateScheme }) => {
-      if (cancelled) return;
-      const scheme = generateScheme(seed);
-      cacheScheme(seed, scheme);
-      setGenerated({ seed, scheme });
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [seed]);
-
-  const scheme = useMemo(() => {
-    if (seed === DEFAULT_SEED) return DEFAULT_SCHEME;
-    if (generated?.seed === seed) return generated.scheme;
-    return readCachedScheme(seed) || DEFAULT_SCHEME;
-  }, [seed, generated]);
-
-  const colors = isDark ? scheme.dark : scheme.light;
+  // ---- Theme: tokens come from expenser-theme.css, the accent is an optional override ----
+  const accent = settings.accentColor;
+  const [colors, setColors] = useState(() => FALLBACK_COLORS[isDark ? 'dark' : 'light']);
 
   useLayoutEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('dark', isDark);
-    applyRoles(colors, root);
-    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
-      meta.removeAttribute('media'); // the in-app theme wins over the OS one
-      meta.setAttribute('content', colors.surface);
-    });
-    root.style.backgroundColor = colors.surface;
-  }, [isDark, colors]);
+    root.classList.toggle('light', !isDark);
+    applyAccent(accent, isDark, root);
+    cacheAccent(accent);
+    let resolved;
+    try {
+      resolved = readThemeColors();
+    } catch {
+      resolved = FALLBACK_COLORS[isDark ? 'dark' : 'light']; // very old browser without oklch / color-mix in canvas
+    }
+    setColors(resolved);
+    // While a splash screen is showing it owns the status-bar colour (see SplashScreen).
+    if (!document.querySelector('.splash')) setThemeColor(resolved.surface);
+    root.style.backgroundColor = resolved.surface;
+  }, [isDark, accent]);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--font-scale', String(FONT_SCALES[settings.fontSize] || 1));

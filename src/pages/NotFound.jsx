@@ -13,7 +13,7 @@ export default function NotFound() {
       </span>
       <h1 className="text-headline-sm text-on-surface">{t('notFound.title')}</h1>
       <p className="max-w-sm text-body-lg text-on-surface-variant">{t('notFound.desc')}</p>
-      <Link to="/" className="state-layer ripple inline-flex h-10 items-center rounded-full bg-primary px-6 text-label-lg text-on-primary">
+      <Link to="/" className="state-layer inline-flex h-10 items-center rounded-lg bg-primary px-4 text-label-lg text-on-primary">
         {t('notFound.home')}
       </Link>
     </div>

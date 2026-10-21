@@ -81,7 +81,7 @@ export default function CategoriesPage() {
       {loading ? (
         <TableSkeleton />
       ) : list.length === 0 ? (
-        <div className="rounded-2xl bg-surface-container-low">
+        <div className="rounded-2xl border border-line bg-card">
           {search.trim() ? (
             <EmptyState icon="search_off" text={t('cat.noMatch', { q: search.trim() })} action={{ label: t('common.clearSearch'), onClick: () => setSearch('') }} />
           ) : (
@@ -94,7 +94,7 @@ export default function CategoriesPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {list.map((c, idx) => (
               <SwipeableItem key={c.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(idx * 30, 300)}ms` }} onEdit={() => openForm(c)} onDelete={() => setDeleteTarget(c)}>
-                <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low p-4 transition-shadow duration-200 hover:shadow-elev-1">
+                <div className="flex items-center gap-3 rounded-2xl border border-line bg-card p-4 transition-colors duration-200 hover:bg-surface-container">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ backgroundColor: `${c.color}26`, color: c.color }}>
                     <Emoji size={24}>{getCategoryEmoji(c)}</Emoji>
                   </span>

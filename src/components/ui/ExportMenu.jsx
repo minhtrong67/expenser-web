@@ -29,7 +29,7 @@ export default function ExportMenu({ label, formats, onSelect, disabled, variant
         {label}
       </Button>
       {open && (
-        <div role="menu" className={`absolute ${align === 'left' ? 'left-0 origin-top-left' : 'right-0 origin-top-right'} z-30 mt-1 w-56 animate-menu-in overflow-hidden rounded-xl bg-surface-container py-2 shadow-elev-2`}>
+        <div role="menu" className={`absolute ${align === 'left' ? 'left-0 origin-top-left' : 'right-0 origin-top-right'} z-30 mt-1 w-56 animate-menu-in overflow-hidden rounded-xl border border-line bg-popover p-1 shadow-elev-2`}>
           {formats.map((f) => (
             <button
               key={f.id}

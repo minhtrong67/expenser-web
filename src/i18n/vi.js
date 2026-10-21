@@ -1,7 +1,7 @@
 // Từ điển tiếng Việt. Placeholder dạng {name}. Chạy `npm run i18n:check` để kiểm tra đồng bộ với en.js.
 export default {
   'meta.title': 'Expenser — Quản lý chi tiêu cá nhân',
-  'meta.description': 'Expenser: ứng dụng quản lý thu chi cá nhân miễn phí, mã nguồn mở. Theo dõi nhiều ví, thống kê trực quan, xuất báo cáo PDF/Excel, giao diện Material Design 3, song ngữ Việt - Anh.',
+  'meta.description': 'Expenser: ứng dụng quản lý thu chi cá nhân miễn phí, mã nguồn mở. Theo dõi nhiều ví, thống kê trực quan, xuất báo cáo PDF/Excel, giao diện tối giản hiện đại, song ngữ Việt - Anh.',
 
   // Chung
   'common.add': 'Thêm',
@@ -51,6 +51,8 @@ export default {
   'tx.transfer': 'Chuyển khoản',
   'tx.type': 'Loại giao dịch',
   'tx.amount': 'Số tiền',
+  'money.suggestions': 'Gợi ý số tiền',
+  'money.pick': 'Chọn {amount}',
   'tx.category': 'Danh mục',
   'tx.wallet': 'Ví',
   'tx.datetime': 'Ngày & giờ',
@@ -235,12 +237,12 @@ export default {
   'settings.mode.light': 'Sáng',
   'settings.mode.dark': 'Tối',
   'settings.mode.system': 'Hệ thống',
-  'settings.color': 'Màu chủ đề',
-  'settings.colorHint': 'Bảng màu Material 3 được tạo tự động từ màu bạn chọn',
-  'settings.colorReset': 'Màu mặc định',
+  'settings.color': 'Màu nhấn',
+  'settings.colorHint': 'Chỉ đổi màu nhấn (nút, liên kết, biểu đồ); nền và chữ giữ theo giao diện tối giản',
+  'settings.colorReset': 'Mặc định',
   'settings.colors.blue': 'Xanh dương',
   'settings.colors.teal': 'Xanh ngọc',
-  'settings.colors.green': 'Xanh lá',
+  'settings.colors.green': 'Xanh lá (mặc định)',
   'settings.colors.amber': 'Vàng hổ phách',
   'settings.colors.orange': 'Cam',
   'settings.colors.rose': 'Hồng',
