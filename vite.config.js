@@ -25,8 +25,11 @@ export default defineConfig({
         name: 'Expenser - Quản lý chi tiêu cá nhân',
         short_name: 'Expenser',
         description: 'Theo dõi thu chi, ví và thống kê chi tiêu cá nhân',
-        // theme_color: '#4CAF50',
-        background_color: '#4CAF50',
+        // Launch (OS) splash colours. A manifest has a single value, so use the light surface;
+        // browsers that support color_scheme_dark switch to the dark one automatically.
+        theme_color: '#ffffff',
+        background_color: '#ffffff',
+        color_scheme_dark: { theme_color: '#0a0a0a', background_color: '#0a0a0a' },
         display: 'standalone',
         start_url: '/',
         icons: [

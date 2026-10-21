@@ -10,7 +10,7 @@
 
 // Splash screen colours. Keep in sync with: index.html (inline <style>),
 // src/index.css (.splash) and vite.config.js (iOS startup images / manifest).
-export const SPLASH = { light: '#008236', dark: '#0a0a0a' };
+export const SPLASH = { light: '#ffffff', dark: '#0a0a0a' };
 
 // Accent presets offered in Settings. `hex: ''` is the supplied theme itself
 // (expenser-theme.css) - nothing is overridden. The others only need a hue:

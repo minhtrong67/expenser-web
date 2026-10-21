@@ -88,8 +88,7 @@ export function SettingsProvider({ children }) {
       resolved = FALLBACK_COLORS[isDark ? 'dark' : 'light']; // very old browser without oklch / color-mix in canvas
     }
     setColors(resolved);
-    // While a splash screen is showing it owns the status-bar colour (see SplashScreen).
-    if (!document.querySelector('.splash')) setThemeColor(resolved.surface);
+    setThemeColor(resolved.surface);
     root.style.backgroundColor = resolved.surface;
   }, [isDark, accent]);
 
