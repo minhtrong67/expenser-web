@@ -400,7 +400,7 @@ export default function SettingsPage() {
         </Row>
         <Divider />
         <Row label={t('settings.version')}>
-          <span className="text-body-md text-on-surface-variant">Expenser {__APP_VERSION__} · MIT</span>
+          <span className="text-body-md text-on-surface-variant">Expenser · MIT</span>
         </Row>
       </Section>
 
