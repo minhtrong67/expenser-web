@@ -10,9 +10,8 @@ export default function Topbar({ title, scrolled, onSearchClick, onMenuClick }) 
 
   return (
     <header
-      className={`sticky top-0 z-20 box-content flex h-14 items-center gap-1 px-2 transition-colors duration-300 sm:h-16 sm:gap-2 sm:px-4 lg:px-6 ${
-        scrolled ? 'border-b border-line bg-background/85 backdrop-blur-md' : 'border-b border-transparent bg-background'
-      }`}
+      className={`sticky top-0 z-20 box-content flex h-14 items-center gap-1 px-2 transition-colors duration-300 sm:h-16 sm:gap-2 sm:px-4 lg:px-6 ${scrolled ? 'border-b border-line bg-card/85 backdrop-blur-md' : 'border-b border-transparent bg-card'
+        }`}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
       <IconButton icon="menu" label={t('nav.toggleMenu')} onClick={onMenuClick} />

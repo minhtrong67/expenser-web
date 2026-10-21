@@ -9,7 +9,7 @@ export default function MobileNav() {
     <>
       <nav
         aria-label={t('nav.menu')}
-        className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-card/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
       >
         <div className="mx-auto flex h-16 max-w-xl items-stretch justify-around px-2">
           {MOBILE_NAV_ITEMS.map((item) => (
@@ -18,8 +18,7 @@ export default function MobileNav() {
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `group flex flex-1 flex-col items-center justify-center gap-1 text-label-md transition-colors ${
-                  isActive ? 'text-brand' : 'text-on-surface-variant'
+                `group flex flex-1 flex-col items-center justify-center gap-1 text-label-md transition-colors ${isActive ? 'text-brand' : 'text-on-surface-variant'
                 }`
               }
             >

@@ -25,7 +25,7 @@ export default defineConfig({
         name: 'Expenser - Quản lý chi tiêu cá nhân',
         short_name: 'Expenser',
         description: 'Theo dõi thu chi, ví và thống kê chi tiêu cá nhân',
-        // theme_color: '#4CAF50',
+        theme_color: '#4CAF50',
         background_color: '#4CAF50',
         display: 'standalone',
         start_url: '/',
