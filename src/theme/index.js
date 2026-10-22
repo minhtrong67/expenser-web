@@ -146,9 +146,9 @@ export function readThemeColors() {
   return Object.fromEntries(Object.entries(COLOR_VARS).map(([key, name]) => [key, resolveToHex(`var(${name})`)]));
 }
 
-// Values of expenser-theme.css, used for the very first render (before the
+// Values of expenser-theme.css (green-500 primary, zinc neutrals), used for the very first render (before the
 // real ones can be read from the DOM).
 export const FALLBACK_COLORS = {
-  light: { primary: '#22c55e', brand: '#16a34a', income: '#16a34a', expense: '#e7000b', surface: '#ffffff', popover: '#ffffff', onSurface: '#0a0a0a', onSurfaceVariant: '#737373', outlineVariant: '#e5e5e5', inverseSurface: '#0a0a0a', inverseOnSurface: '#ffffff' },
-  dark: { primary: '#22c55e', brand: '#22c55e', income: '#22c55e', expense: '#ff6467', surface: '#0a0a0a', popover: '#171717', onSurface: '#fafafa', onSurfaceVariant: '#a1a1a1', outlineVariant: '#262626', inverseSurface: '#fafafa', inverseOnSurface: '#0a0a0a' },
+  light: { primary: '#22c55e', brand: '#16a34a', income: '#16a34a', expense: '#dc2626', surface: '#fafafa', popover: '#ffffff', onSurface: '#18181b', onSurfaceVariant: '#71717a', outlineVariant: '#e4e4e7', inverseSurface: '#18181b', inverseOnSurface: '#fafafa' },
+  dark: { primary: '#22c55e', brand: '#22c55e', income: '#22c55e', expense: '#f87171', surface: '#27272a', popover: '#313135', onSurface: '#fafafa', onSurfaceVariant: '#a1a1aa', outlineVariant: '#444448', inverseSurface: '#fafafa', inverseOnSurface: '#27272a' },
 };

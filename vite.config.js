@@ -25,8 +25,10 @@ export default defineConfig({
         name: 'Expenser - Quản lý chi tiêu cá nhân',
         short_name: 'Expenser',
         description: 'Theo dõi thu chi, ví và thống kê chi tiêu cá nhân',
+        // No launch colours on purpose: vite-plugin-pwa would inject its own defaults
+        // (#ffffff / #42b883), so they are explicitly unset to leave the OS default.
         background_color: undefined,
-        theme_color: "#00c950",
+        theme_color: undefined,
         display: 'standalone',
         start_url: '/',
         icons: [

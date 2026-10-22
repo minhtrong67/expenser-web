@@ -34,7 +34,7 @@ export default function FabStack({ onSlot }) {
           aria-label={t('common.scrollTop')}
           title={t('common.scrollTop')}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="state-layer flex h-12 w-12 animate-scale-in items-center justify-center rounded-xl border border-line bg-primary text-on-surface shadow-elev-2 transition-transform duration-200 ease-emphasized active:scale-95"
+          className="state-layer flex h-12 w-12 animate-scale-in items-center justify-center rounded-xl border border-line bg-primary text-on-primary shadow-elev-2 transition-transform duration-200 ease-emphasized active:scale-95"
         >
           <Icon name="arrow_upward" size={24} />
         </button>
