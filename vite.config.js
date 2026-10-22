@@ -20,10 +20,27 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      theme_color: '#00c950',
-      background_color: '#00c950',
-      manifest: false,
-      includeAssets: ['favicon.ico', 'favicon.svg', 'manifest.webmanifest', 'icons/*.png']
+      includeAssets: ['favicon.ico', 'favicon.svg', 'icons/*.png'],
+      manifest: {
+        id: '/',
+        name: "Expenser — Quản lý chi tiêu",
+        short_name: 'Expenser',
+        description: 'Quản lý chi tiêu cá nhân, theo dõi ngân sách và xuất báo cáo',
+        lang: 'vi',
+        dir: 'ltr',
+        start_url: '/',
+        scope: '/',
+        display: 'standalone',
+        theme_color: '#00c950',
+        background_color: '#00c950',
+        categories: ['finance', 'productivity'],
+        icons: [
+          { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: '/icons/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+        ]
+      },
+
     })
   ]
 })
