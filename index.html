@@ -6,23 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="light dark" />
 
-  <!-- Applies the user's saved theme (and accent) before the stylesheet and React load. Mirrors SettingsContext. -->
-  <script>
-    (function () {
-      try {
-        var root = document.documentElement;
-        var s = JSON.parse(localStorage.getItem('qlct:settings') || '{}');
-        var mode = s.themeMode || 'system';
-        var dark = mode === 'dark' || (mode === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        root.classList.add(dark ? 'dark' : 'light');
-        var a = JSON.parse(localStorage.getItem('qlct:accent') || 'null');
-        if (a && a.hex === s.accentColor) root.style.cssText += ';' + (dark ? a.dark : a.light);
-        if (s.language === 'en') root.lang = 'en';
-      } catch (e) {
-        /* storage unavailable - the OS theme applies via prefers-color-scheme */
-      }
-    })();
-  </script>
+
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
