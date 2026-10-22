@@ -106,7 +106,7 @@
 | Thành phần | Công nghệ |
 | --- | --- |
 | Frontend | React 19, Vite 8, React Router 7 |
-| Giao diện | Tailwind CSS 3, token màu `oklch` trong `expenser-theme.css`, font hệ thống, lucide-react |
+| Giao diện | Tailwind CSS 3, token màu `oklch` trong `theme.css`, font hệ thống, lucide-react |
 | Backend | Firebase Authentication + Cloud Firestore (persistent cache) |
 | Thông báo đẩy | Web Push (VAPID) qua Vercel Function `api/send-reminders.js`, `web-push`, `firebase-admin` |
 | Biểu đồ | Recharts |
@@ -212,19 +212,19 @@ Mỗi thiết bị bật nhắc nhở lưu một tài liệu trong collection `r
 
 Phong cách **modern minimalist**: nền phẳng, viền mảnh thay cho đổ bóng, góc bo nhỏ, màu nhấn xanh lá duy nhất.
 
-**Token màu — một nguồn duy nhất.** Toàn bộ màu nằm trong [`src/theme/expenser-theme.css`](src/theme/expenser-theme.css) (`:root` = sáng, `.dark` = tối, giá trị `oklch`). [`src/index.css`](src/index.css) ánh xạ các token đó sang tên màu mà component và Tailwind dùng (`bg-surface`, `text-on-surface-variant`, `bg-card`, `border-line`, `text-brand`…), nên sửa file theme là cả ứng dụng đổi theo.
+**Token màu — một nguồn duy nhất.** Toàn bộ biến màu nằm trong [`src/theme/theme.css`](src/theme/theme.css) (`:root` = sáng, `.dark` = tối, giá trị `oklch`): token nền (`--background`, `--primary`, `--card`, thang zinc `--n-*`…) và các token vai trò dẫn xuất từ chúng (`--md-*`, `--brand`, `--on-solid`, `--shadow-color`) mà Tailwind và component dùng (`bg-surface`, `text-on-surface-variant`, `bg-card`, `border-line`, `text-brand`…). `src/index.css` và `tailwind.config.js` không chứa giá trị màu nào, nên sửa file theme là cả ứng dụng đổi theo.
 
 | Việc cần làm | Sửa ở đâu |
 | --- | --- |
-| Đổi bảng màu | Các biến trong `src/theme/expenser-theme.css` (màu chủ đạo: Tailwind `green-500` `#22c55e`; nền/viền/chữ: thang trung tính `--n-50 … --n-950` (zinc của Tailwind v4) khai báo ở đầu file theme — sáng `n-50`, tối `n-800`) |
-| Đổi độ bo góc | `--radius` trong `src/theme/expenser-theme.css` |
+| Đổi bảng màu | Các biến trong `src/theme/theme.css` (màu chủ đạo: Tailwind `green-500` `#22c55e`; nền/viền/chữ: thang trung tính `--n-50 … --n-950` (zinc của Tailwind v4) khai báo ở đầu file theme — sáng `n-50`, tối `n-800`) |
+| Đổi độ bo góc | `--radius` trong `src/theme/theme.css` |
 | Thêm / đổi màu nhấn gợi ý | `ACCENT_PRESETS` trong `src/theme/index.js` |
 
 **Màu nhấn.** Mặc định là đúng theme. Khi người dùng chọn màu khác, chỉ `primary`, `chart-*` và `sidebar-primary` bị ghi đè theo hue của màu đó, với độ sáng/độ bão hòa lấy từ dải xanh lá của theme để luôn đủ tương phản ở cả chế độ sáng và tối.
 
 **Toast & tooltip.** Dùng biến `--popover`, `--popover-foreground`, `--border` nên luôn khớp giao diện sáng/tối và đổi màu tức thì khi chuyển theme.
 
-**Splash screen PWA.** Không đặt màu nền riêng và không kiểm tra giao diện sáng/tối khi mở app: manifest không khai báo `background_color` / `theme_color`, `index.html` không có `theme-color` hay nền tiền-render, nên hệ điều hành dùng mặc định. Màn hình tải trong trang chỉ hiện logo và vòng quay trên nền mặc định.
+**Không splash screen, màu status bar theo theme.** Ứng dụng không có màn hình splash riêng: khi đang tải chỉ hiện nền theme. `public/manifest.webmanifest` không khai báo `theme_color` / `background_color` (vite-plugin-pwa bị tắt phần tự sinh manifest vì mặc định của nó tự chèn `theme_color` xanh lá `#42b883`). Thẻ `<meta name="theme-color">` được tạo lúc chạy từ màu nền trong `theme.css` và đổi theo sáng/tối nên status bar luôn khớp với trang.
 
 ## 🧭 Luồng điều hướng
 
@@ -254,7 +254,7 @@ expenser/
 ├── src/
 │   ├── components/
 │   │   ├── layout/           # AppLayout, Sidebar, Topbar, MobileNav, CommandPalette
-│   │   ├── ui/               # Button, Modal, MoneyInput, TextInput, SplashScreen…
+│   │   ├── ui/               # Button, Modal, MoneyInput, TextInput…
 │   │   └── *.jsx             # Form giao dịch / danh mục / ví, bộ lọc, lịch
 │   ├── contexts/             # Auth, Settings (giao diện + ngôn ngữ), Data (Firestore)
 │   ├── hooks/                # useReminder, useInView, useSessionState, usePwaInstall…
@@ -262,7 +262,7 @@ expenser/
 │   ├── pages/                # Landing, Login, Dashboard, Transactions, Categories, Wallets, Statistics, Settings…
 │   ├── routes/               # ProtectedRoute (kèm landing cho khách), PublicRoute, ProtectedShell
 │   ├── services/reminders.js # Đăng ký push, lịch nhắc, nội dung thông báo
-│   ├── theme/                # expenser-theme.css (token) + màu nhấn
+│   ├── theme/                # theme.css (toàn bộ biến màu) + index.js (màu nhấn)
 │   ├── utils/                # format, validators, exportImport, pieChart…
 │   ├── firebase.js · firestore.js
 │   └── main.jsx · App.jsx · index.css
@@ -286,7 +286,7 @@ reminders/{uid}_{hash}   { uid, enabled, time, tz, lang, subscription, lastSentD
 npm run build
 ```
 
-Triển khai thư mục `dist/` cùng thư mục `api/` lên **Vercel** (đã có `vercel.json`: SPA rewrite không chặn `/api`, cache header, chuyển hướng `/landing.html` → `/`). Nhớ thêm tên miền triển khai vào **Authorized domains** của Firebase Auth. Nếu không dùng Vercel, ứng dụng vẫn chạy tĩnh được (Firebase Hosting, Netlify…) nhưng thông báo đẩy khi đóng ứng dụng cần một nơi chạy `api/send-reminders.js`.
+Triển khai thư mục `dist/` cùng thư mục `api/` lên **Vercel** (đã có `vercel.json`: SPA rewrite không chặn `/api`, cache header, chuyển hướng `/landing.html` → `/welcome`). Nhớ thêm tên miền triển khai vào **Authorized domains** của Firebase Auth. Nếu không dùng Vercel, ứng dụng vẫn chạy tĩnh được (Firebase Hosting, Netlify…) nhưng thông báo đẩy khi đóng ứng dụng cần một nơi chạy `api/send-reminders.js`.
 
 SEO & chia sẻ mạng xã hội: thẻ Open Graph / Twitter Card, canonical, JSON-LD (`WebApplication`), `robots.txt` và `sitemap.xml` đã có sẵn cho `https://expenser-quan-ly-chi-tieu.vercel.app/`; ảnh chia sẻ là `public/og-image.png` (1200×630).
 

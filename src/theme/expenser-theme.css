@@ -1,0 +1,105 @@
+/*
+  Expenser theme tokens (shadcn-style, oklch). Single source of truth for colour.
+
+  - Primary  : Tailwind green-500 (#22c55e) in BOTH light and dark.
+  - Neutrals : the zinc scale below (--n-50 ... --n-950). Every neutral token
+               (background, card, text, border...) is mapped onto it.
+               Light = n-50 page / white cards; dark = n-800 page (soft charcoal,
+               not near-black) with cards a step lighter.
+  - Text on primary is green-950 (white on green-500 is only ~2.3:1).
+*/
+:root {
+  /* ---- Thang trung tính: zinc (Tailwind v4) ---- */
+  --n-50: oklch(0.985 0 0);
+  --n-100: oklch(0.967 0.001 286.375);
+  --n-200: oklch(0.92 0.004 286.32);
+  --n-300: oklch(0.871 0.006 286.286);
+  --n-400: oklch(0.705 0.015 286.067);
+  --n-500: oklch(0.552 0.016 285.938);
+  --n-600: oklch(0.442 0.017 285.786);
+  --n-700: oklch(0.37 0.013 285.805);
+  --n-800: oklch(0.274 0.006 286.033);
+  --n-900: oklch(0.21 0.006 285.885);
+  --n-950: oklch(0.141 0.005 285.823);
+
+  --background: var(--n-50);
+  --foreground: var(--n-900);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--n-900);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--n-900);
+  --primary: oklch(0.723 0.219 149.579);
+  /* green-500 */
+  --primary-foreground: oklch(0.266 0.065 152.934);
+  /* green-950 */
+  --secondary: var(--n-100);
+  --secondary-foreground: var(--n-900);
+  --muted: var(--n-100);
+  --muted-foreground: var(--n-500);
+  --accent: var(--n-100);
+  --accent-foreground: var(--n-900);
+  --destructive: oklch(0.577 0.245 27.325);
+  /* red-600 */
+  --border: var(--n-200);
+  --input: var(--n-300);
+  --ring: var(--n-400);
+  --chart-1: oklch(0.871 0.15 154.449);
+  /* green-300 */
+  --chart-2: oklch(0.723 0.219 149.579);
+  /* green-500 */
+  --chart-3: oklch(0.627 0.194 149.214);
+  /* green-600 */
+  --chart-4: oklch(0.527 0.154 150.069);
+  /* green-700 */
+  --chart-5: oklch(0.448 0.119 151.328);
+  /* green-800 */
+  --radius: 0.625rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: var(--n-900);
+  --sidebar-primary: oklch(0.627 0.194 149.214);
+  /* green-600: readable as text/icons on light */
+  --sidebar-primary-foreground: oklch(0.266 0.065 152.934);
+  --sidebar-accent: var(--n-100);
+  --sidebar-accent-foreground: var(--n-900);
+  --sidebar-border: var(--n-200);
+  --sidebar-ring: var(--n-400);
+}
+
+.dark {
+  --background: var(--n-900);
+  --foreground: var(--n-50);
+  --card: var(--n-800);
+  /* between n-800 and n-700 */
+  --card-foreground: var(--n-50);
+  --popover: var(--n-800);
+  --popover-foreground: var(--n-50);
+  --primary: oklch(0.723 0.219 149.579);
+  /* green-500 */
+  --primary-foreground: oklch(0.266 0.065 152.934);
+  /* green-950 */
+  --secondary: var(--n-700);
+  --secondary-foreground: var(--n-50);
+  --muted: var(--n-700);
+  --muted-foreground: var(--n-400);
+  --accent: var(--n-700);
+  --accent-foreground: var(--n-50);
+  --destructive: oklch(0.704 0.191 22.216);
+  /* red-400 */
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: var(--n-500);
+  --chart-1: oklch(0.871 0.15 154.449);
+  --chart-2: oklch(0.723 0.219 149.579);
+  --chart-3: oklch(0.627 0.194 149.214);
+  --chart-4: oklch(0.527 0.154 150.069);
+  --chart-5: oklch(0.448 0.119 151.328);
+  --sidebar: color-mix(in oklab, var(--n-800) 55%, var(--n-700));
+  --sidebar-foreground: var(--n-50);
+  --sidebar-primary: oklch(0.723 0.219 149.579);
+  /* green-500 */
+  --sidebar-primary-foreground: oklch(0.266 0.065 152.934);
+  --sidebar-accent: var(--n-700);
+  --sidebar-accent-foreground: var(--n-50);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: var(--n-500);
+}

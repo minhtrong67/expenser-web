@@ -1,15 +1,15 @@
 // Theme runtime helpers.
 //
-// The design tokens themselves live in ./expenser-theme.css (shadcn-style
-// oklch variables for light + .dark). index.css maps them onto the role names
-// the components use. This module only deals with the two things CSS cannot:
+// Every colour token lives in ./theme.css (shadcn-style oklch variables for
+// light + .dark, plus the role names the components use). This module only
+// deals with the things CSS cannot:
 //   1. an optional accent colour chosen in Settings (overrides the green
 //      primary / chart / sidebar-primary tokens at runtime), and
 //   2. resolving CSS colours to plain hex for the places that need real
-//      values (Recharts, toasts).
+//      values (Recharts, the browser's theme-color / status bar).
 
 // Accent presets offered in Settings. `hex: ''` is the supplied theme itself
-// (expenser-theme.css) - nothing is overridden. The others only need a hue:
+// (theme.css) - nothing is overridden. The others only need a hue:
 // lightness/chroma are taken from the theme's own green ladder so contrast
 // stays right in light and dark mode.
 export const ACCENT_PRESETS = [
@@ -146,9 +146,33 @@ export function readThemeColors() {
   return Object.fromEntries(Object.entries(COLOR_VARS).map(([key, name]) => [key, resolveToHex(`var(${name})`)]));
 }
 
-// Values of expenser-theme.css (green-500 primary, zinc neutrals), used for the very first render (before the
-// real ones can be read from the DOM).
-export const FALLBACK_COLORS = {
-  light: { primary: '#22c55e', brand: '#16a34a', income: '#16a34a', expense: '#dc2626', surface: '#fafafa', popover: '#ffffff', onSurface: '#18181b', onSurfaceVariant: '#71717a', outlineVariant: '#e4e4e7', inverseSurface: '#18181b', inverseOnSurface: '#fafafa' },
-  dark: { primary: '#22c55e', brand: '#22c55e', income: '#22c55e', expense: '#f87171', surface: '#27272a', popover: '#313135', onSurface: '#fafafa', onSurfaceVariant: '#a1a1aa', outlineVariant: '#444448', inverseSurface: '#fafafa', inverseOnSurface: '#27272a' },
-};
+// Used only when the browser cannot resolve oklch / color-mix through a canvas:
+// the CSS variables themselves, so no colour value is duplicated outside theme.css.
+const CSS_VAR_COLORS = Object.fromEntries(Object.entries(COLOR_VARS).map(([key, name]) => [key, `var(${name})`]));
+
+/**
+ * Applies light/dark + the accent override to <html> and returns the resolved colours.
+ * Safe to call during the very first render (no flash of a wrong palette).
+ */
+export function applyTheme(isDark, accent, root = document.documentElement) {
+  root.classList.toggle('dark', isDark);
+  root.classList.toggle('light', !isDark);
+  applyAccent(accent, isDark, root);
+  try {
+    return readThemeColors();
+  } catch {
+    return CSS_VAR_COLORS;
+  }
+}
+
+/** Keeps <meta name="theme-color"> (browser UI / Android status bar) equal to the page background. */
+export function applyBrowserThemeColor(color) {
+  if (!color || color.startsWith('var(')) return;
+  let meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute('content', color);
+}

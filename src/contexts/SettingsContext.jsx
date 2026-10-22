@@ -13,11 +13,10 @@ import { setFormatLocale } from '../utils/format';
 import { DEFAULT_REMINDER, normalizeTime } from '../services/reminders';
 import {
   DEFAULT_ACCENT,
-  FALLBACK_COLORS,
-  applyAccent,
+  applyBrowserThemeColor,
+  applyTheme,
   cacheAccent,
   isValidHex,
-  readThemeColors,
 } from '../theme';
 
 const SettingsContext = createContext(null);
@@ -37,7 +36,7 @@ const DEFAULT_SETTINGS = {
   fontSize: 'md', // sm | md | lg
   language: detectLanguage(), // vi | en
   reminder: DEFAULT_REMINDER, // daily notification: { enabled, time: 'HH:MM' } - per device
-  accentColor: DEFAULT_ACCENT, // '' = the supplied theme (expenser-theme.css); or any #RRGGBB accent
+  accentColor: DEFAULT_ACCENT, // '' = the supplied theme (theme.css); or any #RRGGBB accent
 };
 
 function getSystemPrefersDark() {
@@ -70,22 +69,15 @@ export function SettingsProvider({ children }) {
 
   const isDark = settings.themeMode === 'system' ? systemDark : settings.themeMode === 'dark';
 
-  // ---- Theme: tokens come from expenser-theme.css, the accent is an optional override ----
+  // ---- Theme: tokens come from theme.css, the accent is an optional override ----
   const accent = settings.accentColor;
-  const [colors, setColors] = useState(() => FALLBACK_COLORS[isDark ? 'dark' : 'light']);
+  // Resolved synchronously on the first render, so charts never paint with a stale palette.
+  const [colors, setColors] = useState(() => applyTheme(isDark, accent));
 
   useLayoutEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle('dark', isDark);
-    root.classList.toggle('light', !isDark);
-    applyAccent(accent, isDark, root);
+    const resolved = applyTheme(isDark, accent);
     cacheAccent(accent);
-    let resolved;
-    try {
-      resolved = readThemeColors();
-    } catch {
-      resolved = FALLBACK_COLORS[isDark ? 'dark' : 'light']; // very old browser without oklch / color-mix in canvas
-    }
+    applyBrowserThemeColor(resolved.surface); // status bar / browser chrome follows the page background
     setColors(resolved);
   }, [isDark, accent]);
 

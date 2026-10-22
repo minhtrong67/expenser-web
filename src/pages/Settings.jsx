@@ -440,7 +440,7 @@ export default function SettingsPage() {
       <Section title={t('settings.about')} icon="info" description={t('settings.aboutDesc')}>
         <Row label={t('settings.landing')} hint={t('settings.landingHint')}>
           <a
-            href="/landing.html"
+            href="/welcome"
             target="_blank"
             rel="noopener noreferrer"
             className="state-layer inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg bg-secondary-container px-3 text-label-lg text-on-secondary-container"

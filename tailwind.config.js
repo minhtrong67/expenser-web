@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 // Colour roles (bg-surface, text-on-surface-variant, bg-primary-container ...)
-// are defined in src/index.css from the tokens in src/theme/expenser-theme.css.
+// are all declared in src/theme/theme.css (the single colour file).
 // They are full CSS colours (oklch / color-mix), so opacity modifiers such as
 // `bg-on-surface/12` are applied with color-mix instead of the rgb() alpha slot.
 const role = (name) => `color-mix(in oklab, var(--md-${name}) calc(<alpha-value> * 100%), transparent)`;
@@ -23,7 +23,7 @@ const ROLES = [
   'expense', 'on-expense', 'expense-container', 'on-expense-container',
 ];
 
-// Raw tokens from expenser-theme.css, for the minimalist surfaces:
+// Raw tokens from theme.css, for the minimalist surfaces:
 //   card / popover = panels, line = hairline borders, brand = readable accent (text, icons, focus).
 const token = (name) => `color-mix(in oklab, var(--${name}) calc(<alpha-value> * 100%), transparent)`;
 const EXTRA_COLORS = {
@@ -71,9 +71,9 @@ export default {
       },
       // Minimalist: depth comes from hairline borders; shadows are only for floating layers.
       boxShadow: {
-        'elev-1': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-        'elev-2': '0 4px 12px -2px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.06)',
-        'elev-3': '0 16px 40px -8px rgb(0 0 0 / 0.22), 0 4px 10px -4px rgb(0 0 0 / 0.10)',
+        'elev-1': '0 1px 2px 0 rgb(var(--shadow-color) / 0.05)',
+        'elev-2': '0 4px 12px -2px rgb(var(--shadow-color) / 0.10), 0 2px 4px -2px rgb(var(--shadow-color) / 0.06)',
+        'elev-3': '0 16px 40px -8px rgb(var(--shadow-color) / 0.22), 0 4px 10px -4px rgb(var(--shadow-color) / 0.10)',
       },
       transitionTimingFunction: {
         emphasized: 'cubic-bezier(0.2, 0, 0, 1)',

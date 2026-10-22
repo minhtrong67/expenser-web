@@ -20,21 +20,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png', 'icons/*.png'],
-      manifest: {
-        name: 'Expenser - Quản lý chi tiêu cá nhân',
-        short_name: 'Expenser',
-        description: 'Theo dõi thu chi, ví và thống kê chi tiêu cá nhân',
-        // background_color: "#00c950",
-        // theme_color: "#00c950",
-        display: 'standalone',
-        start_url: '/',
-        icons: [
-          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-          { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
-        ]
-      }
+      theme_color: '#00c950',
+      background_color: '#00c950',
+      manifest: false,
+      includeAssets: ['favicon.ico', 'favicon.svg', 'manifest.webmanifest', 'icons/*.png']
     })
   ]
 })

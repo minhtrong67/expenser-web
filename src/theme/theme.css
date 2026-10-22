@@ -1,5 +1,11 @@
 /*
-  Expenser theme tokens (shadcn-style, oklch). Single source of truth for colour.
+  Expenser theme - the ONLY place colours are declared (shadcn-style, oklch).
+  Two layers:
+    1. Base tokens  (--background, --primary, --card ... + the zinc scale --n-*)
+    2. Role tokens  (--md-*, --brand, --on-solid, --shadow-color): derived from the
+       base tokens; these are the names Tailwind (bg-surface, text-on-surface...) and
+       the components use. Change a base token and every role follows.
+  :root = light, .dark = dark. Nothing else in the project may hard-code a UI colour.
 
   - Primary  : Tailwind green-500 (#22c55e) in BOTH light and dark.
   - Neutrals : the zinc scale below (--n-50 ... --n-950). Every neutral token
@@ -63,6 +69,67 @@
   --sidebar-accent-foreground: var(--n-900);
   --sidebar-border: var(--n-200);
   --sidebar-ring: var(--n-400);
+
+  /* ---- Role tokens (derived) ---- */
+  /* Readable accent for text / icons / borders (the fill colour is --primary). */
+  --brand: var(--sidebar-primary);
+  /* Text on solid semantic fills (error, income ...). */
+  --on-solid: var(--n-50);
+  /* RGB triplet used by box-shadows (tailwind.config.js, toasts, charts). */
+  --shadow-color: 0 0 0;
+
+  --md-primary: var(--primary);
+  --md-on-primary: var(--primary-foreground);
+  --md-primary-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-on-primary-container: var(--chart-4);
+
+  --md-secondary: var(--secondary-foreground);
+  --md-on-secondary: var(--secondary);
+  --md-secondary-container: color-mix(in oklab, var(--muted) 92%, var(--foreground));
+  --md-on-secondary-container: var(--foreground);
+
+  --md-tertiary: var(--muted-foreground);
+  --md-on-tertiary: var(--background);
+  --md-tertiary-container: var(--muted);
+  --md-on-tertiary-container: var(--foreground);
+
+  --md-error: var(--destructive);
+  --md-on-error: var(--on-solid);
+  --md-error-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
+  --md-on-error-container: var(--destructive);
+
+  --md-background: var(--background);
+  --md-on-background: var(--foreground);
+  --md-surface: var(--background);
+  --md-on-surface: var(--foreground);
+  --md-surface-variant: var(--muted);
+  --md-on-surface-variant: var(--muted-foreground);
+  --md-surface-dim: var(--muted);
+  --md-surface-bright: var(--background);
+  --md-surface-container-lowest: var(--background);
+  --md-surface-container-low: var(--card);
+  --md-surface-container: var(--muted);
+  --md-surface-container-high: color-mix(in oklab, var(--muted) 92%, var(--foreground));
+  --md-surface-container-highest: color-mix(in oklab, var(--muted) 84%, var(--foreground));
+
+  --md-outline: color-mix(in oklab, var(--input) 88%, var(--foreground));
+  --md-outline-variant: var(--border);
+  --md-shadow: oklch(0 0 0);
+  --md-scrim: oklch(0 0 0);
+  --md-inverse-surface: var(--foreground);
+  --md-inverse-on-surface: var(--background);
+  --md-inverse-primary: var(--sidebar-primary);
+  --md-surface-tint: var(--primary);
+
+  /* Money colours: income = brand green, expense = destructive */
+  --md-income: var(--brand);
+  --md-on-income: var(--on-solid);
+  --md-income-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-on-income-container: var(--chart-4);
+  --md-expense: var(--destructive);
+  --md-on-expense: var(--on-solid);
+  --md-expense-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
+  --md-on-expense-container: var(--destructive);
 }
 
 .dark {
@@ -102,4 +169,15 @@
   --sidebar-accent-foreground: var(--n-50);
   --sidebar-border: oklch(1 0 0 / 12%);
   --sidebar-ring: var(--n-500);
+
+  /* Role overrides that differ in dark */
+  --on-solid: var(--n-950);
+  --md-primary-container: color-mix(in oklab, var(--brand) 22%, var(--background));
+  --md-on-primary-container: var(--brand);
+  --md-on-income-container: var(--brand);
+  --md-secondary-container: color-mix(in oklab, var(--muted) 88%, var(--foreground));
+  --md-surface-container-high: color-mix(in oklab, var(--muted) 90%, var(--foreground));
+  --md-income-container: color-mix(in oklab, var(--brand) 22%, var(--background));
+  --md-expense-container: color-mix(in oklab, var(--destructive) 22%, var(--background));
+  --md-outline: color-mix(in oklab, var(--input) 85%, var(--foreground));
 }

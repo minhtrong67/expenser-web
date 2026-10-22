@@ -1,6 +1,6 @@
 {
   "redirects": [
-    { "source": "/landing.html", "destination": "/", "permanent": true }
+    { "source": "/landing.html", "destination": "/welcome", "permanent": true }
   ],
   "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
   "functions": {

@@ -18,7 +18,7 @@ export function useChartTheme() {
           fontSize: 12,
           background: colors.popover,
           color: colors.onSurface,
-          boxShadow: '0 8px 24px -8px rgba(0,0,0,.25)',
+          boxShadow: '0 8px 24px -8px rgb(var(--shadow-color) / 0.25)',
         },
         itemStyle: { color: colors.onSurface },
         labelStyle: { color: colors.onSurface, fontWeight: 600 },

@@ -1,5 +1,5 @@
-/* Design tokens (light + .dark) supplied as expenser-theme.css - the single source of truth. */
-@import './theme/expenser-theme.css';
+/* All colours (light + .dark) live in theme.css - the single source of truth. */
+@import './theme/theme.css';
 
 @tailwind base;
 @tailwind components;
@@ -8,12 +8,9 @@
 /* ==========================================================================
    Modern minimalist design system
    --------------------------------------------------------------------------
-   Colours come from the tokens in src/theme/expenser-theme.css. Below they are
-   re-exported under the role names the components and Tailwind config use
-   (bg-surface, text-on-surface-variant, bg-primary-container ...), so changing
-   the theme file restyles the whole app. Roles are complete CSS colours
-   (oklch / color-mix), not "r g b" triplets - Tailwind adds opacity with
-   color-mix (see tailwind.config.js).
+   Colours come from src/theme/theme.css (base tokens + the role names the
+   components and Tailwind config use: bg-surface, text-on-surface-variant ...).
+   This file holds no colour values of its own, only layout / state-layer maths.
    ========================================================================== */
 :root {
   --font-scale: 1;
@@ -21,84 +18,12 @@
   --state-hover: 0.06;
   --state-focus: 0.08;
   --state-press: 0.08;
-
-  /* Readable accent for text / icons / borders (the fill colour lives in --primary = green-500;
-     green-500 on white is too pale for small text, so light mode uses the next step down). */
-  --brand: var(--sidebar-primary);
-  /* Text on solid semantic fills (error, income ...). */
-  --on-solid: var(--n-50);
-
-  --md-primary: var(--primary);
-  --md-on-primary: var(--primary-foreground);
-  --md-primary-container: color-mix(in oklab, var(--brand) 14%, var(--background));
-  --md-on-primary-container: var(--chart-4);
-
-  /* Tonal fill used for selected chips / segments / nav items */
-  --md-secondary: var(--secondary-foreground);
-  --md-on-secondary: var(--secondary);
-  --md-secondary-container: color-mix(in oklab, var(--muted) 92%, var(--foreground));
-  --md-on-secondary-container: var(--foreground);
-
-  --md-tertiary: var(--muted-foreground);
-  --md-on-tertiary: var(--background);
-  --md-tertiary-container: var(--muted);
-  --md-on-tertiary-container: var(--foreground);
-
-  --md-error: var(--destructive);
-  --md-on-error: var(--on-solid);
-  --md-error-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
-  --md-on-error-container: var(--destructive);
-
-  --md-background: var(--background);
-  --md-on-background: var(--foreground);
-  --md-surface: var(--background);
-  --md-on-surface: var(--foreground);
-  --md-surface-variant: var(--muted);
-  --md-on-surface-variant: var(--muted-foreground);
-  --md-surface-dim: var(--muted);
-  --md-surface-bright: var(--background);
-  --md-surface-container-lowest: var(--background);
-  --md-surface-container-low: var(--card);
-  --md-surface-container: var(--muted);
-  --md-surface-container-high: color-mix(in oklab, var(--muted) 92%, var(--foreground));
-  --md-surface-container-highest: color-mix(in oklab, var(--muted) 84%, var(--foreground));
-
-  --md-outline: color-mix(in oklab, var(--input) 88%, var(--foreground));
-  --md-outline-variant: var(--border);
-  --md-shadow: oklch(0 0 0);
-  --md-scrim: oklch(0 0 0);
-  --md-inverse-surface: var(--foreground);
-  --md-inverse-on-surface: var(--background);
-  --md-inverse-primary: var(--sidebar-primary);
-  --md-surface-tint: var(--primary);
-
-  /* Money colours: income = brand green, expense = destructive */
-  --md-income: var(--brand);
-  --md-on-income: var(--on-solid);
-  --md-income-container: color-mix(in oklab, var(--brand) 14%, var(--background));
-  --md-on-income-container: var(--chart-4);
-  --md-expense: var(--destructive);
-  --md-on-expense: var(--on-solid);
-  --md-expense-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
-  --md-on-expense-container: var(--destructive);
 }
 
 html.dark {
-  /* In dark mode --primary is a deep green (good for filled buttons); the
-     lighter sidebar-primary green is the one that reads well as text/icons. */
-  --brand: var(--sidebar-primary);
-  --on-solid: var(--n-950);
   --state-hover: 0.05;
   --state-focus: 0.07;
   --state-press: 0.07;
-  --md-primary-container: color-mix(in oklab, var(--brand) 22%, var(--background));
-  --md-on-primary-container: var(--brand);
-  --md-on-income-container: var(--brand);
-  --md-secondary-container: color-mix(in oklab, var(--muted) 88%, var(--foreground));
-  --md-surface-container-high: color-mix(in oklab, var(--muted) 90%, var(--foreground));
-  --md-income-container: color-mix(in oklab, var(--brand) 22%, var(--background));
-  --md-expense-container: color-mix(in oklab, var(--destructive) 22%, var(--background));
-  --md-outline: color-mix(in oklab, var(--input) 85%, var(--foreground));
 }
 
 html {
@@ -267,37 +192,8 @@ input[type='number'] { -moz-appearance: textfield; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ---- Splash ------------------------------------------------------------------
-   Loading state used by every top-level Suspense / auth gate. It has no
-   background of its own: the page default shows through. */
-.splash {
-  position: relative;
-  display: flex;
-  min-height: 100dvh;
-  align-items: center;
-  justify-content: center;
-}
-.splash-logo {
-  width: 6rem;
-  height: 6rem;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-.splash-spinner {
-  position: absolute;
-  top: calc(50% + 3rem + 2rem);
-  left: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -0.75rem;
-  border-radius: 9999px;
-  border: 2px solid var(--border);
-  border-top-color: var(--primary);
-  animation: spin 0.8s linear infinite;
-}
 /* Small in-page spinner that only appears if loading takes longer than ~200 ms */
 .delayed-spinner { opacity: 0; animation: reveal 200ms 200ms cubic-bezier(0.2, 0, 0, 1) forwards; }
-@keyframes spin { to { transform: rotate(360deg); } }
 /* Keyframes used from plain CSS must be declared here: Tailwind only emits the
    ones referenced by an animate-* utility class. */
 @keyframes shimmer {

@@ -5,7 +5,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import { SettingsProvider } from './contexts/SettingsContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
-import SplashScreen from './components/ui/SplashScreen';
 
 // Every page is its own chunk, fetched only when visited. The signed-in shell
 // (Firestore data layer + app chrome) is one lazy module too, so the login
@@ -42,7 +41,7 @@ function ThemedToaster() {
           lineHeight: '20px',
           padding: '10px 14px',
           maxWidth: 'min(92vw, 420px)',
-          boxShadow: '0 12px 32px -12px rgb(0 0 0 / 0.30), 0 2px 6px -2px rgb(0 0 0 / 0.10)',
+          boxShadow: '0 12px 32px -12px rgb(var(--shadow-color) / 0.30), 0 2px 6px -2px rgb(var(--shadow-color) / 0.10)',
         },
         success: { iconTheme: { primary: 'var(--brand)', secondary: 'var(--popover)' } },
         error: { iconTheme: { primary: 'var(--destructive)', secondary: 'var(--popover)' } },
@@ -51,14 +50,22 @@ function ThemedToaster() {
   );
 }
 
+function LoadingScreen() {
+  return (
+    <div className="min-h-[100dvh] flex items-center justify-center bg-surface">
+      <img src="/icons/icon-192.png" alt="" width="64" height="64" className="w-16 h-16 rounded-xl" />
+    </div>
+  )
+}
+
+
 export default function App() {
   return (
     <SettingsProvider>
       <AuthProvider>
         <BrowserRouter>
           <ThemedToaster />
-          {/* Same splash as index.html + the auth gate: one continuous loading screen */}
-          <Suspense fallback={<SplashScreen />}>
+          <Suspense fallback={<LoadingScreen />}>
             <Routes>
               {/* Intro page: always reachable (Settings > About links here for signed-in users) */}
               <Route path="/welcome" element={<Landing />} />
