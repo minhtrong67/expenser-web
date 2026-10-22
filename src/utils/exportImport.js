@@ -15,18 +15,18 @@ async function loadExcel() {
 }
 
 // Brand palette for reports (matches the default expenser-theme.css: green on neutral)
-const BRAND = [0, 130, 54];
+const BRAND = [22, 163, 74]; // green-600: white header text stays readable
 const INK = [10, 10, 10];
 const MUTED = [82, 82, 82];
 const ZEBRA = [250, 250, 250];
 const HEX = {
-  brand: 'FF008236',
+  brand: 'FF16A34A',
   ink: 'FF0A0A0A',
   muted: 'FF525252',
   zebra: 'FFFAFAFA',
   line: 'FFE5E5E5',
   white: 'FFFFFFFF',
-  income: 'FF008236',
+  income: 'FF16A34A',
   expense: 'FFE7000B',
 };
 
@@ -460,7 +460,7 @@ async function buildImageReport(r) {
   const node = document.createElement('div');
   node.style.cssText = 'position:fixed;left:-10000px;top:0;width:640px;padding:28px;background:#FFFFFF;color:#0A0A0A;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif';
   node.innerHTML = `
-    <div style="background:#008236;color:#fff;border-radius:14px;padding:20px 22px">
+    <div style="background:#22c55e;color:#052e16;border-radius:14px;padding:20px 22px">
       <div style="font-size:13px;opacity:.8;font-weight:700">${APP_NAME}</div>
       <div style="font-size:22px;font-weight:700;margin-top:4px">${escapeHtml(title)}</div>
       <div style="font-size:12px;opacity:.8;margin-top:4px">${escapeHtml(subtitle)}</div>
@@ -495,7 +495,7 @@ export async function exportRangeReport({ title, start, end, transactions, getCa
   // Income vs expense share (image report): two slices, zero values dropped.
   const compareSlices = toPieSlices(
     [
-      { name: t('export.type.income'), value: income, color: '#008236' },
+      { name: t('export.type.income'), value: income, color: '#16a34a' },
       { name: t('export.type.expense'), value: expense, color: '#E7000B' },
     ].filter((x) => x.value > 0),
     t('common.other'),

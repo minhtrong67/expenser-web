@@ -122,7 +122,7 @@ function ThemeColorPicker({ value, onChange }) {
         style={!isPreset ? { backgroundColor: value } : undefined}
       >
         <Icon name="colorize" size={18} className={!isPreset ? 'text-white' : ''} />
-        <input type="color" value={isPreset ? '#008236' : value} aria-label={t('settings.colors.custom')} onChange={(e) => isValidHex(e.target.value) && onChange(e.target.value.toUpperCase())} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+        <input type="color" value={isPreset ? '#22c55e' : value} aria-label={t('settings.colors.custom')} onChange={(e) => isValidHex(e.target.value) && onChange(e.target.value.toUpperCase())} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
       </label>
     </div>
   );

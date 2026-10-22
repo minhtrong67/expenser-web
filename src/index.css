@@ -22,15 +22,16 @@
   --state-focus: 0.08;
   --state-press: 0.08;
 
-  /* Readable accent for text / icons / borders (the fill colour lives in --primary). */
-  --brand: var(--primary);
+  /* Readable accent for text / icons / borders (the fill colour lives in --primary = green-500;
+     green-500 on white is too pale for small text, so light mode uses the next step down). */
+  --brand: var(--sidebar-primary);
   /* Text on solid semantic fills (error, income ...). */
   --on-solid: oklch(0.985 0 0);
 
   --md-primary: var(--primary);
   --md-on-primary: var(--primary-foreground);
-  --md-primary-container: color-mix(in oklab, var(--brand) 10%, var(--background));
-  --md-on-primary-container: var(--brand);
+  --md-primary-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-on-primary-container: var(--chart-4);
 
   /* Tonal fill used for selected chips / segments / nav items */
   --md-secondary: var(--secondary-foreground);
@@ -45,7 +46,7 @@
 
   --md-error: var(--destructive);
   --md-on-error: var(--on-solid);
-  --md-error-container: color-mix(in oklab, var(--destructive) 10%, var(--background));
+  --md-error-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
   --md-on-error-container: var(--destructive);
 
   --md-background: var(--background);
@@ -74,11 +75,11 @@
   /* Money colours: income = brand green, expense = destructive */
   --md-income: var(--brand);
   --md-on-income: var(--on-solid);
-  --md-income-container: color-mix(in oklab, var(--brand) 10%, var(--background));
-  --md-on-income-container: var(--brand);
+  --md-income-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-on-income-container: var(--chart-4);
   --md-expense: var(--destructive);
   --md-on-expense: var(--on-solid);
-  --md-expense-container: color-mix(in oklab, var(--destructive) 10%, var(--background));
+  --md-expense-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
   --md-on-expense-container: var(--destructive);
 }
 
@@ -90,11 +91,13 @@ html.dark {
   --state-hover: 0.05;
   --state-focus: 0.07;
   --state-press: 0.07;
-  --md-primary-container: color-mix(in oklab, var(--brand) 14%, var(--background));
+  --md-primary-container: color-mix(in oklab, var(--brand) 22%, var(--background));
+  --md-on-primary-container: var(--brand);
+  --md-on-income-container: var(--brand);
   --md-secondary-container: color-mix(in oklab, var(--muted) 88%, var(--foreground));
   --md-surface-container-high: color-mix(in oklab, var(--muted) 90%, var(--foreground));
-  --md-income-container: color-mix(in oklab, var(--brand) 14%, var(--background));
-  --md-expense-container: color-mix(in oklab, var(--destructive) 14%, var(--background));
+  --md-income-container: color-mix(in oklab, var(--brand) 22%, var(--background));
+  --md-expense-container: color-mix(in oklab, var(--destructive) 22%, var(--background));
   --md-outline: color-mix(in oklab, var(--input) 85%, var(--foreground));
 }
 

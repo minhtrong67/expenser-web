@@ -13,7 +13,7 @@
 // lightness/chroma are taken from the theme's own green ladder so contrast
 // stays right in light and dark mode.
 export const ACCENT_PRESETS = [
-  { id: 'green', hex: '', swatch: '#008236' },
+  { id: 'green', hex: '', swatch: '#22c55e' },
   { id: 'blue', hex: '#2563EB', swatch: '#2563EB' },
   { id: 'teal', hex: '#0D9488', swatch: '#0D9488' },
   { id: 'amber', hex: '#D97706', swatch: '#D97706' },
@@ -69,9 +69,9 @@ export function accentVars(hex, dark) {
   const { hue, chroma } = hexToOklch(hex);
   const k = chroma < 0.03 ? 0 : 1; // a grey pick gives a neutral accent
   const o = (i, scale = 1) => `oklch(${RAMP[i][0]} ${(RAMP[i][1] * k * scale).toFixed(3)} ${hue.toFixed(1)})`;
-  const fg = `oklch(0.985 ${(0.018 * k).toFixed(3)} ${hue.toFixed(1)})`;
+  const fg = `oklch(0.266 ${(0.065 * k).toFixed(3)} ${hue.toFixed(1)})`; // dark text: readable on the bright primary
   return {
-    '--primary': dark ? o(4) : o(3),
+    '--primary': o(1), // L 0.723, like green-500 in the supplied theme (same in light and dark)
     '--primary-foreground': fg,
     '--sidebar-primary': dark ? o(1) : o(2),
     '--sidebar-primary-foreground': fg,
@@ -149,6 +149,6 @@ export function readThemeColors() {
 // Values of expenser-theme.css, used for the very first render (before the
 // real ones can be read from the DOM).
 export const FALLBACK_COLORS = {
-  light: { primary: '#008236', brand: '#008236', income: '#008236', expense: '#e7000b', surface: '#ffffff', popover: '#ffffff', onSurface: '#0a0a0a', onSurfaceVariant: '#737373', outlineVariant: '#e5e5e5', inverseSurface: '#0a0a0a', inverseOnSurface: '#ffffff' },
-  dark: { primary: '#016630', brand: '#00c950', income: '#00c950', expense: '#ff6467', surface: '#0a0a0a', popover: '#171717', onSurface: '#fafafa', onSurfaceVariant: '#a1a1a1', outlineVariant: '#262626', inverseSurface: '#fafafa', inverseOnSurface: '#0a0a0a' },
+  light: { primary: '#22c55e', brand: '#16a34a', income: '#16a34a', expense: '#e7000b', surface: '#ffffff', popover: '#ffffff', onSurface: '#0a0a0a', onSurfaceVariant: '#737373', outlineVariant: '#e5e5e5', inverseSurface: '#0a0a0a', inverseOnSurface: '#ffffff' },
+  dark: { primary: '#22c55e', brand: '#22c55e', income: '#22c55e', expense: '#ff6467', surface: '#0a0a0a', popover: '#171717', onSurface: '#fafafa', onSurfaceVariant: '#a1a1a1', outlineVariant: '#262626', inverseSurface: '#fafafa', inverseOnSurface: '#0a0a0a' },
 };

@@ -216,7 +216,7 @@ Phong cách **modern minimalist**: nền phẳng, viền mảnh thay cho đổ b
 
 | Việc cần làm | Sửa ở đâu |
 | --- | --- |
-| Đổi bảng màu | Các biến trong `src/theme/expenser-theme.css` |
+| Đổi bảng màu | Các biến trong `src/theme/expenser-theme.css` (màu chủ đạo mặc định: Tailwind `green-500` `#22c55e`) |
 | Đổi độ bo góc | `--radius` trong `src/theme/expenser-theme.css` |
 | Thêm / đổi màu nhấn gợi ý | `ACCENT_PRESETS` trong `src/theme/index.js` |
 

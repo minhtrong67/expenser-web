@@ -256,8 +256,9 @@ export default function StatisticsPage() {
         </div>
 
         <div
-          className={`mt-2 flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-title-sm sm:mt-3 sm:px-4 ${totals.net >= 0 ? 'bg-income-container text-on-income-container' : 'bg-expense-container text-on-expense-container'
-            }`}
+          className={`mt-2 flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-title-sm sm:mt-3 sm:px-4 ${
+            totals.net >= 0 ? 'bg-income-container text-on-income-container' : 'bg-expense-container text-on-expense-container'
+          }`}
         >
           <span className="flex min-w-0 items-center gap-2">
             <Icon name={totals.net >= 0 ? 'trending_up' : 'trending_down'} size={18} />
