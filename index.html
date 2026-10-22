@@ -83,10 +83,53 @@
         "image": "https://expenser-quan-ly-chi-tieu.vercel.app/og-image.png"
       }
     </script>
+  <!-- First-paint theme + splash: runs before any JS bundle so the PWA never opens on a blank screen -->
+  <script>
+    (function () {
+      try {
+        var s = JSON.parse(localStorage.getItem('qlct:settings') || '{}');
+        var m = s.themeMode || 'system';
+        var dark = m === 'dark' || (m === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+        var el = document.documentElement;
+        if (dark) el.classList.add('dark');
+        var meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        meta.content = dark ? '#18181b' : '#fafafa';
+        document.head.appendChild(meta);
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
+  <style>
+    html { background: #fafafa; color-scheme: light; }
+    html.dark { background: #18181b; color-scheme: dark; }
+    body { margin: 0; }
+    /* Shared by this static splash and the React <SplashScreen /> (same look = no flicker on hand-over) */
+    .splash {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+      min-height: 100dvh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+    .splash-logo { width: 96px; height: 96px; border-radius: 22px; user-select: none; -webkit-user-drag: none; animation: splash-in 400ms cubic-bezier(0.2, 0, 0, 1) both; }
+    .splash-spinner {
+      width: 28px; height: 28px; border-radius: 9999px;
+      border: 3px solid rgba(34, 197, 94, 0.25); border-top-color: #22c55e;
+      animation: splash-spin 800ms linear infinite;
+    }
+    @keyframes splash-spin { to { transform: rotate(360deg); } }
+    @keyframes splash-in { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .splash-logo { animation: none; } .splash-spinner { animation-duration: 1800ms; } }
+  </style>
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!-- Replaced automatically when React renders -->
+    <div class="splash" role="status" aria-label="Loading">
+      <img class="splash-logo" src="/icons/icon-192.png" width="96" height="96" alt="" draggable="false" />
+      <div class="splash-spinner"></div>
+    </div>
+  </div>
   <noscript>
     <main
       style="font-family: system-ui, sans-serif; max-width: 640px; margin: 15vh auto; padding: 0 24px; line-height: 1.6">

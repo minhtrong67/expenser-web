@@ -2,8 +2,9 @@ import { useT } from '../../i18n';
 
 /**
  * The one full-screen loading state (auth gate + top-level Suspense).
- * It deliberately paints no background: the page default shows through, so
- * there is no light/dark check when the app opens.
+ * Its styles (.splash, .splash-logo, .splash-spinner) live in index.html so the
+ * same splash is already on screen before the JS bundle loads; the page
+ * background comes from <html> (light/dark set by the inline script there).
  */
 export default function SplashScreen() {
   const t = useT();
