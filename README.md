@@ -108,7 +108,7 @@
 | Frontend | React 19, Vite 8, React Router 7 |
 | Giao diện | Tailwind CSS 3, token màu `oklch` trong `theme.css`, font hệ thống, lucide-react |
 | Backend | Firebase Authentication + Cloud Firestore (persistent cache) |
-| Thông báo đẩy | Web Push (VAPID) qua Vercel Function `api/send-reminders.js`, `web-push`, `firebase-admin` |
+
 | Biểu đồ | Recharts |
 | Xuất / nhập | jsPDF + autoTable, ExcelJS, PapaParse, html2canvas |
 | PWA | vite-plugin-pwa (Workbox) |
@@ -286,7 +286,7 @@ reminders/{uid}_{hash}   { uid, enabled, time, tz, lang, subscription, lastSentD
 npm run build
 ```
 
-Triển khai thư mục `dist/` cùng thư mục `api/` lên **Vercel** (đã có `vercel.json`: SPA rewrite không chặn `/api`, cache header, chuyển hướng `/landing.html` → `/welcome`). Nhớ thêm tên miền triển khai vào **Authorized domains** của Firebase Auth. Nếu không dùng Vercel, ứng dụng vẫn chạy tĩnh được (Firebase Hosting, Netlify…) nhưng thông báo đẩy khi đóng ứng dụng cần một nơi chạy `api/send-reminders.js`.
+Triển khai thư mục `dist/` cùng thư mục `api/` lên **Vercel** (đã có `vercel.json`: SPA rewrite không chặn `/api`, cache header, chuyển hướng `/landing.html` → `/welcome`). Nhớ thêm tên miền triển khai vào **Authorized domains** của Firebase Auth. Nếu không dùng Vercel, ứng dụng vẫn chạy tĩnh được (Firebase Hosting, Netlify…) 
 
 SEO & chia sẻ mạng xã hội: thẻ Open Graph / Twitter Card, canonical, JSON-LD (`WebApplication`), `robots.txt` và `sitemap.xml` đã có sẵn cho `https://expenser-quan-ly-chi-tieu.vercel.app/`; ảnh chia sẻ là `public/og-image.png` (1200×630).
 
