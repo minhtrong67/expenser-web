@@ -1,22 +1,12 @@
-import { useEffect } from 'react';
 import { useT } from '../../i18n';
-import { readThemeColors, setThemeColor, splashColor } from '../../theme';
 
 /**
- * The one full-screen loading state. Its markup/styles match the splash inside
- * index.html, so the page goes: static splash -> (React mounts) -> same splash
- * -> app. It never flashes a different spinner - or a white screen - in between.
- * The colour follows the light/dark theme (see .splash in index.css).
+ * The one full-screen loading state (auth gate + top-level Suspense).
+ * It deliberately paints no background: the page default shows through, so
+ * there is no light/dark check when the app opens.
  */
 export default function SplashScreen() {
   const t = useT();
-
-  // Keep the status bar the same colour as the splash while it is visible, then
-  // hand it back to the app surface colour.
-  // useEffect(() => {
-  //   setThemeColor(splashColor());
-  //   return () => setThemeColor(readThemeColors().surface);
-  // }, []);
 
   return (
     <div className="splash" role="status" aria-live="polite">

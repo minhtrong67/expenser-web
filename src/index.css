@@ -265,19 +265,15 @@ input[type='number'] { -moz-appearance: textfield; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ---- Splash ------------------------------------------------------------------
-   One loading screen used by index.html AND every top-level Suspense / auth
-   gate, so there is a single continuous splash instead of several spinners.
-   Follows the light/dark theme: white surface in light, the dark background in dark. Keep the two colours in sync with SPLASH in src/theme/index.js,
-   the inline <style> in index.html and vite.config.js (iOS startup images). */
+   Loading state used by every top-level Suspense / auth gate. It has no
+   background of its own: the page default shows through. */
 .splash {
   position: relative;
   display: flex;
   min-height: 100dvh;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
 }
-html.dark .splash { background: #0a0a0a; }
 .splash-logo {
   width: 6rem;
   height: 6rem;
@@ -292,13 +288,12 @@ html.dark .splash { background: #0a0a0a; }
   height: 1.5rem;
   margin-left: -0.75rem;
   border-radius: 9999px;
-  border: 2px solid rgb(0 130 54 / 0.2);
-  border-top-color: #008236;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
   animation: spin 0.8s linear infinite;
 }
 /* Small in-page spinner that only appears if loading takes longer than ~200 ms */
 .delayed-spinner { opacity: 0; animation: reveal 200ms 200ms cubic-bezier(0.2, 0, 0, 1) forwards; }
-html.dark .splash-spinner { border-color: rgb(0 201 80 / 0.25); border-top-color: #00c950; }
 @keyframes spin { to { transform: rotate(360deg); } }
 /* Keyframes used from plain CSS must be declared here: Tailwind only emits the
    ones referenced by an animate-* utility class. */

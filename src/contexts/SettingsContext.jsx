@@ -18,7 +18,6 @@ import {
   cacheAccent,
   isValidHex,
   readThemeColors,
-  setThemeColor,
 } from '../theme';
 
 const SettingsContext = createContext(null);
@@ -88,8 +87,6 @@ export function SettingsProvider({ children }) {
       resolved = FALLBACK_COLORS[isDark ? 'dark' : 'light']; // very old browser without oklch / color-mix in canvas
     }
     setColors(resolved);
-    setThemeColor(resolved.surface);
-    root.style.backgroundColor = resolved.surface;
   }, [isDark, accent]);
 
   useEffect(() => {

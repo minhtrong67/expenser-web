@@ -6,11 +6,7 @@
 //   1. an optional accent colour chosen in Settings (overrides the green
 //      primary / chart / sidebar-primary tokens at runtime), and
 //   2. resolving CSS colours to plain hex for the places that need real
-//      values (Recharts, toasts, <meta name="theme-color">).
-
-// Splash screen colours. Keep in sync with: index.html (inline <style>),
-// src/index.css (.splash) and vite.config.js (iOS startup images / manifest).
-export const SPLASH = { light: '#ffffff', dark: '#0a0a0a' };
+//      values (Recharts, toasts).
 
 // Accent presets offered in Settings. `hex: ''` is the supplied theme itself
 // (expenser-theme.css) - nothing is overridden. The others only need a hue:
@@ -156,15 +152,3 @@ export const FALLBACK_COLORS = {
   light: { primary: '#008236', brand: '#008236', income: '#008236', expense: '#e7000b', surface: '#ffffff', popover: '#ffffff', onSurface: '#0a0a0a', onSurfaceVariant: '#737373', outlineVariant: '#e5e5e5', inverseSurface: '#0a0a0a', inverseOnSurface: '#ffffff' },
   dark: { primary: '#016630', brand: '#00c950', income: '#00c950', expense: '#ff6467', surface: '#0a0a0a', popover: '#171717', onSurface: '#fafafa', onSurfaceVariant: '#a1a1a1', outlineVariant: '#262626', inverseSurface: '#fafafa', inverseOnSurface: '#0a0a0a' },
 };
-
-/** Sets every <meta name="theme-color"> (status bar / title bar colour). */
-export function setThemeColor(color) {
-  document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
-    meta.removeAttribute('media'); // the in-app theme wins over the OS one
-    meta.setAttribute('content', color);
-  });
-}
-
-export function splashColor(dark = document.documentElement.classList.contains('dark')) {
-  return dark ? SPLASH.dark : SPLASH.light;
-}

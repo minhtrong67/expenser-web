@@ -63,6 +63,33 @@ function ChartCard({ title, subtitle, children }) {
   );
 }
 
+// One labelled progress bar: dot + name on the left, amount + % on the right.
+function ProgressRow({ name, color, value, pct }) {
+  return (
+    <li>
+      <div className="mb-1 flex items-center justify-between gap-2 text-body-sm">
+        <span className="flex min-w-0 items-center gap-1.5 font-medium text-on-surface">
+          <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+          <span className="wrap-any">{name}</span>
+        </span>
+        <span className="shrink-0 tabular-nums text-on-surface-variant">
+          {formatMoney(value)} · {pct}%
+        </span>
+      </div>
+      <div
+        className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest"
+        role="progressbar"
+        aria-label={name}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={pct}
+      >
+        <div className="h-full rounded-full transition-[width] duration-500 ease-emphasized" style={{ width: `${pct}%`, backgroundColor: color }} />
+      </div>
+    </li>
+  );
+}
+
 export default function StatisticsPage() {
   const { t } = useI18n();
   const chart = useChartTheme();
@@ -129,6 +156,18 @@ export default function StatisticsPage() {
       .map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }));
   }, [totals, chart.income, chart.expense, t]);
 
+  // Same two figures as progress bars shown under the pie (always both rows, even when one is 0).
+  // Expense % is derived from income % so the pair always adds up to exactly 100.
+  const incomeExpenseBars = useMemo(() => {
+    const total = totals.income + totals.expense;
+    const incomePct = total ? Math.round((totals.income / total) * 100) : 0;
+    const expensePct = total ? 100 - incomePct : 0;
+    return [
+      { key: 'income', name: t('tx.income'), value: totals.income, color: chart.income, pct: incomePct },
+      { key: 'expense', name: t('tx.expense'), value: totals.expense, color: chart.expense, pct: expensePct },
+    ];
+  }, [totals, chart.income, chart.expense, t]);
+
   async function handleExport(format) {
     if (filtered.length === 0) {
       toast.error(t('stats.exportEmpty'));
@@ -192,30 +231,42 @@ export default function StatisticsPage() {
         </div>
       </div>
 
-      <section className="relative overflow-hidden rounded-2xl border border-brand/20 bg-primary-container p-5 text-on-primary-container sm:p-6">
-        <div className="relative grid grid-cols-3 gap-3 sm:gap-6">
-          <div className="min-w-0">
-            <p className="flex items-center gap-1 text-label-md opacity-80">
+      <section className="animate-fade-in rounded-2xl border border-line bg-card p-3 sm:p-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          <div className="min-w-0 rounded-xl bg-surface-container p-3 text-on-surface sm:p-4">
+            <p className="flex items-center gap-1 text-label-md text-on-surface-variant">
               <Icon name="receipt_long" size={13} /> {t('stats.transactions')}
             </p>
             <p className="mt-1.5 text-title-lg font-bold tabular-nums sm:text-headline-md">{filtered.length}</p>
           </div>
-          <div className="min-w-0">
-            <p className="flex items-center gap-1 text-label-md opacity-80">
+
+          <div className="min-w-0 rounded-xl bg-income-container p-3 text-on-income-container sm:p-4">
+            <p className="flex items-center gap-1 text-label-md">
               <Icon name="arrow_upward" size={13} /> {t('tx.income')}
             </p>
             <p className="mt-1.5 wrap-any text-title-sm font-bold tabular-nums leading-tight sm:text-title-lg lg:text-headline-sm">{formatMoney(totals.income)}</p>
           </div>
-          <div className="min-w-0">
-            <p className="flex items-center gap-1 text-label-md opacity-80">
+
+          <div className="min-w-0 rounded-xl bg-expense-container p-3 text-on-expense-container sm:p-4">
+            <p className="flex items-center gap-1 text-label-md">
               <Icon name="arrow_downward" size={13} /> {t('tx.expense')}
             </p>
             <p className="mt-1.5 wrap-any text-title-sm font-bold tabular-nums leading-tight sm:text-title-lg lg:text-headline-sm">{formatMoney(totals.expense)}</p>
           </div>
         </div>
-        <div className="relative mt-4 flex items-center gap-2 border-t border-on-primary-container/20 pt-3.5 text-title-sm">
-          <Icon name={totals.net >= 0 ? 'trending_up' : 'trending_down'} size={18} />
-          {t('stats.difference')}: <span className="font-bold tabular-nums">{formatMoney(totals.net)}</span>
+
+        <div
+          className={`mt-2 flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-title-sm sm:mt-3 sm:px-4 ${totals.net >= 0 ? 'bg-income-container text-on-income-container' : 'bg-expense-container text-on-expense-container'
+            }`}
+        >
+          <span className="flex min-w-0 items-center gap-2">
+            <Icon name={totals.net >= 0 ? 'trending_up' : 'trending_down'} size={18} />
+            <span className="wrap-any">{t('stats.difference')}</span>
+          </span>
+          <span className="shrink-0 font-bold tabular-nums">
+            {totals.net > 0 ? '+' : ''}
+            {formatMoney(totals.net)}
+          </span>
         </div>
       </section>
 
@@ -238,6 +289,13 @@ export default function StatisticsPage() {
                   <Legend wrapperStyle={{ fontSize: 12 }} />
                 </PieChart>
               </ResponsiveContainer>
+
+              {/* Income / expense share as progress bars, right under the pie */}
+              <ul className="mt-4 space-y-3 border-t border-line pt-4">
+                {incomeExpenseBars.map((b) => (
+                  <ProgressRow key={b.key} name={b.name} color={b.color} value={b.value} pct={b.pct} />
+                ))}
+              </ul>
             </ChartCard>
 
             <ChartCard title={t('stats.pie')} subtitle={categoryData.length > 0 ? t('stats.pieSubtitle', { total: formatMoney(totals.expense), n: categoryData.length }) : undefined}>
@@ -265,20 +323,7 @@ export default function StatisticsPage() {
             ) : (
               <ul className="space-y-3">
                 {categoryData.map((c) => (
-                  <li key={c.name}>
-                    <div className="mb-1 flex items-center justify-between gap-2 text-body-sm">
-                      <span className="flex min-w-0 items-center gap-1.5 font-medium text-on-surface">
-                        <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: c.color }} />
-                        <span className="wrap-any">{c.name}</span>
-                      </span>
-                      <span className="shrink-0 tabular-nums text-on-surface-variant">
-                        {formatMoney(c.value)} · {c.pct}%
-                      </span>
-                    </div>
-                    <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
-                      <div className="h-full rounded-full transition-[width] duration-500 ease-emphasized" style={{ width: `${c.pct}%`, backgroundColor: c.color }} />
-                    </div>
-                  </li>
+                  <ProgressRow key={c.name} name={c.name} color={c.color} value={c.value} pct={c.pct} />
                 ))}
               </ul>
             )}

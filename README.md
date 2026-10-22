@@ -56,7 +56,7 @@
 | ⚡ **Nhập liệu nhanh** | Gợi ý số tiền một chạm: gõ `2` → `2.000 · 20.000 · 200.000 · 2.000.000`. |
 | 🔔 **Nhắc nhở hàng ngày** | Thông báo đẩy đẹp mắt, bật/tắt và đổi giờ trong Cài đặt (mặc định 06:00). |
 | 🌐 **Song ngữ** | Tiếng Việt / English, ngày giờ và tiền tệ tự định dạng theo ngôn ngữ. |
-| 📴 **Offline-first** | PWA có splash screen theo giao diện sáng/tối, Firestore lưu đệm và tự đồng bộ khi có mạng. |
+| 📴 **Offline-first** | PWA cài lên màn hình chính, Firestore lưu đệm và tự đồng bộ khi có mạng. |
 | 🔓 **Mã nguồn mở** | Phát hành theo giấy phép MIT. |
 
 ## 🖼️ Ảnh chụp màn hình
@@ -98,7 +98,7 @@
 - Form nhiều trường mở dạng sheet toàn màn hình; form ngắn và hộp xác nhận dùng dialog; không tự focus để tránh bật bàn phím.
 - Bộ lọc từng trang và trạng thái các mục Cài đặt được nhớ trong phiên.
 - Tìm kiếm nhanh **Ctrl + K**; hoạt ảnh gọn nhẹ, tôn trọng `prefers-reduced-motion`.
-- **PWA**: cài lên màn hình chính, dùng offline, splash screen không còn nền trắng và đổi theo giao diện sáng/tối.
+- **PWA**: cài lên màn hình chính, dùng offline, màn hình khởi động dùng nền mặc định, không kiểm tra sáng/tối.
 - Truy cập tốt: nhãn ARIA, điều hướng bàn phím, bẫy focus trong hộp thoại.
 
 ## 🧰 Công nghệ
@@ -111,7 +111,7 @@
 | Thông báo đẩy | Web Push (VAPID) qua Vercel Function `api/send-reminders.js`, `web-push`, `firebase-admin` |
 | Biểu đồ | Recharts |
 | Xuất / nhập | jsPDF + autoTable, ExcelJS, PapaParse, html2canvas |
-| PWA | vite-plugin-pwa (Workbox), ảnh splash iOS sinh lúc build |
+| PWA | vite-plugin-pwa (Workbox) |
 | Công cụ | oxlint, script kiểm tra i18n |
 
 ## 🚀 Bắt đầu
@@ -200,7 +200,7 @@ Mỗi thiết bị bật nhắc nhở lưu một tài liệu trong collection `r
 | Lệnh | Tác dụng |
 | --- | --- |
 | `npm run dev` | Dev server tại `http://localhost:5173` (thêm `-- --host` để mở trên điện thoại cùng mạng LAN). |
-| `npm run build` | Build production vào `dist/` (kèm service worker và ảnh splash). |
+| `npm run build` | Build production vào `dist/` (kèm service worker). |
 | `npm run preview` | Chạy thử bản build. |
 | `npm run lint` | Kiểm tra code bằng oxlint. |
 | `npm run i18n:check` | Kiểm tra mọi khóa dịch có đủ ở `vi.js` và `en.js`. |
@@ -219,16 +219,12 @@ Phong cách **modern minimalist**: nền phẳng, viền mảnh thay cho đổ b
 | Đổi bảng màu | Các biến trong `src/theme/expenser-theme.css` |
 | Đổi độ bo góc | `--radius` trong `src/theme/expenser-theme.css` |
 | Thêm / đổi màu nhấn gợi ý | `ACCENT_PRESETS` trong `src/theme/index.js` |
-| Đổi màu splash screen | `SPLASH` trong `src/theme/index.js`, kèm `index.html`, `src/index.css` và `vite.config.js` |
 
 **Màu nhấn.** Mặc định là đúng theme. Khi người dùng chọn màu khác, chỉ `primary`, `chart-*` và `sidebar-primary` bị ghi đè theo hue của màu đó, với độ sáng/độ bão hòa lấy từ dải xanh lá của theme để luôn đủ tương phản ở cả chế độ sáng và tối.
 
 **Toast & tooltip.** Dùng biến `--popover`, `--popover-foreground`, `--border` nên luôn khớp giao diện sáng/tối và đổi màu tức thì khi chuyển theme.
 
-**Splash screen PWA.** Màu nền xanh brand ở giao diện sáng và `#0a0a0a` ở giao diện tối — không bao giờ trắng.
-
-- **iOS**: ảnh `apple-touch-startup-image` sáng/tối cho từng kích thước iPhone/iPad, chọn bằng `prefers-color-scheme`.
-- **Android**: Chrome chưa hỗ trợ biến thể tối cho `background_color` của manifest nên dùng một màu cố định (xanh brand); màn hình tải trong trang sau đó hiển thị đúng theme.
+**Splash screen PWA.** Không đặt màu nền riêng và không kiểm tra giao diện sáng/tối khi mở app: manifest không khai báo `background_color` / `theme_color`, `index.html` không có `theme-color` hay nền tiền-render, nên hệ điều hành dùng mặc định. Màn hình tải trong trang chỉ hiện logo và vòng quay trên nền mặc định.
 
 ## 🧭 Luồng điều hướng
 
@@ -266,7 +262,7 @@ expenser/
 │   ├── pages/                # Landing, Login, Dashboard, Transactions, Categories, Wallets, Statistics, Settings…
 │   ├── routes/               # ProtectedRoute (kèm landing cho khách), PublicRoute, ProtectedShell
 │   ├── services/reminders.js # Đăng ký push, lịch nhắc, nội dung thông báo
-│   ├── theme/                # expenser-theme.css (token) + màu nhấn, splash
+│   ├── theme/                # expenser-theme.css (token) + màu nhấn
 │   ├── utils/                # format, validators, exportImport, pieChart…
 │   ├── firebase.js · firestore.js
 │   └── main.jsx · App.jsx · index.css
